@@ -40,5 +40,29 @@ button.active{
     border-bottom: 2px solid #8A6652;
 }
 
+nav{
+    position: fixed;
+    transition: all 0.25s;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+}
+nav.on{
+    left: 0;
+}
+@media (min-width: 768px) {
+    //...md
+    nav,nav.on{
+        position: unset;
+        transition: unset;
+        width: unset;
+        height: unset;
+    }
+}
+
+.top-bar .user-menu div::after{content: '|'; margin: 0 7px;}
+.top-bar .user-menu div:last-child::after{content: none;}
+
 .ft-menu div::after{content: '|'; margin: 0 7px;}
 .ft-menu div:last-child::after{content: none;}
