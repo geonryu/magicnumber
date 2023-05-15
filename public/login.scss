@@ -1,0 +1,40 @@
+.sec-sign form .join-policy input{
+    overflow: hidden;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: -1;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    background: transparent;
+    visibility: hidden;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+}
+.sec-sign form .join-policy input:checked+label::after{
+    border-color: #0046d7;
+}
+.sec-sign form .join-policy label{
+    cursor: pointer;
+    font-weight: 500;
+    color: #000;
+}
+.sec-sign form .join-policy label::after{
+    display: block;
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    content: '';
+    top: 3px;
+    left: 7px;
+    width: 5px;
+    height: 10px;
+    box-sizing: content-box;
+}
