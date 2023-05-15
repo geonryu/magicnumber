@@ -5,16 +5,118 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/default.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <script src="js/main.js"></script>
 </head>
 <body>
     <div id="wrapper">
+        <div class="top-bar bg-primary">
+            <div class="container py-2">
+                <div class="align-items-center d-flex">
+                    <div class="msg">모바일에서 편하게 즐기세요!</div>
+                    <div class="btn-download ms-auto ms-md-2">
+                        <a href="#" class="btn btn-md d-flex align-items-center active text-point border-point py-1" role="button" aria-pressed="true">
+                            <span class="material-symbols-outlined">download</span>
+                            앱 다운로드
+                        </a>
+                    </div>
+                    <div class="user-menu pc-only d-none d-md-flex ms-md-auto">
+                        <div class="login"><a href="#">로그인</a></div>
+                        <div class="join"><a href="#">회원가입</a></div>
+                        <div class="coin"><a href="#">코인충전</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <header>
-            <h1 id="logo"><a href="#"><img src="images/logo-d.svg" alt=""></a></h1>
+            <div class="container d-flex justify-content-between align-items-center py-2">
+                    <h1 class="my-0" id="logo"><a href="#"><img src="images/logo-d.svg" alt=""></a></h1>
+                    <div class="btn-nav d-block d-md-none" id="navOpn">
+                        <button class="btn btn-lg">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                    </div>
+                    <nav id="nav" class="d-flex flex-column">
+                        <div class="mob-ui d-block d-md-none bg-dark position-relative">
+                            <div class="nav-logo col-4 mx-auto py-4">
+                                <div class="copyright text-white text-center mb-4">운명을 확인하는<br>가장 확실한 방법</div>
+                                <img class="w-70 d-block mx-auto" src="images/logo-nav.svg" alt="">
+                            </div>
+                            <div class="d-block d-md-none position-absolute top-0 end-0">
+                                <button class="btn btn-lg">
+                                    <span id="navCls" class="material-symbols-outlined text-white" style="font-size: 36px;">close</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="content bg-white p-4 p-md-3 h-100 d-flex flex-column">
+                            <div class="gnb d-block d-md-flex">
+                                <div class="fw-bold fs-3 ms-md-4 fs-md-5 mb-5 mb-md-0">수비학이란?</div>
+                                <div class="fw-bold fs-3 ms-md-4 fs-md-5 mb-5 mb-md-0">060서비스 안내</div>
+                                <div class="fw-bold fs-3 ms-md-4 fs-md-5 mb-5 mb-md-0">상담사등록</div>
+                            </div>
+                            <div class="login mob-only border-top py-3 mt-auto d-block d-md-none">
+                                <a href="#">
+                                    <span class="material-symbols-outlined">login</span>
+                                    로그인
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <script>
+                const $btnOpn = document.getElementById("navOpn");
+                const $nav = document.getElementById("nav");
+                const $btnCls = document.getElementById("navCls");
+
+                $btnOpn.addEventListener("click", () => {
+                    $nav.classList.toggle("on");
+                });
+                $btnCls.addEventListener("click", () => {
+                    $nav.classList.toggle("on");
+                });
+            </script>
         </header>
-        <main>
-            {% block content %}
+        <div class="main-banner">
+            <a href="#">
+                <img src="images/mainBanner.jpg" alt="">
+            </a>
+        </div>
+        <main class="bg-default"> 
+            {% block content %} 
             {% endblock %}
         </main>
+        <footer class="bg-dark">
+            <div class="container py-5 text-white">
+                <div class="row">
+                    <div class="ft-logo col-5 col-md-3 mx-auto">
+                        <a href="#">
+                            <img src="images/logo-w.svg" alt="매직넘버">
+                        </a>
+                    </div>
+                    <div class="text col-12 col-md-9">
+                        <div class="ft-menu d-flex justify-content-center justify-content-md-start my-3 my-md-0 mb-md-3">
+                            <div><a href="#">이용약관</a></div>
+                            <div><a href="#">이용약관</a></div>
+                            <div><a href="#">이용약관</a></div>
+                            <div><a href="#">이용약관</a></div>
+                        </div>
+                        <address>
+                            <span class="tit text-primary">회사명</span> 매직넘버 | 
+                            <span class="tit text-primary">대표자</span> 김대표 |
+                            <span class="tit text-primary">사업자등록번호</span> 123-45-12345 |
+                            <span class="tit text-primary">주소</span> 부산광역시 남구 동명로 170번길 93
+                            <span class="tit text-primary">고객센터</span> 1588-4949 |
+                            <span class="tit text-primary">운영시간</span> 평일 오전 9:00 ~ 오후 6:00 |
+                            <span class="tit text-primary">통신판매업</span> 제2023-서울금천-1000호
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
