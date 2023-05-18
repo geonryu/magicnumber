@@ -24,8 +24,8 @@
                         </a>
                     </div>
                     <div class="user-menu pc-only d-none d-md-flex ms-md-auto">
-                        <div class="login"><a href="#">로그인</a></div>
-                        <div class="join"><a href="#">회원가입</a></div>
+                        <div class="login"><a href="/login">로그인</a></div>
+                        <div class="join"><a href="/join">회원가입</a></div>
                         <div class="coin"><a href="#">코인충전</a></div>
                     </div>
                 </div>
@@ -33,13 +33,13 @@
         </div>
         <header>
             <div class="container d-flex justify-content-between align-items-center py-2">
-                    <h1 class="my-0" id="logo"><a href="#"><img src="images/logo-d.svg" alt=""></a></h1>
+                    <h1 class="my-0" id="logo"><a href="/"><img src="images/logo-d.svg" alt=""></a></h1>
                     <div class="btn-nav d-block d-md-none" id="navOpn">
                         <button class="btn btn-lg">
                             <span class="material-symbols-outlined">menu</span>
                         </button>
                     </div>
-                    <nav id="nav" class="d-flex flex-column">
+                    <nav id="nav" class="d-flex flex-column z-index-1">
                         <div class="mob-ui d-block d-md-none bg-dark position-relative">
                             <div class="nav-logo col-4 mx-auto py-4">
                                 <div class="copyright text-white text-center mb-4">운명을 확인하는<br>가장 확실한 방법</div>
@@ -53,12 +53,12 @@
                         </div>
                         <div class="content bg-white p-4 p-md-3 h-100 d-flex flex-column">
                             <div class="gnb d-block d-md-flex">
-                                <div class="fw-bold fs-3 ms-md-4 fs-md-5 mb-5 mb-md-0">수비학이란?</div>
-                                <div class="fw-bold fs-3 ms-md-4 fs-md-5 mb-5 mb-md-0">060서비스 안내</div>
-                                <div class="fw-bold fs-3 ms-md-4 fs-md-5 mb-5 mb-md-0">상담사등록</div>
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0">수비학이란?</div>
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0">060서비스 안내</div>
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0">상담사등록</div>
                             </div>
                             <div class="login mob-only border-top py-3 mt-auto d-block d-md-none">
-                                <a href="#">
+                                <a href="/login">
                                     <span class="material-symbols-outlined">login</span>
                                     로그인
                                 </a>
@@ -80,11 +80,6 @@
                 });
             </script>
         </header>
-        <div class="main-banner">
-            <a href="#">
-                <img src="images/mainBanner.jpg" alt="">
-            </a>
-        </div>
         <main class="bg-default"> 
             {% block content %} 
             {% endblock %}
@@ -93,7 +88,7 @@
             <div class="container py-5 text-white">
                 <div class="row">
                     <div class="ft-logo col-5 col-md-3 mx-auto">
-                        <a href="#">
+                        <a href="/">
                             <img src="images/logo-w.svg" alt="매직넘버">
                         </a>
                     </div>
