@@ -5,42 +5,42 @@
 <div class="join py-5">
     <div class="container">
         <div class="wrapper col-12 col-lg-6 mx-lg-auto">
-            <h2 class="border-bottom text-center mb-2 fw-bold">매직넘버 회원가입</h2>
+            <h2 class="border-bottom text-center pb-3 mb-3 fw-bold">매직넘버 회원가입</h2>
             <div class="text text-center pb-3 mb-3">하나의 계정으로<br>브라우저와 앱에서 손쉽게 매직넘버를 만나보세요!</div>
             <div class="emailJoin">
                 <form action="" id="joinForm">
                     <div class="join-id mb-3">
-                        <label for="joinId mb-1">아이디(이메일)</label>
-                        <input class="px-4 py-3 bg-white border border-dark d-block rounded w-100" type="text" id="joinId" placeholder="아이디(이메일)을 입력" required>
+                        <label class="mb-1" for="joinId">아이디(이메일)</label>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="joinId" placeholder="아이디(이메일)을 입력" required>
                         <div id="emailWarn" class="message-warn fs-6 text-point">정확한 이메일을 입력해주세요.</div>
                     </div>
                     <div class="join-pw mb-3">
-                        <label for="joinPw mb-1">비밀번호</label>
-                        <input class="px-4 py-3 bg-white border border-dark d-block rounded w-100" type="password" id="joinPw" placeholder="비밀번호를 입력" required>
+                        <label class="mb-1" for="joinPw">비밀번호</label>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="joinPw" placeholder="비밀번호 입력" maxlength="20" required>
                         <div class="ck-pw-eff">
-                            <span class="px-1" style="color: #cccccc;">영문</span>
-                            <span class="px-1" style="color: #cccccc;">숫자</span>
-                            <span class="px-1" style="color: #cccccc;">특수문자</span>
-                            <span class="px-1" style="color: #cccccc;">8-20자 이내</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">영문</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">숫자</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">특수문자</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">8-20자 이내</span>
                         </div>
                     </div>
                     <div class="join-pw-ck mb-3">
-                        <label for="joinPwCk mb-1">비밀번호 확인</label>
-                        <input class="px-4 py-3 bg-white border border-dark d-block rounded w-100" type="password" id="joinPwCk" placeholder="비밀번호 확인" required>
+                        <label class="mb-1" for="joinPwCk">비밀번호 확인</label>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="joinPwCk" placeholder="비밀번호 확인" maxlength="20" required>
                         <div id="pwWarn" class="message-warn fs-6 text-point">비밀번호가 일치하지 않습니다.</div>
                     </div>
                     <div class="join-name mb-3">
-                        <label for="joinName mb-1">닉네임</label>
-                        <input id="joinName" class="px-4 py-3 bg-white border border-dark d-block rounded w-100" type="text" placeholder="닉네임 입력" required>
+                        <label class="mb-1" for="joinName">닉네임</label>
+                        <input id="joinName" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" placeholder="닉네임 입력" required>
                     </div>
                     <div class="join-auth mb-3">
-                        <label for="joinAuthTel">본인인증</label>
-                        <input id="joinAuthTel" class="px-4 py-3 bg-white border border-dark d-block rounded w-100 mb-3" type="tel" placeholder="휴대전화 번호 입력" maxlength="13" required>
-                        <div class="ck-auth mb-3 d-flex">
-                            <input class="w-100 border px-4 py-3 border-dark" type="num" maxlength="" placeholder="인증번호입력" disabled>
-                            <input type="button" class="col col-2 p-3 bg-dark text-white" value="인증" disabled>
+                        <label class="mb-1" for="joinAuthTel">본인인증</label>
+                        <input id="joinAuthTel" class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" placeholder="휴대전화 번호 입력" maxlength="13" required>
+                        <div class="ck-auth mb-3 d-flex border border-primary">
+                            <input class="w-100 px-4 py-3 " type="num" maxlength="" placeholder="인증번호입력" disabled>
+                            <input id="verify" type="button" class="col col-2 p-3 bg-primary text-white bg-bgDisabled" value="인증" disabled>
                         </div>
-                        <input class="sms px-4 py-3 d-block w-100 bg-dark rounded text-white fw-bold" type="button" value="인증번호 전송">
+                        <input id="verifyCall" class="sms px-4 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" value="인증번호 전송" disabled>
                     </div>
                     <div class="policy">
                         <div class="label-policy mb-1">약관동의</div>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="btn-join">
-                        <button class="px-4 py-3 mt-3 d-block w-100 bg-dark rounded text-white fw-bold">회원가입</button>
+                        <button class="px-4 py-3 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">회원가입</button>
                     </div>
                 </form>
             </div>

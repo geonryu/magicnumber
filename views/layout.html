@@ -13,12 +13,12 @@
 </head>
 <body>
     <div id="wrapper">
-        <div class="top-bar bg-primary">
+        <div class="top-bar bg-primary text-textForPrime">
             <div class="container py-2">
                 <div class="align-items-center d-flex">
                     <div class="msg">모바일에서 편하게 즐기세요!</div>
                     <div class="btn-download ms-auto ms-md-2">
-                        <a href="#" class="btn btn-md d-flex align-items-center active text-point border-point py-1" role="button" aria-pressed="true">
+                        <a href="#" class="btn btn-md d-flex align-items-center text-white border-white py-1" role="button" aria-pressed="true">
                             <span class="material-symbols-outlined">download</span>
                             앱 다운로드
                         </a>
@@ -26,7 +26,8 @@
                     <div class="user-menu pc-only d-none d-md-flex ms-md-auto">
                         <div class="login"><a href="/login">로그인</a></div>
                         <div class="join"><a href="/join">회원가입</a></div>
-                        <div class="coin"><a href="#">코인충전</a></div>
+                        <div class="mypage"><a href="/mypage">마이페이지</a></div>
+                        <div class="coin"><a href="/charge">코인충전</a></div> 
                     </div>
                 </div>
             </div>
@@ -39,30 +40,73 @@
                             <span class="material-symbols-outlined">menu</span>
                         </button>
                     </div>
-                    <nav id="nav" class="d-flex flex-column z-index-1">
-                        <div class="mob-ui d-block d-md-none bg-dark position-relative">
-                            <div class="nav-logo col-4 mx-auto py-4">
-                                <div class="copyright text-white text-center mb-4">운명을 확인하는<br>가장 확실한 방법</div>
-                                <img class="w-70 d-block mx-auto" src="images/logo-nav.svg" alt="">
-                            </div>
-                            <div class="d-block d-md-none position-absolute top-0 end-0">
-                                <button class="btn btn-lg">
-                                    <span id="navCls" class="material-symbols-outlined text-white" style="font-size: 36px;">close</span>
-                                </button>
+                    <nav id="nav" class="d-flex flex-column z-index-1 bg-white">
+                        <div class="mob-ui d-block d-md-none bg-primary position-relative">
+                            <div class="contianer d-flex justify-content-between align-items-center">
+                                <div class="nav-logo py-2 px-3">
+                                    <div class="copyright text-white w-100">운명을 확인하는<br>가장 확실한 방법</div>
+                                </div>
+                                <div class="d-block d-md-none">
+                                    <button class="btn btn-lg">
+                                        <span id="navCls" class="material-symbols-outlined text-white" style="font-size: 36px;">close</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="content bg-white p-4 p-md-3 h-100 d-flex flex-column">
-                            <div class="gnb d-block d-md-flex">
-                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0">수비학이란?</div>
-                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0">060서비스 안내</div>
-                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0">상담사등록</div>
+                        <div class="nav-banner px-4 py-3">
+                            <div class="slide bg-default rounded p-3 d-flex justify-content-between align-items-end">
+                                <div class="txt fs-5 fw-bold">
+                                    이 달의 리뷰왕이<br>
+                                    되어보세요!
+                                </div>
+                                <div class="more"><a href="#">자세히보기 ></a></div>
                             </div>
-                            <div class="login mob-only border-top py-3 mt-auto d-block d-md-none">
-                                <a href="/login">
+                        </div>
+                        <div class="nav-utils px-4">
+                            <div class="notLoggedIn mob-only border-top py-3">
+                                <a href="/login" class="d-flex align-items-center">
                                     <span class="material-symbols-outlined">login</span>
                                     로그인
                                 </a>
+                            </div> <!-- Component for user not logged in  -->
+                            <div class="loggedIn bg-primary p-3 rounded text-white">
+                                <div class="user-name fs-4 fw-bold mb-3 d-flex align-items-center justify-content-between">
+                                    <span class="name">사용자1</span>
+                                    <span class="material-symbols-outlined fw-bold"><a href="/mypage">more_horiz</a></span>
+                                </div>
+                                <div class="user-mileage">
+                                    <div class="coin-info d-flex align-items-center flex-wrap">
+                                        <div class="tit d-flex align-items-center">
+                                            <div class="ico me-1"><img src="images/coin.png" alt=""></div>
+                                            <div class="txt fw-bold">보유코인</div>
+                                        </div>
+                                        <div class="user-coin ms-auto">
+                                            <a href="/mypage-coin">
+                                                <span class="coin fw-bold me-1 fs-5">1,300</span>원
+                                            </a><!--클릭 시 코인충전페이지-->
+                                        </div>
+                                        <div class="charge-coin">
+                                            <a href="/charge" class="d-flex justify-content-end align-items-center fs-6 p-1 rounded bg-point text-white ms-2">
+                                                충전
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- Component for user logged in -->
+                        </div>
+                        <div class="content bg-white p-4 p-md-3 d-flex flex-column">
+                            <div class="gnb d-block d-md-flex">
+                                <!-- <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0"><a class="activable" href="#">수비학이란?</a></div> -->
+                                <!-- 수비학 소개 페이지 보류 (컨텐츠 기획 후 추후 삽입 예정) -->
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="#">마이페이지</a></div>
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="#">이용방법 안내</a></div>
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="#">공지사항</a></div>
+                                <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="#">상담사 등록</a></div>
                             </div>
+                        </div>
+                        <div class="app-down p-4 border-top">
+                            <div class="app-store text-darkGray mb-2"><a href="#" class="d-flex align-items-center"><span class="material-symbols-outlined me-1">download</span>App Store</a></div>
+                            <div class="play-store text-darkGray mb-2"><a href="#" class="d-flex align-items-center"><span class="material-symbols-outlined me-1">download</span>Google Play</a></div>
                         </div>
                     </nav>
                 </div>
@@ -100,13 +144,13 @@
                             <div><a href="#">이용약관</a></div>
                         </div>
                         <address>
-                            <span class="tit text-primary">회사명</span> 매직넘버 | 
-                            <span class="tit text-primary">대표자</span> 김대표 |
-                            <span class="tit text-primary">사업자등록번호</span> 123-45-12345 |
-                            <span class="tit text-primary">주소</span> 부산광역시 남구 동명로 170번길 93
-                            <span class="tit text-primary">고객센터</span> 1588-4949 |
-                            <span class="tit text-primary">운영시간</span> 평일 오전 9:00 ~ 오후 6:00 |
-                            <span class="tit text-primary">통신판매업</span> 제2023-서울금천-1000호
+                            <span class="tit text-default">회사명</span> 매직넘버 | 
+                            <span class="tit text-default">대표자</span> 김대표 |
+                            <span class="tit text-default">사업자등록번호</span> 123-45-12345 |
+                            <span class="tit text-default">주소</span> 부산광역시 남구 동명로 170번길 93
+                            <span class="tit text-default">고객센터</span> 1588-4949 |
+                            <span class="tit text-default">운영시간</span> 평일 오전 9:00 ~ 오후 6:00 |
+                            <span class="tit text-default">통신판매업</span> 제2023-서울금천-1000호
                         </address>
                     </div>
                 </div>

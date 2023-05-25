@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container py-5">
+        <div class="notice mb-3">
+            <h3>코인충전 안내</h3>
+            <ul class="notice-list p-0">
+                <li class="py-1 d-flex"><span class="bullet"></span>충전 금액에 따라 추가 코인이 지급됩니다.</li>
+                <li class="py-1 d-flex"><span class="bullet"></span>환불은 결제일로부터 7일 이내, 충전 후 미사용한 결제건에 한해 가능하며, 부분 환불은 불가능합니다.</li>
+                <li class="py-1 d-flex"><span class="bullet"></span>충전된 코인이 모두 사용되면 자동으로 종료됩니다.</li>
+            </ul>
+        </div>
+        <div class="charge-info">
+            <form action="" id="coinChargeForm">
+                <div class="charge-select py-3">
+                    <h3 class="fw-bold mb-3">충전금액 선택</h3>
+                    <div class="bg-white p-3 text-center rounded border border-darkgray">
+                        <table class="w-100 table table-hover">
+                            <thead>
+                                <tr class="py-5">
+                                    <th scope="col" class="text-darkGray">선택</th>
+                                    <th scope="col" class="text-darkGray">결제금액(VAT별도)</th>
+                                    <th scope="col" class="text-darkGray">금액</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="price1" value="30000">
+                                    </th>
+                                    <th><label for="price1" class="d-block">30,000원</label></th>
+                                    <th><label for="price1" class="d-block">30,000</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="price2" value="50000">
+                                    </th>
+                                    <th><label for="price2" class="d-block">50,000원</label></th>
+                                    <th><label for="price2" class="d-block">50,000</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="price3" value="100000">
+                                    </th>
+                                    <th><label for="price3" class="d-block">100,000원</label></th>
+                                    <th><label for="price3" class="d-block">105,000</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="price4" value="200000">
+                                    </th>
+                                    <th><label for="price4" class="d-block">200,000원</label></th>
+                                    <th><label for="price4" class="d-block">210,000</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="price5" value="300000">
+                                    </th>
+                                    <th><label for="price5" class="d-block">300,000원</label></th>
+                                    <th><label for="price5" class="d-block">320,000</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="price6" value="500000">
+                                    </th>
+                                    <th><label for="price6" class="d-block">500,000원</label></th>
+                                    <th><label for="price6" class="d-block">550,000</label></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="method-select py-3">
+                    <h3 class="fw-bold mb-3">결제방식 선택</h3>
+                    <div class="bg-white p-3 text-center rounded border border-darkgray">
+                        <table class="w-100 table table-hover">
+                            <tbody>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="payWidthCreditCard" value="credit-card">
+                                    </th>
+                                    <th class="text-start"><label for="payWidthCreditCard" class="d-block text-darkGray">신용카드</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="payWidthAccount" value="credit-card">
+                                    </th>
+                                    <th class="text-start"><label for="payWidthAccount" class="d-block text-darkGray">무통장입금(가상계좌)</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="payWidthTransfer" value="credit-card">
+                                    </th>
+                                    <th class="text-start"><label for="payWidthTransfer" class="d-block text-darkGray">실시간 계좌이체</label></th>
+                                </tr>
+                                <tr class="py-5">
+                                    <th scope="row">
+                                        <input class="rdo" type="radio" name="amount" id="payWidthKakao" value="credit-card">
+                                    </th>
+                                    <th class="text-start"><label for="payWidthKakao" class="d-block text-darkGray">카카오페이</label></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="print-info py-3">
+                    <h3 class="fw-bold mb-3">결제정보 확인</h3>
+                    <div class="print bg-white border border-darkgray rounded p-3">
+                        <div class="pay-price d-flex justify-content-between align-items-center mb-1">
+                            <div class="t text-darkGray">결제금액</div>
+                            <div class="price fw-bold text-darkGray"><span>50,000</span>원</div>
+                        </div>
+                        <div class="tax d-flex justify-content-between align-items-center mb-1">
+                            <div class="t text-darkGray">VAT</div>
+                            <div class="price fw-bold text-darkGray"><span>5,000</span>원</div>
+                        </div>
+                        <div class="pay-method d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom border-darkgray">
+                            <div class="t text-darkGray">결제방식</div>
+                            <div class="fw-bold text-darkGray">신용카드</div>
+                        </div>
+                        <div class="total-rpice d-flex justify-content-between align-items-center mb-1">
+                            <div class="t text-darkGray">최종결제금액</div>
+                            <div class="price fw-bold text-primary"><span>55,000</span>원</div>
+                        </div>
+                        <button type="submit" class="btn btn-md bg-primary text-white w-100 mt-3 fw-bold">결제하기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,18 +1,19 @@
 $theme-colors: (
-    "primary":    #E7C7B1,
-    "secondary":  #8A6652,
+    "primary":    #6900FF,
+    "textForPrime" : #fff,
+    "secondary":  #c7a7fc,
     "success":    red,
-    "point" : #EB5602,
-    "bgPoint" : #FEC7AF,
+    "point" : #eb4002,
+    "bgPoint" : #ebdbff,
     // "info":       red,
     // "warning":    red,
     // "danger":     red,
     // "light":      red,
-    "dark":       #B69583,
-    "bgDisabled" : #D6D7D9,
+    "dark":       #5a19b5,
+    "bgDisabled" : #d9bfff,
     "txtDisabled" : #929293,
     "darkGray" : #757575,
-    "default" : #F4F2F0
+    "default" : #f0f0ff
 );
 
 $font-sizes : (
@@ -33,13 +34,19 @@ $font-sizes : (
 a {
     text-decoration: none;
 }
+// highlight when hover on a tags
+a.activable:hover{color: #6900FF;}
 
-button.active{
-    color: #8A6652 !important;
+.active{
+    color: #6900FF !important;
     font-weight: 600;
-    border-bottom: 2px solid #8A6652;
+    border-bottom: 2px solid #6900FF;
 }
 
+// Keep the header at the top index
+header{position: relative; z-index: 1010;}
+
+// navigation style
 nav{
     position: fixed;
     transition: all 0.25s;
@@ -52,7 +59,7 @@ nav.on{
     left: 0;
 }
 @media (min-width: 768px) {
-    //...md
+    //...md width breakpoint
     nav,nav.on{
         position: unset;
         transition: unset;
@@ -61,8 +68,113 @@ nav.on{
     }
 }
 
+// top bar user utilities
 .top-bar .user-menu div::after{content: '|'; margin: 0 7px;}
 .top-bar .user-menu div:last-child::after{content: none;}
 
+// footer navigation
 .ft-menu div::after{content: '|'; margin: 0 7px;}
 .ft-menu div:last-child::after{content: none;}
+
+// customization for checkbox
+input.ck{
+    overflow: hidden;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    background: transparent;
+    visibility: hidden;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+}
+input.ck:checked+label::after{
+    border-color: #EB5602;
+}
+input.ck:checked+label{
+    color: #EB5602;
+}
+label.label-for-ck{
+    cursor: pointer;
+    font-weight: 500;
+    color: #000;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+}
+label.label-for-ck::after{
+    display: block;
+    border: 1px solid #c7a7fc;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg) translate(-7px, 1px);
+    -moz-transform: rotate(45deg) translate(-7px, 1px);
+    -ms-transform: rotate(45deg) translate(-7px, 1px);
+    transform: rotate(45deg) translate(-7px, 1px);
+    content: '';
+    width: 5px;
+    height: 10px;
+    box-sizing: content-box;
+}
+
+// radio button customize
+[type="radio"] {
+  vertical-align: middle;
+  appearance: none;
+  border: max(1px, 0.1em) solid gray;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+}
+
+[type="radio"]:checked {
+  border: 0.25em solid #eb4002;
+}
+
+[type="radio"]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) dotted #eb4002;
+}
+
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+  cursor: pointer;
+}
+
+[type="radio"]:disabled {
+  background-color: lightgray;
+  box-shadow: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type="radio"]:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+// styles for horizontal divider lines between text
+.divider-text{display: flex; width: 100%; align-items: center;}
+.divider-text::after,.divider-text::before{content: ''; display: block; width: 100%; height: 1px; background-color: #8A6652;}
+.divider-text span{display: block;}
+
+// hide warning messages
+.message-warn{display: none;}
+
+// bullet for lists
+li span.bullet{
+    line-height: 1rem;
+}
+li span.bullet::before{
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background-color: #757575;
+    margin-right: .5rem;
+}

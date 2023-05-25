@@ -1,0 +1,46 @@
+{% extends 'mypage.html' %}
+
+{% block myPageComp %}
+<div class="user-info py-3">
+    <h3 class="fw-bold mb-3 d-flex justify-content-between align-items-center">
+        회원정보수정
+        <a href="#" class="fs-6 d-flex align-items-center text-txtDisabled">회원탈퇴<span class="material-symbols-outlined">navigate_next</span></a>
+    </h3>
+    <div class="user-information">
+        <form id="userInfoForm" action="">
+            <div class="user-id mb-3">
+                <label for="userId" class="mb-1">아이디(이메일)</label>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="userId" value="magicNumb@gmail.com" disabled>
+            </div>
+            <div class="user-pw mb-3">
+                <label class="mb-1" for="userPw">비밀번호</label>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="userPw" value="00000000" maxlength="20">
+            </div>
+            <div class="user-pw-ck mb-3">
+                <label class="mb-1" for="userPwCk">비밀번호 확인</label>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="userPwCk" value="00000000" maxlength="20">
+            </div>
+            <div class="user-name mb-3">
+                <label class="mb-1" for="userName">닉네임</label>
+                <input id="userName" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" value="사용자닉네임" disabled>
+            </div>
+            <div class="user-auth mb-3">
+                <label class="mb-1" for="userAuthTel">본인인증</label>
+                <input id="userAuthTel" class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" maxlength="13" value="010-1234-1234" required>
+                <input id="verifyCall" class="sms px-4 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" value="인증완료" disabled>
+            </div>
+            <div class="label-policy pt-3 mb-1">혜택 알림 동의</div>
+            <div class="allow-list rounded bg-white">
+                <div class="allow-priv position-relative border-bottom px-4 py-3">
+                    <input id="allowEmail" class="ck" type="checkbox" value="allowed-email-marketing" checked>
+                    <label class="label-for-ck w-100 h-100" for="allowEmail">이메일 수신동의</label>
+                </div>
+                <div class="allow-opt position-relative border-bottom px-4 py-3">
+                    <input id="allowSns" class="ck" type="checkbox" value="allowed-sns-marketing">
+                    <label class="label-for-ck w-100 h-100" for="allowSns">SNS 수신동의</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
