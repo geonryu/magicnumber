@@ -50,4 +50,28 @@ router.get("/charge", async (req, res, next) => {
   });
 }); //마이페이지-찜목록 라우터
 
+router.get("/howToUse", async (req, res, next) => {
+  res.render("how-to-use", {
+    title: "매직넘버:이용방법 안내",
+  });
+}); //이용방법안내 라우터
+
+router.get("/notice", async (req, res, next) => {
+  res.render("notice", {
+    title: "매직넘버:공지사항",
+  });
+}); //게시판(공지사항) 라우터
+
+router.get("/notice-post", async (req, res, next) => {
+  res.render("notice-post", {
+    title: "매직넘버:공지사항",
+  });
+}); //게시판(공지사항) - 게시글 라우터
+
+router.get("/recruit", async (req, res, next) => {
+  res.render("recruit", {
+    title: "매직넘버:상담사모집",
+  });
+}); //게시판(공지사항) - 게시글 라우터
+
 module.exports = router;
