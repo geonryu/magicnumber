@@ -20,6 +20,24 @@ router.get("/join", async (req, res, next) => {
   });
 }); //회원가입라우터
 
+router.get("/counselorInfoProfile", async (req, res, next) => {
+  res.render("counselor-info-profile", {
+    title: "매직넘버:상담사정보",
+  });
+}); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 프로필 라우터 & 프로필 랜딩 라우터
+
+router.get("/counselorInfoReview", async (req, res, next) => {
+  res.render("counselor-info-review", {
+    title: "매직넘버:상담사정보",
+  });
+}); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 후기
+
+router.get("/counselorInfoQnA", async (req, res, next) => {
+  res.render("counselor-info-qna", {
+    title: "매직넘버:상담사정보",
+  });
+}); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 문의하기
+
 router.get("/mypage", async (req, res, next) => {
   res.render("mypage-basic-info", {
     title: "매직넘버:마이페이지",
