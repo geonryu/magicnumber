@@ -1,0 +1,46 @@
+{% extends 'counselor-info.html' %}
+
+{% block counselorInfoComp %}
+<div class="counselor-contact py-3">
+    <div class="inner py-3">
+        <h3 class="fw-bold mb-3">상담사 문의</h3>
+        <div class="content">
+            <div class="question bg-white rounded p-3">
+                <div class="ask mb-3">
+                    <div class="fw-bold mb-2 d-flex">
+                        <span class="status badge bg-dark text-white me-1">답변완료</span>
+                        <span class="user-id">dfkj320sk1</span>
+                        <span class="text-darkGray material-symbols-outlined">lock</span>
+                        <!-- <span class="text-darkGray material-symbols-outlined">lock_open</span> 공개게시글 -->
+                        <span class="created-at ms-auto fw-normal text-darkGray">2023.01.01</span>
+                    </div>
+                    <div class="question-content">
+                        비밀글입니다.
+                    </div>
+                </div>
+                <div class="ans p-2 border rounded">
+                    <div class="tit fw-bold"><span class="material-symbols-outlined me-1 mb-2">subdirectory_arrow_right</span>답변내용</div>
+                    비밀글입니다.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const maskUserId = (value) => {
+            if (value.length === 2) {
+            return value.replace(/(?<=.{1})./gi, '*');
+            } else if (value.length > 2) {
+            return value.replace(/(?<=.{2})./gi, '*');
+            } else {
+            return value;
+            }
+        }; //아이디 가리기 정규식
+        const question = document.querySelectorAll(".question");
+        question.forEach((item) => {
+            let userId = item.childNodes[1].childNodes[1].childNodes[3];
+            let maskedUserId = maskUserId(userId.innerText);
+            userId.innerText = maskedUserId
+        }); // 아이디 마스킹
+    </script>
+</div>
+{% endblock %}
