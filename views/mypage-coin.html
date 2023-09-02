@@ -1,6 +1,13 @@
 {% extends 'mypage.html' %}
 
 {% block myPageComp %}
+<script>
+    const lnb = document.querySelectorAll(".sub-lnb .list a");
+    lnb.forEach((list, i) => {
+        i === 2 ? list.classList.add("active") : list.classList.remove("active");
+    });
+    // local navigation highlight
+</script>
 <div class="coin-info py-3">
     <h3 class="fw-bold mb-3">코인정보</h3>
     <div class="user-coin bg-white rounded mb-3 p-3 border border-primary d-flex flex-wrap">

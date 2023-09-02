@@ -1,6 +1,13 @@
 {% extends 'mypage.html' %}
 
 {% block myPageComp %}
+<script>
+    const lnb = document.querySelectorAll(".sub-lnb .list a");
+    lnb.forEach((list, i) => {
+        i === 1 ? list.classList.add("active") : list.classList.remove("active");
+    });
+    // local navigation highlight
+</script>
 <div class="user-info py-3">
     <h3 class="fw-bold mb-3 d-flex justify-content-between align-items-center">
         회원정보수정

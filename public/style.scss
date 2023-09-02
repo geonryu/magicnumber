@@ -58,15 +58,6 @@ nav{
 nav.on{
     left: 0;
 }
-@media (min-width: 768px) {
-    //...md width breakpoint
-    nav,nav.on{
-        position: unset;
-        transition: unset;
-        width: unset;
-        height: unset;
-    }
-}
 
 // top bar user utilities
 .top-bar .user-menu div::after{content: '|'; margin: 0 7px;}
