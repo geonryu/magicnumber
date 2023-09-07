@@ -1,6 +1,13 @@
 {% extends 'counselor-info.html' %}
 
 {% block counselorInfoComp %}
+<script>
+    const lnb = document.querySelectorAll(".local-nav div");
+    lnb.forEach((list, i) => {
+        i === 1 ? list.classList.add("active") : list.classList.remove("active");
+    });
+    // local navigation highlight
+</script>
 <div class="review py-3">
     <div class="inner py-3">
         <h3 class="fw-bold mb-3">후기 <span class="review-count text-point">86</span> 건</h3>
@@ -33,6 +40,7 @@
             </div>
         </div>
         <div class="btn-more"><button class="py-3 w-100 rounded bg-white text-center fw-bold text-darkGray">후기 더보기</button></div>
+        <!-- 5개씩 출력 (더보기) -->
     </div>
     <script>
         const maskUserId = (value) => {

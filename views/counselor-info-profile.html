@@ -1,6 +1,13 @@
 {% extends 'counselor-info.html' %}
 
 {% block counselorInfoComp %}
+<script>
+    const lnb = document.querySelectorAll(".local-nav div");
+    lnb.forEach((list, i) => {
+        i === 0 ? list.classList.add("active") : list.classList.remove("active");
+    });
+    // local navigation highlight
+</script>
 <div class="info-basic py-3">
     <div class="notice py-3">
         <h3 class="fw-bold">서비스 공지</h3>

@@ -2,6 +2,12 @@ h1 img {
   height: 40px;
 }
 
+.profile {}/*상담사 프로필 ui카드*/
+.profile .status.idle{background-color: #4ab68c; color: #fff;}/*상담가능*/
+.profile .status.abse{background-color: #929293; color: ##fff;}/*상담중*/
+.profile .status.conn{background-color: #EB5602; color: #fff;}/*부재중*/
+
+
 .review-score{
   height: 12px;
   width: 100%;
@@ -10,13 +16,23 @@ h1 img {
   background-position-x: left;
   font-size: 0;
   text-indent: -99999px;
-}/* 리뷰 별점 */
+}/* 리뷰 별점 노출 ui*/
 
 .review-score.score-1{background-position-y: 0px;}/*별점 1점*/
 .review-score.score-2{background-position-y: -14px;}/*별점 2점*/
 .review-score.score-3{background-position-y: -28px;}/*별점 3점*/
 .review-score.score-4{background-position-y: -42px;}/*별점 4점*/
 .review-score.score-5{background-position-y: -56px;}/*별점 5점*/
+
+/* 리뷰 작성시 별점 선택 ui */
+#counselorScore{background-image: url(../images/review-star.png); background-size: unset; background-position-x: center;}
+#counselorScore.score-1{background-position-y: 0px;}/*별점 1점*/
+#counselorScore.score-2{background-position-y: -14px;}/*별점 2점*/
+#counselorScore.score-3{background-position-y: -28px;}/*별점 3점*/
+#counselorScore.score-4{background-position-y: -42px;}/*별점 4점*/
+#counselorScore.score-5{background-position-y: -56px;}/*별점 5점*/
+#counselorScore div{height: 12px; width: 12px; margin-right: 2px;}
+#counselorScore div:last-child{margin-right: 0;}
 
 /* modal popup */
 .modal-popup{
