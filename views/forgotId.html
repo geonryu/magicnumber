@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="login py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto">
+            <h2 class="login-logo border-bottom text-center pb-3 mb-3 fw-bold">아이디 찾기</h2>
+            <div class="email-login mb-3">
+                <form action="" id="loginForm">
+                    <div class="user-id mb-3"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" id="userId" type="text" placeholder="아이디(이메일)을 입력하세요."></div>
+                    <div class="user-pw mb-3"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" id="userPw" type="text" placeholder="비밀번호를 입력하세요."></div>
+                    <div class="btn-submit"><button class="px-4 py-3 d-block w-100 bg-primary text-white rounded" id="loginSubmit" type="submit">로그인</button></div>
+                </form>
+            </div>
+            <div class="join py-3">
+                <div class="divider divider-text text-secondary mb-3"><span class="col-2 text-center">또는</span></div>
+                <div class="btn-join"><a href="/join" class="btn btn-lg border border-primary text-primary fs-6 d-block w-100">이메일로 회원가입</a></div>
+            </div>
+            <div class="forgot d-flex justify-content-center">
+                <div class="forgot-id fs-6 mx-3"><a href="#">아이디 (이메일) 찾기</a></div> 
+                <div class="forgot-pw fs-6 mx-3"><a href="#">비밀번호 찾기</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
