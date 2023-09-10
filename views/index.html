@@ -11,10 +11,9 @@
 <div class="lnb bg-white">
     <div class="container">
         <div class="row">
-            <div class="col col-6 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray active" data-index="0">전체보기</a></div>
-            <!-- <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">신규</a></div>
-            <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">추천</a></div> -->
-            <div class="col col-6 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray" data-index="1">상담가능</a></div>
+            <div class="col col-6 text-center py-2"><a href="/" class="h-100 w-100 d-block text-darkGray {% if state != 'IDLE' %} active {% endif %}"
+                data-index="0">전체보기</a></div>
+            <div class="col col-6 text-center py-2"><a href="/?state=IDLE" class="h-100 w-100 d-block text-darkGray {% if state == 'IDLE' %} active {% endif %}" data-index="1">상담가능</a></div>
         </div>
     </div>
     <script>
@@ -22,7 +21,7 @@
         lnb.forEach((list, i) => {
             list.addEventListener("click", () => {
                 lnb.forEach((a, i) => {
-                    a.classList.remove("active");  
+                    a.classList.remove("active");
                 });
                 lnb[i].classList.add("active");
             });
@@ -33,33 +32,37 @@
 <div class="counselors">
     <div class="container py-4">
         <div class="row">
-            {% set counselor = ['', '', '', '', '', '', '', ''] %}
-            {% for item in counselor %}
+            {% for item in counselorList %}
             <div class="profile col col-12 col-sm-6 col-md-4 mb-3 mb-sm-4">
                 <div class="inner bg-white">
-                    <a href="/counselorInfoProfile">
+                    <a href="/counselorInfoProfile?csrid={{item.csrid}}">
                         <div class="intro row p-2">
                             <div class="pic col col-5">
                                 <div class="profile-img">
-                                    <img src="images/profile.jpg" alt="">
+                                    <img src="{{host}}{{item.profile_path}}" alt="">
                                 </div>
                             </div>
                             <div class="txt col col-7">
-                                <div id="cnsStatus" class="status badge idle mb-1" >상담가능</div>
-                                <!-- class list : idle, abse, conn -->
-                                <div class="name fw-bold">현성 | <span class="cns-num text-secondary">100</span></div>
-                                <div class="msg fs-6 w-100">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
+                                {% if item.state == 'IDLE' %}
+                                    <div id="cnsStatus" class="status badge idle mb-1">상담가능</div>
+                                {% elif item.state == 'ABSE' %}
+                                    <div id="cnsStatus" class="status badge abse mb-1">부재중</div>
+                                {% elif item.state == 'CONN' %}
+                                    <div id="cnsStatus" class="status badge conn mb-1">상담중</div>
+                                {% endif %}
+                                <div class="name fw-bold">{{item.nicknm}} | <span class="cns-num text-secondary">{{item.csrid}}</span></div>
+                                <div class="msg fs-6 w-100">{{item.profile_title}}</div>
                             </div>
                         </div>
                         <div class="info p-2">
                             <div class="border-top d-flex">
                                 <div class="review d-flex align-items-center">
                                     <div class="ico"><img src="images/review.png" alt=""></div>
-                                    <div class="ms-1">후기<span class="review-count text-point">86</span></div>
+                                    <div class="ms-1">후기<span class="review-count text-point">{{item.review_count}}</span></div>
                                 </div>
                                 <div class="coin d-flex align-items-center ms-auto">
                                     <div class="ico me-1"><img src="images/coin.png" alt=""></div>
-                                    <div class="price">1,200</div>
+                                    <div class="price">{{item.decamt}}</div>
                                 </div>
                             </div>
                         </div>
