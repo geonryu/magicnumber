@@ -18,8 +18,12 @@
                     <span class="user-id">{{item.user_nicknm}}</span>님
                     <span class="created-at ms-auto fw-normal text-darkGray">{{item.create_time}}</span>
                 </div>
-                <div class="my-2 review-score score-{{item.score}}">
-                    별점 <span class="sound-only">{{item.score}}</span>점
+                <div id="counselorScore" class="score d-flex align-items-center py-3 py-md-0 ms-auto score-{{item.score}}">
+                    <div class="score-star"><button class="star-btn" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                    <div class="score-star"><button class="star-btn" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                    <div class="score-star"><button class="star-btn" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                    <div class="score-star"><button class="star-btn" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                    <div class="score-star"><button class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                 </div>
                 <div class="review-content">
                     {{item.contents}}
