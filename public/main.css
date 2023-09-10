@@ -2,4 +2,74 @@ h1 img {
   height: 40px;
 }
 
+.profile {}/*상담사 프로필 ui카드*/
+.profile .status.idle{background-color: #4ab68c; color: #fff;}/*상담가능*/
+.profile .status.abse{background-color: #929293; color: ##fff;}/*상담중*/
+.profile .status.conn{background-color: #EB5602; color: #fff;}/*부재중*/
+
+/* 
+  리뷰 별점 ui (리뷰작성시 / 상담사 프로필 상세) 
+  #counselorScore의 클래스 이름에 따라 css로 제어함
+*/
+#counselorScore{}
+#counselorScore .score-star{position: relative;}
+#counselorScore .score-star .material-symbols-rounded {font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;}
+#counselorScore .score-star .star-disabled{color: #929293;}
+#counselorScore .score-star .star-active{color: #EB5602; position: absolute; top: 0; left: 0; opacity: 0;}
+#counselorScore.score-1 .score-star:nth-child(1) .star-active{opacity: 1;}
+#counselorScore.score-1 .score-star:nth-child(2) .star-active{opacity: 0;}
+#counselorScore.score-1 .score-star:nth-child(3) .star-active{opacity: 0;}
+#counselorScore.score-1 .score-star:nth-child(4) .star-active{opacity: 0;}
+#counselorScore.score-1 .score-star:nth-child(5) .star-active{opacity: 0;}
+#counselorScore.score-2 .score-star:nth-child(1) .star-active{opacity: 1;}
+#counselorScore.score-2 .score-star:nth-child(2) .star-active{opacity: 1;}
+#counselorScore.score-2 .score-star:nth-child(3) .star-active{opacity: 0;}
+#counselorScore.score-2 .score-star:nth-child(4) .star-active{opacity: 0;}
+#counselorScore.score-2 .score-star:nth-child(5) .star-active{opacity: 0;}
+#counselorScore.score-3 .score-star:nth-child(1) .star-active{opacity: 1;}
+#counselorScore.score-3 .score-star:nth-child(2) .star-active{opacity: 1;}
+#counselorScore.score-3 .score-star:nth-child(3) .star-active{opacity: 1;}
+#counselorScore.score-3 .score-star:nth-child(4) .star-active{opacity: 0;}
+#counselorScore.score-3 .score-star:nth-child(5) .star-active{opacity: 0;}
+#counselorScore.score-4 .score-star:nth-child(1) .star-active{opacity: 1;}
+#counselorScore.score-4 .score-star:nth-child(2) .star-active{opacity: 1;}
+#counselorScore.score-4 .score-star:nth-child(3) .star-active{opacity: 1;}
+#counselorScore.score-4 .score-star:nth-child(4) .star-active{opacity: 1;}
+#counselorScore.score-4 .score-star:nth-child(5) .star-active{opacity: 0;}
+#counselorScore.score-5 .score-star:nth-child(1) .star-active{opacity: 1;}
+#counselorScore.score-5 .score-star:nth-child(2) .star-active{opacity: 1;}
+#counselorScore.score-5 .score-star:nth-child(3) .star-active{opacity: 1;}
+#counselorScore.score-5 .score-star:nth-child(4) .star-active{opacity: 1;}
+#counselorScore.score-5 .score-star:nth-child(5) .star-active{opacity: 1;}
+
+/* modal popup style*/
+.modal-popup{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  display: none;
+}
+
+.modal-popup .layer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-popup .layer .content{height: 100vh; overflow: scroll;}
+
+.modal-popup .layer .content .inner{
+}
+
+@media (min-width: 768px) { 
+  .modal-popup .layer .content{height: auto;}
+}
+
 /*# sourceMappingURL=main.css.map */

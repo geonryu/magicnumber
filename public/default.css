@@ -31,3 +31,4 @@ h1, h2, h3, h4, h5, h6, p {overflow-wrap:break-word}
 ul,ol{list-style: none;}
 a{text-decoration: none; color: inherit;}
 img{vertical-align: top; width: 100%;}
+textarea{resize: none;}

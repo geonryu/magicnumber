@@ -11,12 +11,24 @@
 <div class="lnb bg-white">
     <div class="container">
         <div class="row">
-            <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray active">전체</a></div>
-            <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">신규</a></div>
-            <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">추천</a></div>
-            <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">상담가능</a></div>
+            <div class="col col-6 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray active" data-index="0">전체보기</a></div>
+            <!-- <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">신규</a></div>
+            <div class="col col-3 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray">추천</a></div> -->
+            <div class="col col-6 text-center py-2"><a href="#" class="h-100 w-100 d-block text-darkGray" data-index="1">상담가능</a></div>
         </div>
     </div>
+    <script>
+        const lnb = document.querySelectorAll(".lnb .row a");
+        lnb.forEach((list, i) => {
+            list.addEventListener("click", () => {
+                lnb.forEach((a, i) => {
+                    a.classList.remove("active");  
+                });
+                lnb[i].classList.add("active");
+            });
+        });
+        // local navigation highlight
+    </script>
 </div>
 <div class="counselors">
     <div class="container py-4">
@@ -33,8 +45,10 @@
                                 </div>
                             </div>
                             <div class="txt col col-7">
+                                <div id="cnsStatus" class="status badge idle mb-1" >상담가능</div>
+                                <!-- class list : idle, abse, conn -->
                                 <div class="name fw-bold">현성 | <span class="cns-num text-secondary">100</span></div>
-                                <div class="msg fs-6">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
+                                <div class="msg fs-6 w-100">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
                             </div>
                         </div>
                         <div class="info p-2">

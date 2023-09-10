@@ -20,6 +20,18 @@ router.get("/join", async (req, res, next) => {
   });
 }); //회원가입라우터
 
+router.get("/forgotId", async (req, res, next) => {
+  res.render("forgotId", {
+    title: "매직넘버:아이디 찾기",
+  });
+}); //아이디 찾기 라우터
+
+router.get("/forgotPw", async (req, res, next) => {
+  res.render("join", {
+    title: "매직넘버:아이디 찾기",
+  });
+}); //비밀번호 찾기 라우터
+
 router.get("/counselorInfoProfile", async (req, res, next) => {
   res.render("counselor-info-profile", {
     title: "매직넘버:상담사정보",
@@ -56,8 +68,8 @@ router.get("/mypage-coin", async (req, res, next) => {
   });
 }); //마이페이지-코인정보 라우터
 
-router.get("/mypage-bookmark", async (req, res, next) => {
-  res.render("mypage-bookmark", {
+router.get("/mypage-history", async (req, res, next) => {
+  res.render("mypage-history", {
     title: "매직넘버:마이페이지",
   });
 }); //마이페이지-찜목록 라우터
@@ -66,7 +78,7 @@ router.get("/charge", async (req, res, next) => {
   res.render("charge", {
     title: "매직넘버:마이페이지",
   });
-}); //마이페이지-찜목록 라우터
+}); //코인충전 라우터
 
 router.get("/howToUse", async (req, res, next) => {
   res.render("how-to-use", {
@@ -84,12 +96,12 @@ router.get("/notice-post", async (req, res, next) => {
   res.render("notice-post", {
     title: "매직넘버:공지사항",
   });
-}); //게시판(공지사항) - 게시글 라우터
+}); //게시판(공지사항) - 공지사항 게시글 라우터
 
 router.get("/recruit", async (req, res, next) => {
   res.render("recruit", {
     title: "매직넘버:상담사모집",
   });
-}); //게시판(공지사항) - 게시글 라우터
+}); // 상담사 모집
 
 module.exports = router;

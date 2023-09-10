@@ -397,7 +397,7 @@ button:not(:disabled),
 }
 
 textarea {
-  resize: vertical;
+  resize: none;
 }
 
 fieldset {
@@ -11000,14 +11000,6 @@ nav.on {
   left: 0;
 }
 
-@media (min-width: 768px) {
-  nav, nav.on {
-    position: unset;
-    transition: unset;
-    width: unset;
-    height: unset;
-  }
-}
 .top-bar .user-menu div::after {
   content: "|";
   margin: 0 7px;

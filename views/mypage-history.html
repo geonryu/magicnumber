@@ -1,0 +1,190 @@
+{% extends 'mypage.html' %}
+
+{% block myPageComp %}
+<script>
+    const lnb = document.querySelectorAll(".sub-lnb .list a");
+    lnb.forEach((list, i) => {
+        i === 3 ? list.classList.add("active") : list.classList.remove("active");
+    });
+    // local navigation highlight
+</script>
+<div class="history-info py-3">
+    <h3 class="fw-bold mb-3">상담 내역</h3>
+    <div class="history-list">
+        {% set history = "상담이력 더미 데이터" %}
+        {% if history %} <!--구매 내역이 있다면-->
+            <div class="profile col col-12 mb-3 mb-sm-4 rounded bg-white p-2">
+                <div class="inner my-order-tbl">
+                    <div class="row align-items-center">
+                        <div class="col col-12 d-flex justify-content-between pb-2">
+                            <div class="date fw-bold">
+                                <span class="year">2023</span>.
+                                <span class="mm">06</span>.
+                                <span class="hh">26</span>
+                            </div>
+                            <div class="paid d-flex align-items-center justify-content-end">
+                                <div class="fw-bold">
+                                    -<span class="price">1,200</span>
+                                </div>
+                                <div class="ico ms-1"><img src="images/coin.png" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="thumb col col-3 col-md-3">
+                            <div class="profile-img w-100">
+                                <img src="images/profile.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="counselor col col-6">
+                            <div class="name fw-bold fs-4">현성 | <span class="cns-num text-secondary">100</span></div>
+                            <div class="msg fs-6">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
+                        </div>
+                        <div class="review col col-12 col-md-3 mt-3 mt-md-0">
+                            <!-- <a href="#" class="d-block col-lg-6 mt-auto h-100 w-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
+                                <span class="counselor-status ms-1">리뷰쓰기</span>
+                            </a> 
+                            리뷰 Disable -->
+                            <button id="writeReview" class="d-block col-lg-6 mt-auto h-100 w-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                                <span class="counselor-status ms-1">리뷰쓰기</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div><!--profile ui card 1-->
+            <div class="profile col col-12 mb-3 mb-sm-4 rounded bg-white p-2">
+                <div class="inner my-order-tbl">
+                    <div class="row align-items-center">
+                        <div class="col col-12 d-flex justify-content-between pb-2">
+                            <div class="date fw-bold">
+                                <span class="year">2023</span>.
+                                <span class="mm">06</span>.
+                                <span class="hh">26</span>
+                            </div>
+                            <div class="paid d-flex align-items-center justify-content-end">
+                                <div class="fw-bold">
+                                    -<span class="price">1,200</span>
+                                </div>
+                                <div class="ico ms-1"><img src="images/coin.png" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="thumb col col-3 col-md-3">
+                            <div class="profile-img w-100">
+                                <img src="images/profile.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="counselor col col-6">
+                            <div class="name fw-bold fs-4">현성 | <span class="cns-num text-secondary">100</span></div>
+                            <div class="msg fs-6">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
+                        </div>
+                        <div class="review col col-12 col-md-3 mt-3 mt-md-0">
+                            <!-- <button class="d-block col-lg-6 mt-auto h-100 w-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                                <span class="counselor-status ms-1">작성완료</span>
+                            </button>  -->
+                            <!-- 
+                            리뷰 Disable -->
+                            <button id="writeReview" class="d-block col-lg-6 mt-auto h-100 w-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                                <span class="counselor-status ms-1">리뷰쓰기</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div><!--profile ui card 1-->
+        {% else %}<!--구매 내역이 없을 때-->
+            <!-- <div class="empty-history py-2">
+                <div class="inner py-2 col-7 mx-auto text-center">
+                    <span class="material-symbols-rounded text-bgDisabled fs-1">hourglass_disabled</span>
+                    <p class="text-txtDisabled">아직 상담한 이력이 없습니다.</p>
+                </div>
+            </div> -->
+        {% endif %}
+    </div>
+    <div id="popup" class="modal-popup review-modal">
+        <div id="layer" class="layer">
+            <div id="content" class="content bg-white col-12 col-md-8">
+                <div class="inner p-3 p-md-5 col-12">
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <h4 class="mb-3 fw-bold fs-4">리뷰 작성하기</h4>
+                        <div class="close">
+                            <button class="text-black"><span class="material-symbols-outlined fw-bold fs-3">close</span></button>
+                        </div>
+                    </div>
+                    <div id="counselorProfile" class="counselor-profile d-md-flex justify-content-between align-items-center border-top border-bottom py-2">
+                        <div class="thumb col col-6 col-md-3 mx-auto">
+                            <img src="images/profile.jpg" alt="">
+                        </div>
+                        <div class="counselor col col-12 col-md-8 mt-2 mt-md-0">
+                            <div class="name fw-bold fs-4">현성 | <span class="cns-num text-secondary">100</span></div>
+                            <div class="msg fs-6">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
+                        </div>
+                    </div><!--후기 작성 대상인 상담사의 프로필-->
+                    <div class="give-score py-3">
+                        <form action="" id="" class="d-md-flex flex-wrap">
+                            <div class="fw-bold text-center">상담은 어떠셨나요?</div>
+                            <div class="text-center ms-md-1">별점을 통해 평가해주세요.</div>
+                            <div id="counselorScore" class="score d-flex justify-content-center align-items-center py-3 py-md-0 ms-auto">
+                                <div class="score-star"><button class="star-btn" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button class="star-btn" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button class="star-btn" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button class="star-btn" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                            </div>
+                            <textarea id="reviewTxt" type="text" placeholder="후기를 작성해주세요." class="border w-100 py-3 px-2" rows="6"></textarea>
+                            <div id="warnMsg" class="warn text-point fs-6"></div>
+                            <div class="notice fs-6 text-txtDisabled mt-2">실제 상담과 무관하거나 비속어가 포함된 리뷰 등 공정한 운영에 저해되는 리뷰는 고지 없이 블라인드 처리 될 수 있습니다.</div>
+                            <button id="reviewSubmit" type="submit" class="btn btn-rounded btn-primary fw-bold ms-auto mt-3 col-12 col-md-3">등록하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // 리뷰 레이팅 인터렉션
+
+            // 팝업 제어
+            const popup = document.querySelector("#popup");
+            const opnBtn = document.querySelectorAll("#writeReview");
+            const layer = document.querySelector("#layer");
+            const cont = document.querySelector("#content");
+            const clsBtn = document.querySelector(".modal-popup .close button");
+
+            opnBtn.forEach((opn,i) => {
+                opn.addEventListener("click", (e) => {popup.style.display = "block";});
+            });
+            clsBtn.addEventListener("click", (e) => {popup.style.display = "none";});
+            layer.addEventListener("click", (e) => {popup.style.display = "none";});
+            cont.addEventListener("click", (e) => {e.stopPropagation();});
+
+            // 리뷰 제어
+            const scoreStar = document.getElementById("counselorScore");
+            const starBtn = document.querySelectorAll("#counselorScore button");
+            const submitBtn = document.querySelector("#reviewSubmit");
+            starBtn.forEach((btn,i) => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const score = e.currentTarget.getAttribute("data-score");
+                    for(let i = 0; i < 5; i++) {
+                        scoreStar.classList.remove("score-1", "score-2", "score-3", "score-4", "score-5");
+                    }
+                    scoreStar.classList.add(`score-${score}`);
+                    scoreStar.classList.add("rated"); //별점을 줬는지 여부
+                    btn.classList.add("selected"); //별점
+                });
+            });// rating star
+
+            submitBtn.addEventListener("click", (e) => {
+                const reviewText = document.querySelector("#reviewTxt").value; //리뷰 글
+
+                // e.preventDefault()
+                if(!scoreStar.classList.contains("rated")) { //별점 미선택시 경고
+                    document.querySelector("#warnMsg").innerText = "* 별점을 선택해주세요.";
+                } else if(reviewText === "") { //후기 미작성시 경고
+                    document.querySelector("#warnMsg").innerText = "* 후기를 작성해주세요.";
+                } else { //입력 완료 후 submit
+                    const reviewScore = document.querySelector(".selected").getAttribute("data-score"); //별점
+                    
+                    console.log(reviewScore, reviewText);
+                }
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}
