@@ -127,7 +127,8 @@
                                 <div class="score-star"><button class="star-btn" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                                 <div class="score-star"><button class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                             </div>
-                            <textarea type="text" placeholder="후기를 작성해주세요." class="border w-100 py-3 px-2" rows="6"></textarea>
+                            <textarea id="reviewTxt" type="text" placeholder="후기를 작성해주세요." class="border w-100 py-3 px-2" rows="6"></textarea>
+                            <div id="warnMsg" class="warn text-point fs-6"></div>
                             <div class="notice fs-6 text-txtDisabled mt-2">실제 상담과 무관하거나 비속어가 포함된 리뷰 등 공정한 운영에 저해되는 리뷰는 고지 없이 블라인드 처리 될 수 있습니다.</div>
                             <button id="reviewSubmit" type="submit" class="btn btn-rounded btn-primary fw-bold ms-auto mt-3 col-12 col-md-3">등록하기</button>
                         </form>
@@ -160,15 +161,28 @@
                 btn.addEventListener("click", (e) => {
                     e.preventDefault();
                     const score = e.currentTarget.getAttribute("data-score");
-                    for(i = 0; i < 5; i++) {
+                    for(let i = 0; i < 5; i++) {
                         scoreStar.classList.remove("score-1", "score-2", "score-3", "score-4", "score-5");
                     }
-                    scoreStar.classList.add(`score-${score}`)
+                    scoreStar.classList.add(`score-${score}`);
+                    scoreStar.classList.add("rated"); //별점을 줬는지 여부
+                    btn.classList.add("selected"); //별점
                 });
             });// rating star
 
-            submitBtn.addEventListener("click", () => {
+            submitBtn.addEventListener("click", (e) => {
+                const reviewText = document.querySelector("#reviewTxt").value; //리뷰 글
 
+                // e.preventDefault()
+                if(!scoreStar.classList.contains("rated")) { //별점 미선택시 경고
+                    document.querySelector("#warnMsg").innerText = "* 별점을 선택해주세요.";
+                } else if(reviewText === "") { //후기 미작성시 경고
+                    document.querySelector("#warnMsg").innerText = "* 후기를 작성해주세요.";
+                } else { //입력 완료 후 submit
+                    const reviewScore = document.querySelector(".selected").getAttribute("data-score"); //별점
+                    
+                    console.log(reviewScore, reviewText);
+                }
             });
         </script>
     </div>
