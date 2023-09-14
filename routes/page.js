@@ -2,10 +2,31 @@ const express = require("express");
 
 const router = express.Router();
 
+<<<<<<< Updated upstream
 router.get("/", async (req, res, next) => {
   res.render("index", {
     title: "매직넘버",
   });
+=======
+// API 호스트 경로
+const host = "http://api.magicnumber.co.kr";
+
+router.get("/", async (req, res, next) => {
+  try {
+    const state = req.query.state;
+    const counselorList = await counselor.getCounselorList(state);
+
+    res.render("index", {
+      title: "매직넘버",
+      host: host,
+      counselorList: counselorList,
+      state: state,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+>>>>>>> Stashed changes
 }); // 랜딩 페이지
 
 router.get("/login", async (req, res, next) => {
@@ -25,14 +46,30 @@ router.get("/forgotId", async (req, res, next) => {
     title: "매직넘버:아이디 찾기",
   });
 }); //아이디 찾기 라우터
-
-router.get("/forgotPw", async (req, res, next) => {
-  res.render("join", {
+router.get("/forgotIdResult", async (req, res, next) => {
+  res.render("forgotIdResult", {
     title: "매직넘버:아이디 찾기",
   });
+}); //아이디 찾기 결과 라우터
+router.get("/forgotId", async (req, res, next) => {
+  res.render("forgotId", {
+    title: "매직넘버:아이디 찾기",
+  });
+}); //아이디 찾기 결과 라우터
+
+router.get("/forgotPw", async (req, res, next) => {
+  res.render("forgotPw", {
+    title: "매직넘버:비밀번호 찾기",
+  });
 }); //비밀번호 찾기 라우터
+router.get("/forgotPwResult", async (req, res, next) => {
+  res.render("forgotPwResult", {
+    title: "매직넘버:비밀번호 찾기",
+  });
+}); //비밀번호 찾기 결과 라우터
 
 router.get("/counselorInfoProfile", async (req, res, next) => {
+<<<<<<< Updated upstream
   res.render("counselor-info-profile", {
     title: "매직넘버:상담사정보",
   });
@@ -42,6 +79,39 @@ router.get("/counselorInfoReview", async (req, res, next) => {
   res.render("counselor-info-review", {
     title: "매직넘버:상담사정보",
   });
+=======
+  try {
+    const csrid = req.query.csrid;
+    const counselorInfo = await counselor.getCounselor(csrid);
+
+    res.render("counselor-info-profile", {
+      title: "매직넘버:상담사정보",
+      host: host,
+      counselorInfo: counselorInfo,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 프로필 라우터 & 프로필 랜딩 라우터
+
+router.get("/counselorInfoReview", async (req, res, next) => {
+  try {
+    const csrid = req.query.csrid;
+    const counselorInfo = await counselor.getCounselor(csrid);
+    const reviewList = await counselor.getReviewList(csrid);
+
+    res.render("counselor-info-review", {
+      title: "매직넘버:상담사정보",
+      host: host,
+      counselorInfo: counselorInfo,
+      reviewList: reviewList,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+>>>>>>> Stashed changes
 }); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 후기
 
 router.get("/counselorInfoQnA", async (req, res, next) => {

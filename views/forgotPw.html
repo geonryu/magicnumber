@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="login py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto bg-white px-2 py-4 rounded">
+            <div class="tab border-bottom d-flex mb-3">
+                <div class="find-id-tab col-6 text-center fw-bold"><a href="/forgotId" class="d-block pb-3 mb-3">아이디 찾기</a></div>
+                <div class="find-pw-tab col-6 text-center fw-bold"><a href="/forgotPw" class="d-block pb-3 mb-3 active">비밀번호 찾기</a></div>
+            </div>
+            <div class="find-user-pw mb-3">
+                <form action="" id="findPw">
+                    <div class="user-id mb-3">
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" id="findPwId" type="text" placeholder="매직넘버 이메일 아이디">
+                    </div>
+                    <div class="user-name mb-3">
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" id="findPwName" type="text" placeholder="실명을 입력해주세요.">
+                    </div>
+                    <div class="user-sonum mb-3">
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" id="findPwNum" type="number" placeholder="생년월일 8자리 ex)19900815">
+                    </div>
+                    <div class="user-phone mb-3 row">
+                        <div class="col-4">
+                            <select name="" id="findPwCarrier" class="py-3 bg-white border border-primary d-block rounded w-100 h-100 border d-block fs-6 text-center">
+                                <option value="default" selected>통신사선택</option>
+                                <option value="skt">SKT</option>
+                                <option value="lg">LG</option>
+                                <option value="kt">KT</option>
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block" id="findPwTel" type="text" value="010-" maxlength="13" required>
+                        </div>
+                    </div>
+                    <div class="btn-submit"><button class="px-4 py-3 d-block w-100 bg-primary text-white rounded bg-bgDisabled" id="findPwBtn" type="submit" disabled>비밀번호 찾기</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const $userId = document.getElementById("findPwId");
+        const $userName = document.getElementById("findPwName");
+        const $userSocialNum = document.getElementById("findPwNum");
+        const $findPwCarrier = document.getElementById("findPwCarrier");
+        const $userNum = document.getElementById("findPwTel");
+        
+        const checkTyped = () => {
+            const userName = $userName.value;
+            const userNum = $userNum.value;
+            const userNumInput = userNum.slice(4);
+            const userEmail = $userId.value;
+            const findPwCarrier = $findPwCarrier.value;
+
+            const userSocialNum = $userSocialNum.value;
+            const findBtn = document.getElementById("findPwBtn"); 
+
+            const re = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; //email 유효성검사
+
+            if (userName && userNum && userNum.replace(/-/g, "").length >= 10 && (userEmail !== "" || !re.test(userEmail)) && userSocialNum.length === 8 && findPwCarrier !== "default") {
+                document.getElementById("findPwBtn").removeAttribute("disabled");
+                document.getElementById("findPwBtn").classList.remove("bg-bgDisabled");
+            } else {
+                document.getElementById("findPwBtn").setAttribute("disabled", "");
+                document.getElementById("findPwBtn").classList.add("bg-bgDisabled");
+            }
+        }
+
+        $userId.addEventListener("keyup", checkTyped);
+        $userName.addEventListener("keyup", checkTyped); 
+        $userSocialNum.addEventListener("keyup", checkTyped);
+        $findPwCarrier.addEventListener("change", checkTyped);
+        $userNum.addEventListener("keyup", (e) => {
+            e.target.value = e.target.value
+            .replace(/[^0-9]/g, "")
+            .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+            .replace(/(\-{1,2})$/g, "");
+            // 하이픈 자동 삽입 정규식
+            checkTyped();
+        }); // 전화번호 유효성
+    </script>
+</div>
+{% endblock %}
