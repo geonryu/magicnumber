@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="login py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto bg-white px-2 py-4 rounded">
+            <div class="tab border-bottom d-flex mb-3">
+                <div class="find-id-tab col-6 text-center fw-bold"><a href="/forgotId" class="d-block pb-3 mb-3 active">아이디 찾기</a></div>
+                <div class="find-pw-tab col-6 text-center fw-bold"><a href="/forgotPw" class="d-block pb-3 mb-3">비밀번호 찾기</a></div>
+            </div>
+            <div class="result-login mb-3 text-center d-md-flex align-items-center justify-content-center">
+                <span id="userName" class="fw-bold">홍길동</span>님의 아이디는
+                <h3 id="findIdResult" class="text-primary my-1 mx-md-2">abcd1234</h3>
+                입니다.
+            </div>
+            <div class="btn-submit"><a href="/login" class="px-4 py-3 d-block text-primary rounded bg-bgPoint btn fw-bold">로그인</a></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
 <script src="js/join.js"></script>
-
 <div class="join py-5">
     <div class="container">
         <div class="wrapper col-12 col-lg-6 mx-lg-auto">
@@ -9,63 +8,93 @@
             <div class="text text-center pb-3 mb-3">하나의 계정으로<br>브라우저와 앱에서 손쉽게 매직넘버를 만나보세요!</div>
             <div class="emailJoin">
                 <form action="" id="joinForm">
-                    <div class="join-id mb-3">
-                        <label class="mb-1" for="joinId">아이디(이메일)</label>
-                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="joinId" placeholder="아이디(이메일)을 입력" required>
-                        <div id="emailWarn" class="message-warn fs-6 text-point">정확한 이메일을 입력해주세요.</div>
-                    </div>
-                    <div class="join-pw mb-3">
-                        <label class="mb-1" for="joinPw">비밀번호</label>
-                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="joinPw" placeholder="비밀번호 입력" maxlength="20" required>
-                        <div class="ck-pw-eff">
-                            <span class="px-1 fs-6" style="color: #cccccc;">영문</span>
-                            <span class="px-1 fs-6" style="color: #cccccc;">숫자</span>
-                            <span class="px-1 fs-6" style="color: #cccccc;">특수문자</span>
-                            <span class="px-1 fs-6" style="color: #cccccc;">8-20자 이내</span>
+                    <div class="join-user-info px-2 py-4 bg-white rounded mb-3">
+                        <h3 class="fs-5 mb-3">개인정보*</h3>
+                        <div class="join-name mb-3">
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="joinName" placeholder="이름" required>
+                        </div>
+                        <div class="join-so-num mb-3">
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="joinSoNum" placeholder="생년월일" required>
+                        </div>
+                        <div class="join-gender mb-3">
+                            <select name="" id="joinGender" class="px-4 py-3 bg-white border border-primary d-block rounded w-100">
+                                <option value="default" selected>성별</option>
+                                <option value="">남자</option>
+                                <option value="">여자</option>
+                            </select>
+                        </div>
+                        <div class="join-phone mb-3 row">
+                            <div class="col-4">
+                                <select name="" id="joinCarrier" class="py-3 bg-white border border-primary d-block rounded w-100 h-100 border d-block fs-6 text-center">
+                                    <option value="default" selected>통신사선택</option>
+                                    <option value="skt">SKT</option>
+                                    <option value="lg">LG</option>
+                                    <option value="kt">KT</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
+                                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block" id="joinTel" type="text" value="010-" maxlength="13" required>
+                            </div>
+                        </div>
+                        <div class="join-auth">
+                            <input id="verifyCall" class="auth-btn px-4 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" value="본인인증" disabled>
                         </div>
                     </div>
-                    <div class="join-pw-ck mb-3">
-                        <label class="mb-1" for="joinPwCk">비밀번호 확인</label>
-                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="joinPwCk" placeholder="비밀번호 확인" maxlength="20" required>
-                        <div id="pwWarn" class="message-warn fs-6 text-point">비밀번호가 일치하지 않습니다.</div>
-                    </div>
-                    <div class="join-name mb-3">
-                        <label class="mb-1" for="joinName">닉네임</label>
-                        <input id="joinName" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" placeholder="닉네임 입력" required>
-                    </div>
-                    <div class="join-auth mb-3">
-                        <label class="mb-1" for="joinAuthTel">본인인증</label>
-                        <input id="joinAuthTel" class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" placeholder="휴대전화 번호 입력" maxlength="13" required>
-                        <div class="ck-auth mb-3 d-flex border border-primary">
-                            <input class="w-100 px-4 py-3 " type="num" maxlength="" placeholder="인증번호입력" disabled>
-                            <input id="verify" type="button" class="col col-2 p-3 bg-primary text-white bg-bgDisabled" value="인증" disabled>
+
+                    <div class="join-basic-info px-2 py-4 bg-white rounded mb-3">
+                        <h3 class="fs-5 mb-3">가입정보*</h3>
+                        <div class="join-id mb-3">
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="joinId" placeholder="아이디(이메일)" required>
+                            <div id="emailWarn" class="message-warn fs-6 text-point">정확한 이메일을 입력해주세요.</div>
                         </div>
-                        <input id="verifyCall" class="sms px-4 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" value="인증번호 전송" disabled>
-                    </div>
-                    <div class="policy">
-                        <div class="label-policy mb-1">약관동의</div>
-                        <div class="allow-all position-relative px-4 py-3 rounded bg-white mb-3">
-                            <input id="allowAll" class="ck" type="checkbox">
-                            <label class="label-for-ck w-100 h-100" for="allowAll">약관 전체동의</label>
+                        <div class="join-nick-name mb-3">
+                            <div class="row">
+                                <div class="col-9"><input id="joinNickName" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" placeholder="닉네임" required></div>
+                                <div class="ck-dup col-3"><a href="#" class="d-block px-1 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled text-center">중복확인</a></div>
+                            </div>
+                            <div id="ckDupResult" class="ckDupResult text-point mt-1 fs-6">이미 가입된 닉네임입니다.</div>
+                            <!-- 
+                                가입 가능하다면 => "가입 가능한 닉네임입니다."
+                                가입 불가능하면 .text-point 클래스 추가하기
+                            -->
                         </div>
-                        <div class="allow-list rounded bg-white">
-                            <div class="allow-age position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                                <input id="allowAge" class="ck" type="checkbox" value="allowed-age" required>
-                                <label class="label-for-ck w-80 h-100" for="allowAge">만 14세 이상입니다.(필수)</label>
+                        <div class="join-pw mb-3">
+                            <label class="mb-1" for="joinPw">비밀번호</label>
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="joinPw" placeholder="비밀번호 입력" maxlength="20" required>
+                            <div class="ck-pw-eff">
+                                <span class="px-1 fs-6" style="color: #cccccc;">영문</span>
+                                <span class="px-1 fs-6" style="color: #cccccc;">숫자</span>
+                                <span class="px-1 fs-6" style="color: #cccccc;">특수문자</span>
+                                <span class="px-1 fs-6" style="color: #cccccc;">8-20자 이내</span>
                             </div>
-                            <div class="allow-service position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                                <input id="allowService" class="ck" type="checkbox" value="allowed-service" required>
-                                <label class="label-for-ck w-80 h-100" for="allowService">이용약관(필수)</label>
-                                <a href="#" class="d-flex">[보기]</a>
+                        </div>
+                        <div class="join-pw-ck mb-3">
+                            <label class="mb-1" for="joinPwCk">비밀번호 확인</label>
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="joinPwCk" placeholder="비밀번호 확인" maxlength="20" required>
+                            <div id="pwWarn" class="message-warn fs-6 text-point">비밀번호가 일치하지 않습니다.</div>
+                        </div>
+                        
+                        <div class="policy mt-5">
+                            <h3 class="label-policy fs-5 mb-3">약관동의*</h3>
+                            <div class="allow-all position-relative px-4 py-3 rounded bg-white mb-3">
+                                <input id="allowAll" class="ck" type="checkbox">
+                                <label class="label-for-ck w-100 h-100" for="allowAll">약관 전체동의</label>
                             </div>
-                            <div class="allow-priv position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                                <input id="allowPriv" class="ck" type="checkbox" value="allowed-private" required>
-                                <label class="label-for-ck w-80 h-100" for="allowPriv">개인정보수집 및 이용동의(필수)</label>
-                                <a href="#" class="d-flex">[보기]</a>
-                            </div>
-                            <div class="allow-opt position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                                <input id="allowOpt" class="ck" type="checkbox" value="allowed-optional">
-                                <label class="label-for-ck w-80 h-100" for="allowOpt">이벤트, 쿠폰 알림 메일 및 SNS 수신(선택)</label>
+                            <div class="allow-list rounded bg-white">
+                                <div class="allow-service position-relative border-bottom px-4 py-3 d-flex justify-content-between">
+                                    <input id="allowService" class="ck" type="checkbox" value="allowed-service" required>
+                                    <label class="label-for-ck w-80 h-100" for="allowService">이용약관(필수)</label>
+                                    <a href="#" class="d-flex">[보기]</a>
+                                </div>
+                                <div class="allow-priv position-relative border-bottom px-4 py-3 d-flex justify-content-between">
+                                    <input id="allowPriv" class="ck" type="checkbox" value="allowed-private" required>
+                                    <label class="label-for-ck w-80 h-100" for="allowPriv">개인정보수집 및 이용동의(필수)</label>
+                                    <a href="#" class="d-flex">[보기]</a>
+                                </div>
+                                <div class="allow-opt position-relative border-bottom px-4 py-3 d-flex justify-content-between">
+                                    <input id="allowOpt" class="ck" type="checkbox" value="allowed-optional">
+                                    <label class="label-for-ck w-80 h-100" for="allowOpt">이벤트, 쿠폰 알림 메일 및 SNS 수신(선택)</label>
+                                </div>
                             </div>
                         </div>
                     </div>
