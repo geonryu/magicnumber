@@ -16,6 +16,7 @@ router.get("/", async (req, res, next) => {
 //     const counselorList = await counselor.getCounselorList(state);
 
 //     res.render("index", {
+
 //       title: "매직넘버",
 //       host: host,
 //       counselorList: counselorList,
