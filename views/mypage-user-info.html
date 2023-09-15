@@ -21,11 +21,10 @@
             </div>
             <div class="user-pw mb-3">
                 <label class="mb-1" for="userPw">비밀번호</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="userPw" value="00000000" maxlength="20">
-            </div>
-            <div class="user-pw-ck mb-3">
-                <label class="mb-1" for="userPwCk">비밀번호 확인</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="userPwCk" value="00000000" maxlength="20">
+                <div class="row">
+                    <div class="output col-10"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="userPw" value="00000000" maxlength="20" readonly></div>
+                    <div class="change-pw col-2"><a href="#" class="d-block w-100 px-2 py-3 text-center text-white bg-primary fw-bold rounded">변경</a></div>
+                </div>
             </div>
             <div class="user-name mb-3">
                 <label class="mb-1" for="userName">닉네임</label>
