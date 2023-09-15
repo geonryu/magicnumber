@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="login py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto bg-white px-2 py-4 rounded">
+            <div class="tab border-bottom mb-3">
+                <h3 class="fw-bold text-center">비밀번호 변경하기</h3>
+            </div>
+            <div class="find-pw-result">
+                <form id="userPwChange" action="">
+                    <div class="reset-pw mb-3">
+                        <label class="mb-1" for="resetPw">새 비밀번호</label>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="resetPw" placeholder="비밀번호 입력" maxlength="20" required>
+                        <div class="ck-pw-eff">
+                            <span class="px-1 fs-6" style="color: #cccccc;">영문</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">숫자</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">특수문자</span>
+                            <span class="px-1 fs-6" style="color: #cccccc;">8-20자 이내</span>
+                        </div>
+                    </div>
+                    <div class="reset-pw-ck mb-3">
+                        <label class="mb-1" for="resetPwCk">비밀번호 확인</label>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="resetPwCk" placeholder="비밀번호 확인" maxlength="20" required>
+                        <div id="pwWarn" class="message-warn fs-6 text-point">비밀번호가 일치하지 않습니다.</div>
+                    </div>
+                    <div class="btn-submit"><button id="changePw" type="submit" class="px-4 py-3 d-block text-white rounded bg-primary bg-bgDisabled btn fw-bold w-100 disabled">비밀번호 변경</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const $currentInput = document.getElementById("resetPw");
+        const $userRepeat = document.getElementById("resetPwCk");
+
+        const checkTyped = () => {
+            const changePwBtn = document.getElementById("changePw"); 
+            let userPW = $currentInput.value;
+            // userPW.search(/[a-z]/gi) > 0 && userPW.search(/[0-9]/g) > 1 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2
+            console.log(userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2)
+
+            if ($currentInput.value === $userRepeat.value && userPW.length >= 8 && userPW.length <= 20 && userPW.search(/[a-z]/gi) >= 0 && userPW.search(/[0-9]/g) >= 0 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) >= 0) {
+                document.getElementById("changePw").removeAttribute("disabled");
+                document.getElementById("changePw").classList.remove("bg-bgDisabled");
+            } else {
+                document.getElementById("changePw").setAttribute("disabled", "");
+                document.getElementById("changePw").classList.add("bg-bgDisabled");
+            }
+        }
+
+        $currentInput.addEventListener("keyup", (e) => {
+            let userPW = $currentInput.value;
+            
+            const ckInc = document.querySelectorAll(".ck-pw-eff span");
+
+            const num = userPW.search(/[0-9]/g);
+            const eng = userPW.search(/[a-z]/gi);
+            const spe = userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+            userPW.length < 8 || userPW.length > 20
+            ? (ckInc[3].style.color = "#CCCCCC")
+            : (ckInc[3].style.color = "#EB5602");
+            eng < 0
+            ? (ckInc[0].style.color = "#CCCCCC")
+            : (ckInc[0].style.color = "#EB5602");
+            num < 0
+            ? (ckInc[1].style.color = "#CCCCCC")
+            : (ckInc[1].style.color = "#EB5602");
+            spe < 0
+            ? (ckInc[2].style.color = "#CCCCCC")
+            : (ckInc[2].style.color = "#EB5602");
+
+            checkTyped();
+        });
+
+        const ckPwRe = document.getElementById("resetPwCk").addEventListener("keyup", (e) => {
+            const $msgWarn = document.getElementById("pwWarn");
+            $currentInput.value === $userRepeat.value
+            ? ($msgWarn.style.display = "none")
+            : ($msgWarn.style.display = "block");
+            
+            checkTyped();
+        });
+
+        document.getElementById("userPwChange").addEventListener("submit", () => {
+            // 비밀번호 변경 후 마이페이지 - 회원정보로 리디렉션합니다.
+        });
+
+    </script>
+</div>
+{% endblock %}

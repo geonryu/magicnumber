@@ -127,6 +127,12 @@ router.get("/mypage-info", async (req, res, next) => {
   });
 }); //마이페이지-회원정보 라우터
 
+router.get("/pwChange", async (req, res, next) => {
+  res.render("pwChange", {
+    title: "매직넘버:마이페이지",
+  });
+}); //마이페이지-회원정보 - 비밀번호 변경 라우터
+
 router.get("/mypage-coin", async (req, res, next) => {
   res.render("mypage-coin", {
     title: "매직넘버:마이페이지",
