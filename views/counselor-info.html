@@ -6,14 +6,14 @@
         <div class="profile row py-3 bg-white">
             <div class="profile-info col-12 col-md-5">
                 <div class="profile-img">
-                    <img src="images/profile.jpg" alt="">
+                    <img src="{{host}}{{counselorInfo.profile_path}}" alt="">
                 </div>
             </div>
             <div class="profile-util col-12 col-md-7 d-flex flex-column">
                 <div class="txt py-3">
-                    <div class="name fw-bold fs-4">현성 | <span class="cns-num text-secondary">100</span></div>
+                    <div class="name fw-bold fs-4">{{counselorInfo.nicknm}} | <span class="cns-num text-secondary">{{counselorInfo.csrid}}</span></div>
                     <!--ARS 연결시 필요한 접속 번호-->
-                    <div class="msg">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
+                    <div class="msg">{{counselorInfo.profile_title}}</div>
                 </div>
                 <!-- <div class="tag mb-3">
                     <div class="badge bg-primary">#<span class="keyword">수비학</span></div>
@@ -23,11 +23,11 @@
                 <div class="count mb-3">
                     <div class="review d-flex align-items-center mb-1">
                         <div class="ico"><img src="images/review.png" alt=""></div>
-                        <div class="ms-1">후기<span class="review-count text-point ms-1">86</span></div>
+                        <div class="ms-1">후기<span class="review-count text-point ms-1">{{counselorInfo.review_count}}</span></div>
                     </div>
                     <div class="coin d-flex align-items-center ms-auto">
                         <div class="ico me-1"><img src="images/coin.png" alt=""></div>
-                        <div class="price">1,200</div>
+                        <div class="price">{{counselorInfo.decamt}}</div>
                     </div>
                 </div>
                 <div class="control d-flex align-items-center mt-auto">
@@ -39,15 +39,23 @@
                         <button class="rounded border border-point bg-point text-white">
                             <span class="material-symbols-outlined d-block">favorite</span>
                             찜
-                        </button> 찜 활성화 
+                        </button> 찜 활성화
                     </div> -->
                     <div class="call w-100">
                         <!-- <a href="tel:000-000-0000" class="d-block h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
                             <span class="material-symbols-outlined">call</span>
                             <span class="counselor-status ms-1">상담가능</span>
                         </a> 상담가능 -->
-                        <a href="tel:000-000-0000" class="d-block col-lg-6 mt-auto h-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
-                            <span class="counselor-status ms-1">상담준비중</span>
+                        <a href="javascript:alert('060 API 작업중')" class="d-block col-lg-6 mt-auto h-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
+                            <span class="counselor-status ms-1">
+                                {% if counselorInfo.state == 'IDLE' %}
+                                    상담가능
+                                {% elif counselorInfo.state == 'ABSE' %}
+                                    부재중
+                                {% elif counselorInfo.state == 'CONN' %}
+                                    상담중
+                                {% endif %}
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -55,11 +63,11 @@
         </div>
         <div class="content">
             <div class="local-nav row bg-white">
-                <div class="col col-6 active"><a href="/counselorInfoProfile" class="d-flex align-items-center justify-content-center py-2">프로필</a></div>
+                <div class="col col-6 active"><a href="/counselorInfoProfile?csrid={{counselorInfo.csrid}}" class="d-flex align-items-center justify-content-center py-2">프로필</a></div>
                 <div class="col col-6">
-                    <a href="counselorInfoReview" class="d-flex align-items-center justify-content-center py-2">
+                    <a href="counselorInfoReview?csrid={{counselorInfo.csrid}}" class="d-flex align-items-center justify-content-center py-2">
                         후기
-                        <div class="ms-1 badge bg-point text-white"><span class="review-count">86</span></div>
+                        <div class="ms-1 badge bg-point text-white"><span class="review-count">{{counselorInfo.review_count}}</span></div>
                     </a>
                 </div>
                 <!-- <div class="col col-4">

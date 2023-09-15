@@ -1,8 +1,13 @@
 const express = require("express");
+const counselor = require("./counselor.js");
 
 const router = express.Router();
 
+// API 호스트 경로
+const host = "http://api.magicnumber.co.kr"
+
 router.get("/", async (req, res, next) => {
+//<<<<<<< ui-design
   res.render("index", {
     title: "매직넘버",
   });
@@ -27,11 +32,31 @@ router.get("/", async (req, res, next) => {
 //     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
 //   }
 // }); // 랜딩 페이지
+//=======
+  try {
+    const state = req.query.state;
+    const counselorList = await counselor.getCounselorList(state);
+
+    res.render("index", {
+      title: "매직넘버",
+      host: host,
+      counselorList: counselorList,
+      state: state,
+    });
+
+  } catch (error) {
+    console.error('외부 API와의 통신 중 에러 발생:', error);
+    res.status(500).json({ error: '외부 API와의 통신 중 에러 발생'});
+  }
+}); // 랜딩 페이지
+//>>>>>>> main
 
 router.get("/login", async (req, res, next) => {
   res.render("login", {
     title: "매직넘버:로그인",
   });
+
+
 }); //로그인 라우터
 
 router.get("/join", async (req, res, next) => {
@@ -68,9 +93,20 @@ router.get("/forgotPwResult", async (req, res, next) => {
 }); //비밀번호 찾기 결과 라우터
 
 router.get("/counselorInfoProfile", async (req, res, next) => {
-  res.render("counselor-info-profile", {
-    title: "매직넘버:상담사정보",
-  });
+  try {
+    const csrid = req.query.csrid;
+    const counselorInfo = await counselor.getCounselor(csrid);
+
+    res.render("counselor-info-profile", {
+      title: "매직넘버:상담사정보",
+      host: host,
+      counselorInfo: counselorInfo,
+    });
+
+  } catch (error) {
+    console.error('외부 API와의 통신 중 에러 발생:', error);
+    res.status(500).json({ error: '외부 API와의 통신 중 에러 발생'});
+  }
 }); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 프로필 라우터 & 프로필 랜딩 라우터
 
 // router.get("/counselorInfoReview", async (req, res, next) => {
@@ -104,9 +140,16 @@ router.get("/counselorInfoReview", async (req, res, next) => {
       counselorInfo: counselorInfo,
       reviewList: reviewList,
     });
+//<<<<<<< ui-design
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+//=======
+
+  } catch (error) {
+    console.error('외부 API와의 통신 중 에러 발생:', error);
+    res.status(500).json({ error: '외부 API와의 통신 중 에러 발생'});
+//>>>>>>> main
   }
 }); //상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 후기
 

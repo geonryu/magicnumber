@@ -10,14 +10,15 @@
 </script>
 <div class="review py-3">
     <div class="inner py-3">
-        <h3 class="fw-bold mb-3">후기 <span class="review-count text-point">86</span> 건</h3>
+        <h3 class="fw-bold mb-3">후기 <span class="review-count text-point">{{counselorInfo.review_count}}</span> 건</h3>
         <div class="content">
+            {% for item in reviewList %}
             <div class="user-review rounded bg-white p-3 mb-3">
                 <div class="reviewer fw-bold d-flex">
-                    <span class="user-id">abcd1020</span>님
-                    <span class="created-at ms-auto fw-normal text-darkGray">2023.01.02</span>
+                    <span class="user-id">{{item.user_nicknm}}</span>님
+                    <span class="created-at ms-auto fw-normal text-darkGray">{{item.create_time}}</span>
                 </div>
-                <div id="counselorScore" class="score d-flex align-items-center py-3 py-md-0 ms-auto">
+                <div id="counselorScore" class="score d-flex align-items-center py-3 py-md-0 ms-auto score-{{item.score}}">
                     <div class="score-star"><button class="star-btn" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                     <div class="score-star"><button class="star-btn" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                     <div class="score-star"><button class="star-btn" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
@@ -25,27 +26,10 @@
                     <div class="score-star"><button class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                 </div>
                 <div class="review-content">
-                    요새 너무너무 신경이 쓰였는데 상담 너무 잘 해주셔서 감사합니당!!!<br>
+                    {{item.contents}}
                 </div>
             </div>
-            <div class="user-review rounded bg-white p-3 mb-3">
-                <div class="reviewer fw-bold mb-2 d-flex">
-                    <span class="user-id">dfkj320sk1</span>님
-                    <span class="created-at ms-auto fw-normal text-darkGray">2023.01.01</span>
-                </div>
-                <div id="counselorScore" class="score d-flex align-items-center py-3 py-md-0 ms-auto">
-                    <div class="score-star"><button class="star-btn" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                    <div class="score-star"><button class="star-btn" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                    <div class="score-star"><button class="star-btn" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                    <div class="score-star"><button class="star-btn" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                    <div class="score-star"><button class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                </div>
-                <div class="review-content">
-                    마음 급했었는데 상담하고 많이 차분해졌어요~^-^<br>
-                    넘 감사해요 선생님~~!!
-                </div>
-                <!-- 별점 클래스로 제어 score-1 ~ score-5 -->
-            </div>
+            {% endfor %}
         </div>
         <div class="btn-more"><button class="py-3 w-100 rounded bg-white text-center fw-bold text-darkGray">후기 더보기</button></div>
         <!-- 5개씩 출력 (더보기) -->
