@@ -101,6 +101,51 @@ const auth = {
     }
     res.redirect("/login");
   },
+
+  // 4. 회원가입
+  async signUp(params) {
+    console.log("signUp(params)", params);
+    try {
+      // API URL
+      const apiUrl = "/api/v1/user/signup";
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: "",
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.post(apiUrl, params);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      console.log("=== success start ===========================");
+      console.log(responseStatus);
+      console.log(responseStatusText);
+      console.log(responseData);
+      console.log("=== success end ============================");
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      console.log("=== error start =============================");
+      console.log(responseStatus);
+      console.log(responseStatusText);
+      console.log(responseData);
+      console.log("=== error end ==============================");
+
+      return responseData;
+    }
+  },
 };
 
 module.exports = auth;
