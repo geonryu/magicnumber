@@ -25,10 +25,15 @@
                         </a>
                     </div>
                     <div class="user-menu pc-only d-none d-md-flex ms-md-auto">
-                        <div class="login"><a href="/login">로그인</a></div>
-                        <div class="join"><a href="/join">회원가입</a></div>
-                        <div class="mypage"><a href="/mypage">마이페이지</a></div>
-                        <div class="coin"><a href="/charge">코인충전</a></div> 
+                        {% if user === undefined %}
+                            <div class="login"><a href="/login">로그인</a></div>
+                            <div class="join"><a href="/join">회원가입</a></div>
+                        {% endif %}
+                        {% if user %}
+                            <div class="mypage"><a href="/mypage">{{ user.name }}</a></div>
+                            <div class="coin"><a href="/charge">코인충전</a></div>
+                            <div class="logout"><a href="/logout">로그아웃</a></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -131,8 +136,8 @@
                 });
             </script>
         </header>
-        <main class="bg-default"> 
-            {% block content %} 
+        <main class="bg-default">
+            {% block content %}
             {% endblock %}
         </main>
         <footer class="bg-dark">
@@ -151,7 +156,7 @@
                             <div><a href="#">이용약관</a></div>
                         </div>
                         <address>
-                            <span class="tit text-default">회사명</span> 매직넘버 | 
+                            <span class="tit text-default">회사명</span> 매직넘버 |
                             <span class="tit text-default">대표자</span> 김대표 |
                             <span class="tit text-default">사업자등록번호</span> 123-45-12345 |
                             <span class="tit text-default">주소</span> 부산광역시 남구 동명로 170번길 93
