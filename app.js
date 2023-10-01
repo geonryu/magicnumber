@@ -32,6 +32,9 @@ app.use(flash());
 // body-parser 설정
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// body 파서 미들웨어 사용
+app.use(express.json());
+
 // Passport 초기화 및 세션 설정
 app.use(passport.initialize());
 app.use(passport.session());

@@ -25,23 +25,11 @@ const user = {
       const responseStatusText = response.statusText;
       const responseData = response.data;
 
-      console.log("=== success start ===========================");
-      console.log(responseStatus);
-      console.log(responseStatusText);
-      console.log(responseData);
-      console.log("=== success end ============================");
-
       return responseData;
     } catch (error) {
       const responseStatus = error.response.status;
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;
-
-      console.log("=== error start =============================");
-      console.log(responseStatus);
-      console.log(responseStatusText);
-      console.log(responseData);
-      console.log("=== error end ==============================");
 
       return responseData;
     }
@@ -52,8 +40,32 @@ const user = {
     console.log("checkNickname(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/user/signup/nickname/";
-    } catch (error) {}
+      const apiUrl = "/api/v1/user/signup/nickname/";
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: "",
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.post(apiUrl, params);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 1.3 [POST] 아이디 찾기

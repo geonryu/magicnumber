@@ -3,15 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const $joinName = document.getElementById("joinName");
   const $joinSoNum = document.getElementById("joinSoNum");
   const $joinGender = document.getElementById("joinGender");
-  const $joinCarrier = document.getElementById("joinCarrier");
+  // const $joinCarrier = document.getElementById("joinCarrier");
   const $joinTel = document.getElementById("joinTel");
-  const $verifyCallBtn = document.getElementById("verifyCall");
+  // const $verifyCallBtn = document.getElementById("verifyCall");
   const $joinNickName = document.getElementById("joinNickName");
   const $joinPw = document.getElementById("joinPw");
   const $joinPwCk = document.getElementById("joinPwCk");
 
   const $selects = document.querySelectorAll(".policy .allow-list div input");
   const $selectAll = document.getElementById("allowAll");
+
+  const $checkNickname = document.getElementById("checkNickname");
+  const $ckDupResult = document.getElementById("ckDupResult");
 
   const ckRequired = () => {
     let required1 = $selects[0].checked;
@@ -29,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const joinTelInput = joinTel.slice(4);
 
     const userEmail = $joinId.value;
-    const joinCarrier = $joinCarrier.value;
+    // const joinCarrier = $joinCarrier.value;
     const joinSoNum = $joinSoNum.value;
     const joinGender = $joinGender.value;
     const re = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; //email 유효성검사
@@ -39,14 +42,14 @@ document.addEventListener("DOMContentLoaded", () => {
       joinTel.replace(/-/g, "").length >= 10 &&
       (userEmail !== "" || !re.test(userEmail)) &&
       joinSoNum.length === 8 &&
-      joinCarrier !== "default" &&
+      // joinCarrier !== "default" &&
       joinGender !== "default"
     ) {
-      document.getElementById("verifyCall").removeAttribute("disabled");
-      document.getElementById("verifyCall").classList.remove("bg-bgDisabled");
+      // document.getElementById("verifyCall").removeAttribute("disabled");
+      // document.getElementById("verifyCall").classList.remove("bg-bgDisabled");
     } else {
-      document.getElementById("verifyCall").setAttribute("disabled", "");
-      document.getElementById("verifyCall").classList.add("bg-bgDisabled");
+      // document.getElementById("verifyCall").setAttribute("disabled", "");
+      // document.getElementById("verifyCall").classList.add("bg-bgDisabled");
     }
   };
 
@@ -82,18 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const num = userPW.search(/[0-9]/g);
     const eng = userPW.search(/[a-z]/gi);
     const spe = userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    userPW.length < 8 || userPW.length > 20
-      ? (ckInc[3].style.color = "#CCCCCC")
-      : (ckInc[3].style.color = "#EB5602");
-    eng < 0
-      ? (ckInc[0].style.color = "#CCCCCC")
-      : (ckInc[0].style.color = "#EB5602");
-    num < 0
-      ? (ckInc[1].style.color = "#CCCCCC")
-      : (ckInc[1].style.color = "#EB5602");
-    spe < 0
-      ? (ckInc[2].style.color = "#CCCCCC")
-      : (ckInc[2].style.color = "#EB5602");
+    userPW.length < 8 || userPW.length > 20 ? (ckInc[3].style.color = "#CCCCCC") : (ckInc[3].style.color = "#EB5602");
+    eng < 0 ? (ckInc[0].style.color = "#CCCCCC") : (ckInc[0].style.color = "#EB5602");
+    num < 0 ? (ckInc[1].style.color = "#CCCCCC") : (ckInc[1].style.color = "#EB5602");
+    spe < 0 ? (ckInc[2].style.color = "#CCCCCC") : (ckInc[2].style.color = "#EB5602");
   });
 
   $joinPwCk.addEventListener("keyup", (e) => {
@@ -101,9 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const userRepeat = $joinPwCk.value;
 
     const $msgWarn = document.getElementById("pwWarn");
-    currentInput === userRepeat
-      ? ($msgWarn.style.display = "none")
-      : ($msgWarn.style.display = "block");
+    currentInput === userRepeat ? ($msgWarn.style.display = "none") : ($msgWarn.style.display = "block");
   });
   // pw유효성 끝
 
@@ -130,4 +123,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   // 약관 전체 동의 끝
+
+  $checkNickname.addEventListener("click", function (ev) {
+    ev.preventDefault();
+    const nick_name = $joinNickName.value;
+    const params = {
+      nick_name: nick_name,
+    };
+
+    fetch("/checkNickname", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("서버에서 받은 데이터: ", data);
+
+        if (data.result === 1) {
+          // 이미 사용중인 닉네임입니다.
+          $ckDupResult.innerText = data.message;
+          $ckDupResult.style.display = "block";
+          $ckDupResult.classList.add("text-point");
+        } else if (data.result === 2) {
+          // 사용가능한 닉네임입니다.
+          $ckDupResult.innerText = data.message;
+          $ckDupResult.style.display = "block";
+          $ckDupResult.classList.remove("text-point");
+        }
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error);
+      });
+  });
 });
