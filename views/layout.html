@@ -70,6 +70,8 @@
                                 </div>
                             </div>
                             <div class="nav-utils px-4">
+
+                                {% if user === undefined %}
                                 <div class="notLoggedIn mob-only border-top p-3">
                                     <a href="/login">
                                         <div class="user-name fs-4 fw-bold">
@@ -79,7 +81,9 @@
                                             로그인하기<span class="material-symbols-outlined">navigate_next</span>
                                         </div>
                                     </a>
-                                </div> <!-- Component for user not logged in  -->
+                                </div>
+                                {% endif %}
+                                {% if user %}
                                 <div class="loggedIn bg-primary p-3 rounded text-white">
                                     <div class="user-name fs-4 fw-bold mb-3 d-flex align-items-center justify-content-between">
                                         <span class="name">사용자1</span>
@@ -103,13 +107,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> <!-- Component for user logged in -->
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="content bg-white p-4 p-md-3">
                                 <div class="gnb d-flex flex-column">
                                     <!-- <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0"><a class="activable" href="#">수비학이란?</a></div> -->
                                     <!-- 수비학 소개 페이지 보류 (컨텐츠 기획 후 추후 삽입 예정) -->
+                                    {% if user %}
                                     <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/mypage">마이페이지</a></div>
+                                    {% endif %}
                                     <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/howToUse">이용방법 안내</a></div>
                                     <!-- <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/notice">공지사항</a></div> -->
                                     <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/recruit">상담사 등록</a></div>
