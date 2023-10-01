@@ -2,8 +2,8 @@ const axios = require("axios");
 
 const counselor = {
   // 1. 상담사 목록
-  async getCounselorList(state, accessToken) {
-    console.log("getCounselorList(state)", state);
+  async getCounselorList(params) {
+    console.log("getCounselorList(params)");
 
     try {
       // API URL
@@ -14,13 +14,12 @@ const counselor = {
         baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
-          authorization: accessToken,
-          // authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiSldUIiwiaWQiOiI0OTYyODViYzY5NGYwOGY3ODgzNzA3MDBjYWMwOGZjMCIsImlhdCI6MTY5MzgzNzQyNSwiZXhwIjoxNzAyNDc3NDI1LCJpc3MiOiJtYWdpY251bWJlciJ9.WPYKbug1hfP4TEVYGzapCpSpe1Z65ytZgMghQlegCYE",
+          authorization: "",
         }, // 헤더 설정
       });
 
       // GET 요청 보내기
-      const response = await axiosInstance.get(apiUrl);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;

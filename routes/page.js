@@ -10,10 +10,12 @@ const host = "http://api.magicnumber.co.kr";
 
 router.get("/", async (req, res, next) => {
   try {
-    const accessToken = req.user ? req.user.accessToken : "";
-    const state = req.query.state;
-    const responseData = await counselor.getCounselorList(state, accessToken);
+    const params = {
+      page: 1,
+    };
+    const responseData = await counselor.getCounselorList(params);
 
+    const state = req.query.state;
     let counselorList = [];
     if (responseData.code === 200 && responseData.status === "success") {
       counselorList = responseData.result;
