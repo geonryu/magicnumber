@@ -150,7 +150,10 @@ router.get("/forgotPwResult", async (req, res, next) => {
 router.get("/counselorInfoProfile", async (req, res, next) => {
   try {
     const csrid = req.query.csrid;
-    const counselorInfo = await counselor.getCounselor(csrid);
+    const params = {
+      csrid: csrid,
+    };
+    const counselorInfo = await counselor.getCounselor(params);
 
     res.render("counselor-info-profile", {
       title: "매직넘버:상담사정보",
@@ -167,7 +170,10 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
 router.get("/counselorInfoReview", async (req, res, next) => {
   try {
     const csrid = req.query.csrid;
-    const counselorInfo = await counselor.getCounselor(csrid);
+    const params = {
+      csrid: csrid,
+    };
+    const counselorInfo = await counselor.getCounselor(params);
     const reviewList = await counselor.getReviewList(csrid);
 
     res.render("counselor-info-review", {
