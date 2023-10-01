@@ -10,10 +10,12 @@ const host = "http://api.magicnumber.co.kr";
 
 router.get("/", async (req, res, next) => {
   try {
-    const accessToken = req.user ? req.user.accessToken : "";
-    const state = req.query.state;
-    const responseData = await counselor.getCounselorList(state, accessToken);
+    const params = {
+      page: 1,
+    };
+    const responseData = await counselor.getCounselorList(params);
 
+    const state = req.query.state;
     let counselorList = [];
     if (responseData.code === 200 && responseData.status === "success") {
       counselorList = responseData.result;
@@ -69,6 +71,47 @@ router.get("/join", async (req, res, next) => {
   });
 }); //회원가입라우터
 
+router.post("/join", async (req, res, next) => {
+  try {
+    const params = {
+      email: "abcd@magicnumber.co.kr",
+      password: "5555",
+      check_passowrd: "5555",
+      nick_name: "김길동닉네임",
+      sns_type: "1",
+      user_status: "2",
+      name: "김길동",
+      birth: "20010101",
+      gender: "1",
+      phone_num: "01012345678",
+      terms_of_service: "1",
+      privacy: "1",
+      advertisement: "1",
+    };
+
+    const responseData = await auth.signUp(params);
+
+    let counselorList = [];
+    if (responseData.code === 200 && responseData.status === "success") {
+      counselorList = responseData.result;
+      if (state) {
+        counselorList = counselorList.filter((item) => item.state == state);
+      }
+    }
+
+    res.render("index", {
+      title: "매직넘버",
+      user: req.user,
+      host: host,
+      counselorList: counselorList,
+      state: state,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); //회원가입 처리
+
 router.get("/forgotId", async (req, res, next) => {
   res.render("forgotId", {
     title: "매직넘버:아이디 찾기",
@@ -107,7 +150,10 @@ router.get("/forgotPwResult", async (req, res, next) => {
 router.get("/counselorInfoProfile", async (req, res, next) => {
   try {
     const csrid = req.query.csrid;
-    const counselorInfo = await counselor.getCounselor(csrid);
+    const params = {
+      csrid: csrid,
+    };
+    const counselorInfo = await counselor.getCounselor(params);
 
     res.render("counselor-info-profile", {
       title: "매직넘버:상담사정보",
@@ -124,7 +170,10 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
 router.get("/counselorInfoReview", async (req, res, next) => {
   try {
     const csrid = req.query.csrid;
-    const counselorInfo = await counselor.getCounselor(csrid);
+    const params = {
+      csrid: csrid,
+    };
+    const counselorInfo = await counselor.getCounselor(params);
     const reviewList = await counselor.getReviewList(csrid);
 
     res.render("counselor-info-review", {
