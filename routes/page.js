@@ -1,6 +1,7 @@
 const express = require("express");
 const counselor = require("../middleware/counselor.js");
 const auth = require("../middleware/auth.js");
+const user = require("../middleware/user.js");
 const passport = require("passport");
 
 const router = express.Router();
@@ -13,7 +14,7 @@ router.get("/", async (req, res, next) => {
     const params = {
       page: 1,
     };
-    const responseData = await counselor.getCounselorList(params);
+    const responseData = await counselor.getCounselor(params);
 
     const state = req.query.state;
     let counselorList = [];
@@ -72,45 +73,69 @@ router.get("/join", async (req, res, next) => {
 }); //회원가입라우터
 
 router.post("/join", async (req, res, next) => {
+  console.log("req.body======================================");
+  console.log(req.body);
   try {
     const params = {
-      email: "abcd@magicnumber.co.kr",
-      password: "5555",
-      check_passowrd: "5555",
-      nick_name: "김길동닉네임",
-      sns_type: "1",
-      user_status: "2",
-      name: "김길동",
-      birth: "20010101",
-      gender: "1",
-      phone_num: "01012345678",
-      terms_of_service: "1",
-      privacy: "1",
-      advertisement: "1",
+      // email: "abcd@magicnumber.co.kr",
+      // password: "5555",
+      // check_password: "5555",
+      // nick_name: "김길동닉네임",
+      // sns_type: "1",
+      // user_status: "2",
+      // name: "김길동",
+      // birth: "20010101",
+      // gender: "1",
+      // phone_num: "01012345678",
+      // terms_of_service: "1",
+      // privacy: "1",
+      // advertisement: "1",
+      email: req.body.email,
+      password: req.body.password,
+      check_password: req.body.check_password,
+      nick_name: req.body.nick_name,
+      sns_type: req.body.sns_type,
+      user_status: req.body.user_status,
+      name: req.body.name,
+      birth: req.body.birth,
+      gender: req.body.gender,
+      phone_num: req.body.phone_num,
+      terms_of_service: req.body.terms_of_service,
+      privacy: req.body.privacy,
+      advertisement: req.body.advertisement,
     };
+    console.log("params======================================");
+    console.log(params);
 
-    const responseData = await auth.signUp(params);
+    const responseData = await user.signUp(params);
+    console.log("responseData: ", responseData);
 
-    let counselorList = [];
     if (responseData.code === 200 && responseData.status === "success") {
-      counselorList = responseData.result;
-      if (state) {
-        counselorList = counselorList.filter((item) => item.state == state);
-      }
+      res.redirect("/");
+    } else {
+      res.render("join", {
+        title: "매직넘버:회원가입",
+        user: req.user,
+        message: responseData.message,
+      });
     }
-
-    res.render("index", {
-      title: "매직넘버",
-      user: req.user,
-      host: host,
-      counselorList: counselorList,
-      state: state,
-    });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); //회원가입 처리
+
+router.post("/checkNickname", async (req, res, next) => {
+  const params = req.body;
+  const responseData = await user.checkNickname(params);
+  console.log("[page.js] responseData: ", responseData);
+  try {
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+});
 
 router.get("/forgotId", async (req, res, next) => {
   res.render("forgotId", {
@@ -153,7 +178,11 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
     const params = {
       csrid: csrid,
     };
-    const counselorInfo = await counselor.getCounselor(params);
+    const responseData = await counselor.getCounselor(params);
+    let counselorInfo = {};
+    if (responseData.code === 200 && responseData.status === "success") {
+      counselorInfo = responseData.result[0];
+    }
 
     res.render("counselor-info-profile", {
       title: "매직넘버:상담사정보",
@@ -173,8 +202,24 @@ router.get("/counselorInfoReview", async (req, res, next) => {
     const params = {
       csrid: csrid,
     };
-    const counselorInfo = await counselor.getCounselor(params);
-    const reviewList = await counselor.getReviewList(csrid);
+    const responseData = await counselor.getCounselor(params);
+    let counselorInfo = {};
+    if (responseData.code === 200 && responseData.status === "success") {
+      counselorInfo = responseData.result[0];
+    }
+
+    const params2 = {
+      csrid: csrid,
+      page: 1,
+    };
+
+    const accessToken = req.user ? req.user.accessToken : "";
+    const responseData2 = await counselor.getCounselorReview(params2, accessToken);
+    let reviewList = {};
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      reviewList = responseData2.result;
+    }
+    console.log("reviewList", reviewList);
 
     res.render("counselor-info-review", {
       title: "매직넘버:상담사정보",
