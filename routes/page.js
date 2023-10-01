@@ -1,6 +1,7 @@
 const express = require("express");
 const counselor = require("../middleware/counselor.js");
 const auth = require("../middleware/auth.js");
+const user = require("../middleware/user.js");
 const passport = require("passport");
 
 const router = express.Router();
@@ -13,7 +14,7 @@ router.get("/", async (req, res, next) => {
     const params = {
       page: 1,
     };
-    const responseData = await counselor.getCounselorList(params);
+    const responseData = await counselor.getCounselor(params);
 
     const state = req.query.state;
     let counselorList = [];
@@ -89,7 +90,7 @@ router.post("/join", async (req, res, next) => {
       advertisement: "1",
     };
 
-    const responseData = await auth.signUp(params);
+    const responseData = await user.signUp(params);
 
     let counselorList = [];
     if (responseData.code === 200 && responseData.status === "success") {
@@ -153,7 +154,11 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
     const params = {
       csrid: csrid,
     };
-    const counselorInfo = await counselor.getCounselor(params);
+    const responseData = await counselor.getCounselor(params);
+    let counselorInfo = {};
+    if (responseData.code === 200 && responseData.status === "success") {
+      counselorInfo = responseData.result[0];
+    }
 
     res.render("counselor-info-profile", {
       title: "매직넘버:상담사정보",
@@ -173,8 +178,24 @@ router.get("/counselorInfoReview", async (req, res, next) => {
     const params = {
       csrid: csrid,
     };
-    const counselorInfo = await counselor.getCounselor(params);
-    const reviewList = await counselor.getReviewList(csrid);
+    const responseData = await counselor.getCounselor(params);
+    let counselorInfo = {};
+    if (responseData.code === 200 && responseData.status === "success") {
+      counselorInfo = responseData.result[0];
+    }
+
+    const params2 = {
+      csrid: csrid,
+      page: 1,
+    };
+
+    const accessToken = req.user ? req.user.accessToken : "";
+    const responseData2 = await counselor.getCounselorReview(params2, accessToken);
+    let reviewList = {};
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      reviewList = responseData2.result;
+    }
+    console.log("reviewList", reviewList);
 
     res.render("counselor-info-review", {
       title: "매직넘버:상담사정보",
