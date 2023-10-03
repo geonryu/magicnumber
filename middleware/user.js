@@ -107,7 +107,31 @@ const user = {
     try {
       // API URL
       const apiUrl = "/api/auth/find/pw";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: "",
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.post(apiUrl, params);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 1.5 [PUT] 비밀번호 찾기 이후, 비밀번호 변경
@@ -116,7 +140,31 @@ const user = {
     try {
       // API URL
       const apiUrl = "/api/auth/find/pw/change";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: "",
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.put(apiUrl, params);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 1.6 [POST] 이메일 인증 요청

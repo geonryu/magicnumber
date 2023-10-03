@@ -29,14 +29,11 @@ router.get("/", async (req, res, next) => {
     }
 
     const params2 = {};
-
     const responseData2 = await etc.getBanner(params2);
-    console.log("responseData2", responseData2);
 
     if (responseData2.code === 200 && responseData2.status === "success") {
       bannerList = responseData2.result;
     }
-    console.log("bannerList", bannerList);
 
     res.render("index", {
       title: "매직넘버",
@@ -54,12 +51,12 @@ router.get("/", async (req, res, next) => {
 
 router.get("/login", async (req, res, next) => {
   if (req.isAuthenticated()) {
-    console.log("logged !!");
     res.redirect("/");
   } else {
     res.render("login", {
       title: "매직넘버:로그인",
       user: req.user,
+      msg: req.query.msg,
     });
   }
 }); //로그인 라우터
@@ -124,9 +121,13 @@ router.post("/join", async (req, res, next) => {
 
 router.post("/checkNickname", async (req, res, next) => {
   try {
-    const params = req.body;
+    const params = {
+      nick_name: req.body.nick_name
+    };
+
     const responseData = await user.checkNickname(params);
     console.log("responseData: ", responseData);
+
     res.status(200).json(responseData);
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -172,13 +173,6 @@ router.get("/forgotIdResult", async (req, res, next) => {
   });
 }); //아이디 찾기 결과 라우터
 
-router.get("/forgotId", async (req, res, next) => {
-  res.render("forgotId", {
-    title: "매직넘버:아이디 찾기",
-    user: req.user,
-  });
-}); //아이디 찾기 결과 라우터
-
 router.get("/forgotPw", async (req, res, next) => {
   res.render("forgotPw", {
     title: "매직넘버:비밀번호 찾기",
@@ -186,12 +180,59 @@ router.get("/forgotPw", async (req, res, next) => {
   });
 }); //비밀번호 찾기 라우터
 
+router.post("/forgotPw", async (req, res, next) => {
+  try {
+    const params = {
+      email: req.body.email,
+      name: req.body.name,
+      birth: req.body.birth,
+      phone_num: req.body.phone_num,
+    };
+
+    const responseData = await user.findPw(params);
+    console.log("responseData: ", responseData);
+
+    if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
+      res.redirect(`/forgotPwResult?temp_token=${responseData.result}`);
+    }else{
+      res.redirect("/forgotPw");
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); //비밀번호 찾기 처리
+
 router.get("/forgotPwResult", async (req, res, next) => {
+  const temp_token = req.query.temp_token;
   res.render("forgotPwResult", {
     title: "매직넘버:비밀번호 찾기",
     user: req.user,
+    temp_token: temp_token,
   });
 }); //비밀번호 찾기 결과 라우터
+
+router.post("/forgotPwResult", async (req, res, next) => {
+  try {
+    const params = {
+      temp_token: req.body.temp_token,
+      password: req.body.password,
+      confirm_password: req.body.confirm_password,
+    };
+
+    const responseData = await user.changeFindPw(params);
+    console.log("responseData: ", responseData);
+
+    if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
+      res.redirect(`/login?msg=${responseData.result.msg}`);
+    }else{
+      res.redirect("/forgotPwResult");
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); //비밀번호 찾기 이후 비밀번호 변경 처리
 
 router.get("/counselorInfoProfile", async (req, res, next) => {
   try {
@@ -240,7 +281,6 @@ router.get("/counselorInfoReview", async (req, res, next) => {
     if (responseData2.code === 200 && responseData2.status === "success") {
       reviewList = responseData2.result;
     }
-    console.log("reviewList", reviewList);
 
     res.render("counselor-info-review", {
       title: "매직넘버:상담사정보",
