@@ -1,6 +1,9 @@
 const express = require("express");
-const counselor = require("../middleware/counselor.js");
 const auth = require("../middleware/auth.js");
+const counselor = require("../middleware/counselor.js");
+const etc = require("../middleware/etc.js");
+const mypage = require("../middleware/mypage.js");
+const payment = require("../middleware/payment.js");
 const user = require("../middleware/user.js");
 const passport = require("passport");
 
@@ -25,11 +28,22 @@ router.get("/", async (req, res, next) => {
       }
     }
 
+    const params2 = {};
+
+    const responseData2 = await etc.getBanner(params2);
+    console.log("responseData2", responseData2);
+
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      bannerList = responseData2.result;
+    }
+    console.log("bannerList", bannerList);
+
     res.render("index", {
       title: "매직넘버",
       user: req.user,
       host: host,
       counselorList: counselorList,
+      bannerList: bannerList,
       state: state,
     });
   } catch (error) {
