@@ -73,7 +73,7 @@ const user = {
     console.log("findId(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/find/id";
+      const apiUrl = "/api/auth/find/id";
     } catch (error) {}
   },
 
@@ -82,7 +82,7 @@ const user = {
     console.log("findPw(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/find/pw";
+      const apiUrl = "/api/auth/find/pw";
     } catch (error) {}
   },
 
@@ -91,7 +91,7 @@ const user = {
     console.log("changeFindPw(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/find/pw/change";
+      const apiUrl = "/api/auth/find/pw/change";
     } catch (error) {}
   },
 
@@ -100,7 +100,7 @@ const user = {
     console.log("reqEmailAuth(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/email/req";
+      const apiUrl = "/api/auth/email/req";
     } catch (error) {}
   },
 
@@ -109,7 +109,7 @@ const user = {
     console.log("certEmailAuth(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/email/cert";
+      const apiUrl = "/api/auth/email/cert";
     } catch (error) {}
   },
 };

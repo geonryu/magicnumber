@@ -98,7 +98,7 @@ const auth = {
     console.log("logout(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/logout/";
+      const apiUrl = "/api/auth/logout/";
     } catch (error) {}
   },
 
@@ -107,7 +107,7 @@ const auth = {
     console.log("reissuance(params)", params);
     try {
       // API URL
-      const apiurl = "/api/auth/reissuance";
+      const apiUrl = "/api/auth/reissuance";
     } catch (error) {}
   },
 
