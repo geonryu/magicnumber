@@ -7,7 +7,7 @@ const payment = {
     console.log("getMyPoint(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/product";
+      const apiUrl = "/api/v1/counselor/product";
     } catch (error) {}
   },
 
@@ -16,7 +16,7 @@ const payment = {
     console.log("confirmPassword(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/payment/preprocess";
+      const apiUrl = "/api/v1/counselor/payment/preprocess";
     } catch (error) {}
   },
 
@@ -25,7 +25,7 @@ const payment = {
     console.log("getMypage(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/payment/history";
+      const apiUrl = "/api/v1/counselor/payment/history";
     } catch (error) {}
   },
 };

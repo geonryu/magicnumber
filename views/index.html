@@ -1,18 +1,22 @@
-{% extends 'layout.html' %}
-
-{% block content %}
+{% extends 'layout.html' %} {% block content %}
 <div class="main-banner bg-white">
+    <!-- <div class="container">
+        {% for item in bannerList %}
+        <a href="{{item.link}}">
+            <img src="{{host}}{{item.banner_path}}" alt="" />
+        </a>
+        {% endfor %}
+    </div> -->
     <div class="container">
         <a href="#">
-            <img src="images/mainBanner.jpg" alt="">
+            <img src="images/mainBanner.jpg" alt="" />
         </a>
     </div>
 </div>
 <div class="lnb bg-white">
     <div class="container">
         <div class="row">
-            <div class="col col-6 text-center py-2"><a href="/" class="h-100 w-100 d-block text-darkGray {% if state != 'IDLE' %} active {% endif %}"
-                data-index="0">전체보기</a></div>
+            <div class="col col-6 text-center py-2"><a href="/" class="h-100 w-100 d-block text-darkGray {% if state != 'IDLE' %} active {% endif %}" data-index="0">전체보기</a></div>
             <div class="col col-6 text-center py-2"><a href="/?state=IDLE" class="h-100 w-100 d-block text-darkGray {% if state == 'IDLE' %} active {% endif %}" data-index="1">상담가능</a></div>
         </div>
     </div>
@@ -39,16 +43,16 @@
                         <div class="intro row p-2">
                             <div class="pic col col-5">
                                 <div class="profile-img">
-                                    <img src="{{host}}{{item.profile_path}}" alt="">
+                                    <img src="{{host}}{{item.profile_path}}" alt="" />
                                 </div>
                             </div>
                             <div class="txt col col-7">
                                 {% if item.state == 'IDLE' %}
-                                    <div id="cnsStatus" class="status badge idle mb-1">상담가능</div>
+                                <div id="cnsStatus" class="status badge idle mb-1">상담가능</div>
                                 {% elif item.state == 'ABSE' %}
-                                    <div id="cnsStatus" class="status badge abse mb-1">부재중</div>
+                                <div id="cnsStatus" class="status badge abse mb-1">부재중</div>
                                 {% elif item.state == 'CONN' %}
-                                    <div id="cnsStatus" class="status badge conn mb-1">상담중</div>
+                                <div id="cnsStatus" class="status badge conn mb-1">상담중</div>
                                 {% endif %}
                                 <div class="name fw-bold">{{item.nicknm}} | <span class="cns-num text-secondary">{{item.csrid}}</span></div>
                                 <div class="msg fs-6 w-100">{{item.profile_title}}</div>
@@ -57,18 +61,19 @@
                         <div class="info p-2">
                             <div class="border-top d-flex">
                                 <div class="review d-flex align-items-center">
-                                    <div class="ico"><img src="images/review.png" alt=""></div>
+                                    <div class="ico"><img src="images/review.png" alt="" /></div>
                                     <div class="ms-1">후기<span class="review-count text-point">{{item.review_count}}</span></div>
                                 </div>
                                 <div class="coin d-flex align-items-center ms-auto">
-                                    <div class="ico me-1"><img src="images/coin.png" alt=""></div>
+                                    <div class="ico me-1"><img src="images/coin.png" alt="" /></div>
                                     <div class="price">{{item.decamt}}</div>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
-            </div><!--profile ui card-->
+            </div>
+            <!--profile ui card-->
             {% endfor %}
         </div>
     </div>

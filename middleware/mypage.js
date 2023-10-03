@@ -7,7 +7,7 @@ const mypage = {
     console.log("getMyPoint(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/user/mypoint";
+      const apiUrl = "/api/v1/user/mypoint";
     } catch (error) {}
   },
 
@@ -16,7 +16,7 @@ const mypage = {
     console.log("confirmPassword(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/user/mypage/confirm/password";
+      const apiUrl = "/api/v1/user/mypage/confirm/password";
     } catch (error) {}
   },
 
@@ -25,7 +25,7 @@ const mypage = {
     console.log("getMypage(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/user/mypage";
+      const apiUrl = "/api/v1/user/mypage";
     } catch (error) {}
   },
 
@@ -34,7 +34,7 @@ const mypage = {
     console.log("changeUserInfo(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/user/mypage";
+      const apiUrl = "/api/v1/user/mypage";
     } catch (error) {}
   },
 
@@ -43,7 +43,7 @@ const mypage = {
     console.log("changePassword(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/user/mypage/change/password";
+      const apiUrl = "/api/v1/user/mypage/change/password";
     } catch (error) {}
   },
 
@@ -52,7 +52,7 @@ const mypage = {
     console.log("withDraw(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/config/withdraw";
+      const apiUrl = "/api/v1/config/withdraw";
     } catch (error) {}
   },
 };

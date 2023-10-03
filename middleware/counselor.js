@@ -77,7 +77,7 @@ const counselor = {
     console.log("sendCallWithoutComment(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor";
+      const apiUrl = "/api/v1/counselor";
     } catch (error) {}
   },
 
@@ -86,7 +86,7 @@ const counselor = {
     console.log("getMyCounselingHistory(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/history";
+      const apiUrl = "/api/v1/counselor/history";
     } catch (error) {}
   },
 
@@ -95,7 +95,7 @@ const counselor = {
     console.log("getMyReview(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/review";
+      const apiUrl = "/api/v1/counselor/review";
     } catch (error) {}
   },
 
@@ -104,7 +104,7 @@ const counselor = {
     console.log("createReview(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/review";
+      const apiUrl = "/api/v1/counselor/review";
     } catch (error) {}
   },
 
@@ -113,7 +113,7 @@ const counselor = {
     console.log("updateReview(params)", params);
     try {
       // API URL
-      const apiurl = "/api/v1/counselor/review";
+      const apiUrl = "/api/v1/counselor/review";
     } catch (error) {}
   },
 };
