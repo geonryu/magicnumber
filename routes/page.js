@@ -87,23 +87,8 @@ router.get("/join", async (req, res, next) => {
 }); //회원가입라우터
 
 router.post("/join", async (req, res, next) => {
-  console.log("req.body======================================");
-  console.log(req.body);
   try {
     const params = {
-      // email: "abcd@magicnumber.co.kr",
-      // password: "5555",
-      // check_password: "5555",
-      // nick_name: "김길동닉네임",
-      // sns_type: "1",
-      // user_status: "2",
-      // name: "김길동",
-      // birth: "20010101",
-      // gender: "1",
-      // phone_num: "01012345678",
-      // terms_of_service: "1",
-      // privacy: "1",
-      // advertisement: "1",
       email: req.body.email,
       password: req.body.password,
       check_password: req.body.check_password,
@@ -118,8 +103,6 @@ router.post("/join", async (req, res, next) => {
       privacy: req.body.privacy,
       advertisement: req.body.advertisement,
     };
-    console.log("params======================================");
-    console.log(params);
 
     const responseData = await user.signUp(params);
     console.log("responseData: ", responseData);
@@ -140,10 +123,10 @@ router.post("/join", async (req, res, next) => {
 }); //회원가입 처리
 
 router.post("/checkNickname", async (req, res, next) => {
-  const params = req.body;
-  const responseData = await user.checkNickname(params);
-  console.log("[page.js] responseData: ", responseData);
   try {
+    const params = req.body;
+    const responseData = await user.checkNickname(params);
+    console.log("responseData: ", responseData);
     res.status(200).json(responseData);
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -158,10 +141,34 @@ router.get("/forgotId", async (req, res, next) => {
   });
 }); //아이디 찾기 라우터
 
+router.post("/forgotId", async (req, res, next) => {
+  try {
+    const params = {
+      name: req.body.name,
+      birth: req.body.birth,
+      phone_num: req.body.phone_num,
+    };
+
+    const responseData = await user.findId(params);
+    console.log("responseData: ", responseData);
+
+    if (responseData.code === 200 && responseData.status === "success" && responseData.result.email) {
+      res.redirect(`/forgotIdResult?email=${responseData.result.email}`);
+    }else{
+      res.redirect("/forgotId");
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); //아이디 찾기 처리
+
 router.get("/forgotIdResult", async (req, res, next) => {
+  const email = req.query.email;
   res.render("forgotIdResult", {
     title: "매직넘버:아이디 찾기",
     user: req.user,
+    email: email,
   });
 }); //아이디 찾기 결과 라우터
 
