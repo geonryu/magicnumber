@@ -415,7 +415,32 @@ router.get("/mypage-history", async (req, res, next) => {
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
-}); // 마이페이지-찜목록 라우터
+}); // 마이페이지-상담내역 라우터
+
+router.post("/review", async (req, res, next) => {
+  try {
+    const accessToken = req.user ? req.user.accessToken : "";
+
+    const params = {
+      counsel_num: req.body.counsel_num,
+      contents: req.body.contents,
+      score: req.body.score,
+    };
+    console.log("params: ", params);
+
+    const responseData = await counselor.createReview(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    // if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
+    //   res.redirect(`/forgotPwResult?temp_token=${responseData.result}`);
+    // }else{
+    //   res.redirect("/forgotPw");
+    // }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 비밀번호 찾기 처리
 
 router.get("/charge", async (req, res, next) => {
   res.render("charge", {
