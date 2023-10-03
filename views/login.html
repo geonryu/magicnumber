@@ -9,7 +9,7 @@
                         <input
                             class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100"
                             name="userId" id="userId" type="text" placeholder="아이디(이메일)을 입력하세요."
-                            value="abcd@magicnumber.co.kr" />
+                            value="test@magicnumber.co.kr" />
                     </div>
                     <div class="user-pw mb-3">
                         <input
@@ -49,4 +49,11 @@
         </div>
     </div>
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href="/login"
+</script>
+{% endif %}
 {% endblock %}
+
