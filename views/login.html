@@ -1,59 +1,52 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="login py-5">
-  <div class="container">
-    <div class="wrapper col-12 col-lg-6 mx-lg-auto">
-      <h2 class="login-logo border-bottom text-center pb-3 mb-3 fw-bold">로그인</h2>
-      <div class="email-login mb-3">
-        <form action="/login" method="post" id="loginForm">
-          <div class="user-id mb-3">
-            <input
-              class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100"
-              name="userId"
-              id="userId"
-              type="text"
-              placeholder="아이디(이메일)을 입력하세요."
-              value="abcd@magicnumber.co.kr"
-            />
-          </div>
-          <div class="user-pw mb-3">
-            <input
-              class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100"
-              name="userPw"
-              id="userPw"
-              type="password"
-              placeholder="비밀번호를 입력하세요."
-              value="5555"
-            />
-          </div>
-          {% if messages.error %}
-          <div class="error-message mb-3" style="color: red">{{ messages.error }}</div>
-          {% endif %}
-          <div class="btn-submit"><button class="px-4 py-3 d-block w-100 bg-primary text-white rounded" id="loginSubmit" type="submit">로그인</button></div>
-        </form>
-      </div>
-      <div class="social-login py-3">
-        <h3 class="fs-5 fw-bold text-center">다른 서비스 계정으로 간편 가입 또는 로그인</h3>
-        <div class="social-list d-flex justify-content-center align-items-center mt-3">
-          <div class="kakao mx-3">
-            <a href="#"><img src="images/social-login-kakao.png" alt="" /></a>
-          </div>
-          <div class="fb mx-3">
-            <a href="#"><img src="images/social-login-fb.png" alt="" /></a>
-          </div>
-          <div class="google mx-3">
-            <a href="#"><img src="images/social-login-google.png" alt="" /></a>
-          </div>
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto">
+            <h2 class="login-logo border-bottom text-center pb-3 mb-3 fw-bold">로그인</h2>
+            <div class="email-login mb-3">
+                <form action="/login" method="post" id="loginForm">
+                    <div class="user-id mb-3">
+                        <input
+                            class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100"
+                            name="userId" id="userId" type="text" placeholder="아이디(이메일)을 입력하세요."
+                            value="abcd@magicnumber.co.kr" />
+                    </div>
+                    <div class="user-pw mb-3">
+                        <input
+                            class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100"
+                            name="userPw" id="userPw" type="password" placeholder="비밀번호를 입력하세요." value="5555" />
+                    </div>
+                    {% if messages.error %}
+                    <div class="error-message mb-3" style="color: red">{{ messages.error }}</div>
+                    {% endif %}
+                    <div class="btn-submit"><button class="px-4 py-3 d-block w-100 bg-primary text-white rounded"
+                            id="loginSubmit" type="submit">로그인</button></div>
+                </form>
+            </div>
+            <div class="social-login py-3">
+                <h3 class="fs-5 fw-bold text-center">다른 서비스 계정으로 간편 가입 또는 로그인</h3>
+                <div class="social-list d-flex justify-content-center align-items-center mt-3">
+                    <div class="kakao mx-3">
+                        <a href="#"><img src="images/social-login-kakao.png" alt="" /></a>
+                    </div>
+                    <div class="fb mx-3">
+                        <a href="#"><img src="images/social-login-naver.png" alt="" /></a>
+                    </div>
+                    <div class="google mx-3">
+                        <a href="#"><img src="images/social-login-google.png" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="join py-3">
+                <div class="divider divider-text text-secondary mb-3"><span class="col-2 text-center">또는</span></div>
+                <div class="btn-join"><a href="/join"
+                        class="btn btn-lg border border-primary text-primary fs-6 d-block w-100">이메일로 회원가입</a></div>
+            </div>
+            <div class="forgot d-flex justify-content-center">
+                <div class="forgot-id fs-6 mx-3"><a href="/forgotId">아이디 (이메일) 찾기</a></div>
+                <div class="forgot-pw fs-6 mx-3"><a href="/forgotPw">비밀번호 찾기</a></div>
+            </div>
         </div>
-      </div>
-      <div class="join py-3">
-        <div class="divider divider-text text-secondary mb-3"><span class="col-2 text-center">또는</span></div>
-        <div class="btn-join"><a href="/join" class="btn btn-lg border border-primary text-primary fs-6 d-block w-100">이메일로 회원가입</a></div>
-      </div>
-      <div class="forgot d-flex justify-content-center">
-        <div class="forgot-id fs-6 mx-3"><a href="/forgotId">아이디 (이메일) 찾기</a></div>
-        <div class="forgot-pw fs-6 mx-3"><a href="/forgotPw">비밀번호 찾기</a></div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock %}

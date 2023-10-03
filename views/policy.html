@@ -1,0 +1,15 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="login py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto">
+            {% block policy %}
+                <!-- 
+                    새 창으로 띄워주세요.
+                    이용약관 -> termsOfUse.html
+                    개인정보처리방침 -> privatePolicy.html
+                 -->
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
