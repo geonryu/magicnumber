@@ -8,7 +8,7 @@
                 <div class="find-pw-tab col-6 text-center fw-bold"><a href="/forgotPw" class="d-block pb-3 mb-3 active">비밀번호 찾기</a></div>
             </div>
             <div class="find-user-pw mb-3">
-                <form action="/forgotPw" method="post" id="findPw">
+                <form action="forgotPw" method="post" id="findPw">
                     <div class="user-id mb-3">
                         <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" name="email" id="findPwId" type="text" placeholder="매직넘버 이메일 아이디" value="abcd8@gmail.com">
                     </div>
@@ -43,7 +43,7 @@
         const $userSocialNum = document.getElementById("findPwNum");
         // const $findPwCarrier = document.getElementById("findPwCarrier");
         const $userNum = document.getElementById("findPwTel");
-        
+
         const checkTyped = () => {
             const userName = $userName.value;
             const userNum = $userNum.value;
@@ -52,7 +52,7 @@
             // const findPwCarrier = $findPwCarrier.value;
 
             const userSocialNum = $userSocialNum.value;
-            const findBtn = document.getElementById("findPwBtn"); 
+            const findBtn = document.getElementById("findPwBtn");
 
             const re = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; //email 유효성검사
 
@@ -66,7 +66,7 @@
         }
 
         $userId.addEventListener("keyup", checkTyped);
-        $userName.addEventListener("keyup", checkTyped); 
+        $userName.addEventListener("keyup", checkTyped);
         $userSocialNum.addEventListener("keyup", checkTyped);
         // $findPwCarrier.addEventListener("change", checkTyped);
         $userNum.addEventListener("keyup", (e) => {

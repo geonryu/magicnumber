@@ -14,51 +14,75 @@
         <a href="#" class="fs-6 d-flex align-items-center text-txtDisabled">회원탈퇴<span class="material-symbols-outlined">navigate_next</span></a>
     </h3>
     <div class="user-information">
-        <form id="userInfoForm" action="">
+        <form action="mypage-info" method="post" id="userInfoForm">
             <div class="user-id mb-3">
                 <label for="userId" class="mb-1">아이디(이메일)</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" id="userId" value="magicNumb@gmail.com" disabled>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="email" id="userId" value="{{mypageInfo.email}}" disabled>
             </div>
             <div class="user-pw mb-3">
                 <label class="mb-1" for="userPw">비밀번호</label>
                 <div class="row">
-                    <div class="output col-10"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="userPw" value="00000000" maxlength="20" readonly></div>
+                    <div class="output col-10"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" name="password" id="userPw" maxlength="20" readonly></div>
                     <div class="change-pw col-2"><a href="/pwChange" class="d-block w-100 px-2 py-3 text-center text-white bg-primary fw-bold rounded">변경</a></div>
                 </div>
             </div>
             <div class="user-name mb-3">
                 <label class="mb-1" for="userName">이름</label>
-                <input id="userName" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" value="김철수" disabled>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="name" id="userName" value="{{mypageInfo.name}}" disabled>
+            </div>
+            <div class="user-birth mb-3">
+                <label class="mb-1" for="birth">생년월일</label>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="birth" id="birth" value="{{mypageInfo.birth}}">
+            </div>
+            <div class="user-gender mb-3">
+                <label class="mb-1" for="gender">성별</label>
+                {% if mypageInfo.gender == 1 %}
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="gender" id="gender" value="남자" disabled>
+                {% endif %}
+                {% if mypageInfo.gender == 2 %}
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="gender" id="gender" value="여자" disabled>
+                {% endif %}
             </div>
             <div class="user-nick-name mb-3">
                 <label class="mb-1" for="userNickName">닉네임</label>
-                <input id="userNickName" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" value="사용자닉네임" disabled>
+                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="userNickName" value="{{mypageInfo.nick_name}}">
             </div>
             <div class="user-auth">
                 <label class="mb-1" for="userAuthTel">본인인증</label>
                 <div class="row">
-                    <div class="output col-9"><input id="userAuthTel" class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" maxlength="13" value="010-1234-1234" required></div>
-                    <div class="status col-3"><input id="verifyCall" class="sms px-2 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" value="인증완료" disabled></div>
+                    <div class="output col-9"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" name="phone_num" id="userAuthTel" value="{{mypageInfo.phone_num}}" maxlength="13" required></div>
+                    <div class="status col-3"><input class="sms px-2 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" id="verifyCall" value="본인인증" disabled></div>
                 </div>
             </div>
-            <div class="policy">
+            <!-- mypageInfo 에 해당 값 없음 -->
+            <!-- <div class="policy">
                 <div class="label-policy pt-3 mb-1">약관 및 혜택 알림 동의</div>
                 <div class="allow-list rounded bg-white">
                     <div class="allow-service position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                        <input id="allowService" class="ck" type="checkbox" value="allowed-service" required checked>
+                        {% if user.terms_of_service == '1' %}
+                        <input class="ck" type="checkbox" name="terms_of_service" id="allowService" value="1" required disabled checked>
+                        {% endif %}
+                        {% if user.terms_of_service != '1' %}
+                        <input class="ck" type="checkbox" name="terms_of_service" id="allowService" value="1" required disabled>
+                        {% endif %}
                         <label class="label-for-ck w-80 h-100" for="allowService">이용약관(필수)</label>
                         <a href="#" class="d-flex">[보기]</a>
                     </div>
                     <div class="allow-priv position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                        <input id="allowPriv" class="ck" type="checkbox" value="allowed-private" required checked>
+                        {% if user.privacy == '1' %}
+                        <input class="ck" type="checkbox" name="privacy" id="allowPriv" value="1" required disabled checked>
+                        {% endif %}
+                        {% if user.privacy != '1' %}
+                        <input class="ck" type="checkbox" name="privacy" id="allowPriv" value="1" required disabled>
+                        {% endif %}
                         <label class="label-for-ck w-80 h-100" for="allowPriv">개인정보수집 및 이용동의(필수)</label>
                         <a href="#" class="d-flex">[보기]</a>
                     </div>
                     <div class="allow-opt position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                        <input id="allowOpt" class="ck" type="checkbox" value="allowed-optional">
+                        <input class="ck" type="checkbox" name="advertisement" id="allowOpt" value="1">
                         <label class="label-for-ck w-80 h-100" for="allowOpt">이벤트, 쿠폰 알림 메일 및 SNS 수신(선택)</label>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="btn-my-info">
                 <button class="px-4 py-3 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">정보 수정</button>
@@ -66,4 +90,10 @@
         </form>
     </div>
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href = location.pathname
+</script>
+{% endif %}
 {% endblock %}

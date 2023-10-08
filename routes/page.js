@@ -83,6 +83,7 @@ router.get("/join", async (req, res, next) => {
     title: "매직넘버:회원가입",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 회원가입라우터
 
@@ -145,6 +146,7 @@ router.get("/forgotId", async (req, res, next) => {
     title: "매직넘버:아이디 찾기",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 아이디 찾기 라우터
 
@@ -176,6 +178,7 @@ router.get("/forgotIdResult", async (req, res, next) => {
     title: "매직넘버:아이디 찾기",
     host: host,
     user: req.user,
+    msg: req.query.msg,
     email: email,
   });
 }); // 아이디 찾기 결과 라우터
@@ -185,6 +188,7 @@ router.get("/forgotPw", async (req, res, next) => {
     title: "매직넘버:비밀번호 찾기",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 비밀번호 찾기 라우터
 
@@ -217,6 +221,7 @@ router.get("/forgotPwResult", async (req, res, next) => {
     title: "매직넘버:비밀번호 찾기",
     host: host,
     user: req.user,
+    msg: req.query.msg,
     temp_token: temp_token,
   });
 }); // 비밀번호 찾기 결과 라우터
@@ -269,7 +274,12 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
 }); // 상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 프로필 라우터 & 프로필 랜딩 라우터
 
 router.get("/counselorInfoReview", async (req, res, next) => {
+  if(!req.user){
+    res.redirect("/");
+  }
+
   try {
+    const accessToken = req.user.accessToken;
     const csrid = req.query.csrid;
     const params = {
       csrid: csrid,
@@ -285,7 +295,6 @@ router.get("/counselorInfoReview", async (req, res, next) => {
       page: 1,
     };
 
-    const accessToken = req.user ? req.user.accessToken : "";
     const responseData2 = await counselor.getCounselorReview(params2, accessToken);
     let reviewList = {};
     if (responseData2.code === 200 && responseData2.status === "success") {
@@ -311,16 +320,21 @@ router.get("/counselorInfoQnA", async (req, res, next) => {
     title: "매직넘버:상담사정보",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 문의하기
 
 router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
+  if(!req.user){
+    res.redirect("/");
+  }
+
   try {
-    const accessToken = req.user ? req.user.accessToken : "";
+    const accessToken = req.user.accessToken;
     const params = {};
 
     const responseData = await mypage.getMypage(params, accessToken);
-    console.log("responseData: ", responseData)
+    // console.log("responseData: ", responseData)
 
     // 내 정보
     let mypageInfo = {};
@@ -370,12 +384,66 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
 }); // 마이페이지-기본정보 라우터
 
 router.get("/mypage-info", async (req, res, next) => {
-  res.render("mypage-user-info", {
-    title: "매직넘버:마이페이지",
-    host: host,
-    user: req.user,
-  });
+  if(!req.user){
+    res.redirect("/");
+  }
+
+  try {
+    const accessToken = req.user.accessToken;
+    const params = {};
+
+    const responseData = await mypage.getMypage(params, accessToken);
+    // console.log("responseData: ", responseData)
+
+    // 내 정보
+    let mypageInfo = {};
+    if (responseData.code === 200 && responseData.status === "success") {
+      mypageInfo = responseData.result;
+    }
+
+    res.render("mypage-user-info", {
+      title: "매직넘버:마이페이지",
+      host: host,
+      user: req.user,
+      msg: req.query.msg,
+      mypageInfo: mypageInfo,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
 }); // 마이페이지-회원정보 라우터
+
+router.post("/mypage-info", async (req, res, next) => {
+  if(!req.user){
+    res.redirect("/");
+  }
+
+  try {
+    const accessToken = req.user.accessToken;
+
+    const params = {
+      nick_name: req.body.nick_name,
+      birth: req.body.birth,
+    };
+
+    console.log("params: ", params);
+
+    const responseData = await mypage.changeUserInfo(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    if (responseData.code === 200 && responseData.status === "success") {
+      const msg = responseData.message;
+      res.redirect(`/mypage-info?msg=${msg}`);
+    }else{
+      const msg = responseData.message;
+      res.redirect(`/mypage-info?msg=${msg}`);
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 마이페이지-회원정보수정 처리
 
 router.get("/pwChange", async (req, res, next) => {
   res.render("pwChange", {
@@ -387,23 +455,32 @@ router.get("/pwChange", async (req, res, next) => {
 }); // 마이페이지-회원정보 - 비밀번호 변경 라우터
 
 router.post("/pwChange", async (req, res, next) => {
-  const accessToken = req.user ? req.user.accessToken : "";
+  if(!req.user){
+    res.redirect("/");
+  }
 
-  const params = {
-    password: req.body.password,
-    new_password: req.body.new_password,
-    confirm_new_password: req.body.confirm_new_password,
-  };
+  try {
+    const accessToken = req.user.accessToken;
 
-  const responseData = await mypage.changePassword(params, accessToken);
-  console.log("responseData: ", responseData);
+    const params = {
+      password: req.body.password,
+      new_password: req.body.new_password,
+      confirm_new_password: req.body.confirm_new_password,
+    };
 
-  if (responseData.code === 200 && responseData.status === "success") {
-    const msg = "비밀번호 변경이 완료되었습니다.";
-    res.redirect(`/mypage?msg=${msg}`);
-  }else{
-    const msg = responseData.message;
-    res.redirect(`/pwChange?msg=${msg}`);
+    const responseData = await mypage.changePassword(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    if (responseData.code === 200 && responseData.status === "success") {
+      const msg = "비밀번호 변경이 완료되었습니다.";
+      res.redirect(`/mypage?msg=${msg}`);
+    }else{
+      const msg = responseData.message;
+      res.redirect(`/pwChange?msg=${msg}`);
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); // 마이페이지-회원정보 - 비밀번호 변경 처리
 
@@ -412,12 +489,17 @@ router.get("/mypage-coin", async (req, res, next) => {
     title: "매직넘버:마이페이지",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 마이페이지-코인정보 라우터
 
 router.get("/mypage-history", async (req, res, next) => {
+  if(!req.user){
+    res.redirect("/");
+  }
+
   try {
-    const accessToken = req.user ? req.user.accessToken : "";
+    const accessToken = req.user.accessToken;
 
     const params3 = {
       page: 1,
@@ -446,8 +528,12 @@ router.get("/mypage-history", async (req, res, next) => {
 }); // 마이페이지-상담내역 라우터
 
 router.post("/review", async (req, res, next) => {
+  if(!req.user){
+    res.redirect("/");
+  }
+
   try {
-    const accessToken = req.user ? req.user.accessToken : "";
+    const accessToken = req.user.accessToken;
 
     const params = {
       counsel_num: req.body.counsel_num,
@@ -475,6 +561,7 @@ router.get("/charge", async (req, res, next) => {
     title: "매직넘버:마이페이지",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 코인충전 라우터
 
@@ -483,6 +570,7 @@ router.get("/howToUse", async (req, res, next) => {
     title: "매직넘버:이용방법 안내",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 이용방법안내 라우터
 
@@ -491,6 +579,7 @@ router.get("/notice", async (req, res, next) => {
     title: "매직넘버:공지사항",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 게시판(공지사항) 라우터
 
@@ -499,6 +588,7 @@ router.get("/notice-post", async (req, res, next) => {
     title: "매직넘버:공지사항",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 게시판(공지사항) - 공지사항 게시글 라우터
 
@@ -507,6 +597,7 @@ router.get("/recruit", async (req, res, next) => {
     title: "매직넘버:상담사모집",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 상담사 모집
 
