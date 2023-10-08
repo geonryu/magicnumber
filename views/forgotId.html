@@ -8,7 +8,7 @@
                 <div class="find-pw-tab col-6 text-center fw-bold"><a href="/forgotPw" class="d-block pb-3 mb-3">비밀번호 찾기</a></div>
             </div>
             <div class="find-user-id mb-3">
-                <form action="/forgotId" method="post" id="findId">
+                <form action="forgotId" method="post" id="findId">
                     <div class="user-name mb-3">
                         <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 border d-block w-100" name="name" id="findIdName" type="text" placeholder="실명을 입력해주세요." value="홍길동">
                     </div>
@@ -42,7 +42,7 @@
             const userName = $userName.value;
             const userNum = $userNum.value;
             const userNumInput = userNum.slice(4);
-            const findBtn = document.getElementById("findIdBtn"); 
+            const findBtn = document.getElementById("findIdBtn");
 
             if (userName && userNum && userNum.replace(/-/g, "").length >= 10) {
                 document.getElementById("findIdBtn").removeAttribute("disabled");
@@ -53,7 +53,7 @@
             }
         }
 
-        $userName.addEventListener("keyup", checkTyped); 
+        $userName.addEventListener("keyup", checkTyped);
 
         $userNum.addEventListener("keyup", (e) => {
             // e.target.value = e.target.value

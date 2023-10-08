@@ -7,10 +7,14 @@
                 <h3 class="fw-bold text-center">비밀번호 변경하기</h3>
             </div>
             <div class="find-pw-result">
-                <form id="userPwChange" action="">
+                <form action="pwChange" method="post" id="userPwChange">
+                    <div class="reset-pw mb-3">
+                        <label class="mb-1" for="oldPw">비밀번호</label>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="oldPw" name="password" placeholder="비밀번호 입력" maxlength="20" required value="5555">
+                    </div>
                     <div class="reset-pw mb-3">
                         <label class="mb-1" for="resetPw">새 비밀번호</label>
-                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="resetPw" placeholder="비밀번호 입력" maxlength="20" required>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="resetPw" name="new_password" placeholder="비밀번호 입력" maxlength="20" required value="6666">
                         <div class="ck-pw-eff">
                             <span class="px-1 fs-6" style="color: #cccccc;">영문</span>
                             <span class="px-1 fs-6" style="color: #cccccc;">숫자</span>
@@ -20,10 +24,10 @@
                     </div>
                     <div class="reset-pw-ck mb-3">
                         <label class="mb-1" for="resetPwCk">비밀번호 확인</label>
-                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="resetPwCk" placeholder="비밀번호 확인" maxlength="20" required>
+                        <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" id="resetPwCk" name="confirm_new_password" placeholder="비밀번호 확인" maxlength="20" required value="6666">
                         <div id="pwWarn" class="message-warn fs-6 text-point">비밀번호가 일치하지 않습니다.</div>
                     </div>
-                    <div class="btn-submit"><button id="changePw" type="submit" class="px-4 py-3 d-block text-white rounded bg-primary bg-bgDisabled btn fw-bold w-100 disabled">비밀번호 변경</button></div>
+                    <div class="btn-submit"><button id="changePw" type="submit" class="px-4 py-3 d-block text-white rounded bg-primary bg-bgDisabled btn fw-bold w-100">비밀번호 변경</button></div>
                 </form>
             </div>
         </div>
@@ -33,7 +37,7 @@
         const $userRepeat = document.getElementById("resetPwCk");
 
         const checkTyped = () => {
-            const changePwBtn = document.getElementById("changePw"); 
+            const changePwBtn = document.getElementById("changePw");
             let userPW = $currentInput.value;
             // userPW.search(/[a-z]/gi) > 0 && userPW.search(/[0-9]/g) > 1 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2
             console.log(userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2)
@@ -49,7 +53,7 @@
 
         $currentInput.addEventListener("keyup", (e) => {
             let userPW = $currentInput.value;
-            
+
             const ckInc = document.querySelectorAll(".ck-pw-eff span");
 
             const num = userPW.search(/[0-9]/g);
@@ -76,14 +80,19 @@
             $currentInput.value === $userRepeat.value
             ? ($msgWarn.style.display = "none")
             : ($msgWarn.style.display = "block");
-            
+
             checkTyped();
         });
 
         document.getElementById("userPwChange").addEventListener("submit", () => {
             // 비밀번호 변경 후 마이페이지 - 회원정보로 리디렉션합니다.
         });
-
     </script>
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href = location.pathname
+</script>
+{% endif %}
 {% endblock %}
