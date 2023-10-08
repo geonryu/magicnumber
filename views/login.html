@@ -52,8 +52,7 @@
 {% if msg %}
 <script>
   alert("{{msg}}");
-  location.href="/login"
+  location.href = location.pathname
 </script>
 {% endif %}
 {% endblock %}
-
