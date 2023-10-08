@@ -150,7 +150,7 @@ const user = {
         }, // 헤더 설정
       });
 
-      // POST 요청 보내기
+      // PUT 요청 보내기
       const response = await axiosInstance.put(apiUrl, params);
 
       const responseStatus = response.status;
