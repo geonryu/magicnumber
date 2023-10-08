@@ -354,7 +354,7 @@ router.post("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) =>
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
-}); // 마이페이지-비밀번호확인 cjfl
+}); // 마이페이지-비밀번호확인 처리
 
 router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
   try {
