@@ -82,12 +82,38 @@ const counselor = {
   },
 
   // 4.4 [GET] 상담내역 목록 호출
-  async getMyCounselingHistory(params) {
-    console.log("getMyCounselingHistory(params)", params);
+  async getMyCounselingHistory(params, accessToken) {
+    console.log("getMyCounselingHistory(params, accessToken)", params, accessToken);
+    
     try {
       // API URL
       const apiUrl = "/api/v1/counselor/history";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: accessToken,
+        }, // 헤더 설정
+      });
+
+      // GET 요청 보내기
+      const response = await axiosInstance.get(apiUrl, { params: params });
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      console.log(error);
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 4.5 [GET] 리뷰 목록 호출
@@ -100,21 +126,71 @@ const counselor = {
   },
 
   // 4.6 [POST] 리뷰 작성
-  async createReview(params) {
-    console.log("createReview(params)", params);
+  async createReview(params, accessToken) {
+    console.log("createReview(params, accessToken)", params, accessToken);
     try {
       // API URL
       const apiUrl = "/api/v1/counselor/review";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: accessToken,
+        }, // 헤더 설정
+      });
+
+      // GET 요청 보내기
+      const response = await axiosInstance.post(apiUrl, params);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      console.log(error);
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 4.7 [PUT] 리뷰 수정
-  async updateReview(params) {
-    console.log("updateReview(params)", params);
+  async updateReview(params, accessToken) {
+    console.log("updateReview(params, accessToken)", params, accessToken);
     try {
       // API URL
       const apiUrl = "/api/v1/counselor/review";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: accessToken,
+        }, // 헤더 설정
+      });
+
+      // GET 요청 보내기
+      const response = await axiosInstance.get(apiUrl, { params: params });
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      console.log(error);
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 };
 

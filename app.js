@@ -65,7 +65,7 @@ passport.use(
 
 // Passport 직렬화 설정
 passport.serializeUser((user, done) => {
-  console.log("serializeUser - user.accessToken", user.accessToken);
+  // console.log("serializeUser - user.accessToken", user.accessToken);
   done(null, user.accessToken);
 });
 
@@ -74,7 +74,7 @@ passport.deserializeUser(async (accessToken, done) => {
   const responseData = await auth.getUserInfo(accessToken);
   const user = responseData.result;
   user.accessToken = accessToken;
-  console.log("deserializeUser - user", user);
+  // console.log("deserializeUser - user", user);
   done(null, user);
 });
 

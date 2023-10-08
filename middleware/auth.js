@@ -25,23 +25,11 @@ const auth = {
       const responseStatusText = response.statusText;
       const responseData = response.data;
 
-      // console.log("=== success start ===========================");
-      // console.log(responseStatus);
-      // console.log(responseStatusText);
-      // console.log(responseData);
-      // console.log("=== success end ============================");
-
       return responseData;
     } catch (error) {
       const responseStatus = error.response.status;
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;
-
-      // console.log("=== error start =============================");
-      // console.log(responseStatus);
-      // console.log(responseStatusText);
-      // console.log(responseData);
-      // console.log("=== error end ==============================");
 
       return responseData;
     }
