@@ -39,6 +39,7 @@ router.get("/", async (req, res, next) => {
       title: "매직넘버",
       host: host,
       user: req.user,
+      msg: req.query.msg,
       counselorList: counselorList,
       bannerList: bannerList,
       state: state,
@@ -113,6 +114,7 @@ router.post("/join", async (req, res, next) => {
         title: "매직넘버:회원가입",
         host: host,
         user: req.user,
+        msg: req.query.msg,
         message: responseData.message,
       });
     }
@@ -257,6 +259,7 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
       title: "매직넘버:상담사정보",
       host: host,
       user: req.user,
+      msg: req.query.msg,
       counselorInfo: counselorInfo,
     });
   } catch (error) {
@@ -293,6 +296,7 @@ router.get("/counselorInfoReview", async (req, res, next) => {
       title: "매직넘버:상담사정보",
       host: host,
       user: req.user,
+      msg: req.query.msg,
       counselorInfo: counselorInfo,
       reviewList: reviewList,
     });
@@ -311,7 +315,7 @@ router.get("/counselorInfoQnA", async (req, res, next) => {
 }); // 상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 문의하기
 
 router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
-  try {  
+  try {
     const accessToken = req.user ? req.user.accessToken : "";
     const params = {};
 
@@ -333,10 +337,10 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
     if (responseData2.code === 200 && responseData2.status === "success") {
       mypoint = responseData2.result;
     }
-    
+
     // 지역화된 숫자 서식 처리 - 3자리마다 콤마(,)
     mypoint = new Intl.NumberFormat().format(mypoint);
-    
+
     const params3 = {
       page: 1,
     };
@@ -354,6 +358,7 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
       title: "매직넘버:마이페이지",
       host: host,
       user: req.user,
+      msg: req.query.msg,
       mypageInfo: mypageInfo,
       mypoint: mypoint,
       counselingHistory: counselingHistory,
@@ -377,8 +382,30 @@ router.get("/pwChange", async (req, res, next) => {
     title: "매직넘버:마이페이지",
     host: host,
     user: req.user,
+    msg: req.query.msg,
   });
 }); // 마이페이지-회원정보 - 비밀번호 변경 라우터
+
+router.post("/pwChange", async (req, res, next) => {
+  const accessToken = req.user ? req.user.accessToken : "";
+
+  const params = {
+    password: req.body.password,
+    new_password: req.body.new_password,
+    confirm_new_password: req.body.confirm_new_password,
+  };
+
+  const responseData = await mypage.changePassword(params, accessToken);
+  console.log("responseData: ", responseData);
+
+  if (responseData.code === 200 && responseData.status === "success") {
+    const msg = "비밀번호 변경이 완료되었습니다.";
+    res.redirect(`/mypage?msg=${msg}`);
+  }else{
+    const msg = responseData.message;
+    res.redirect(`/pwChange?msg=${msg}`);
+  }
+}); // 마이페이지-회원정보 - 비밀번호 변경 처리
 
 router.get("/mypage-coin", async (req, res, next) => {
   res.render("mypage-coin", {
@@ -409,6 +436,7 @@ router.get("/mypage-history", async (req, res, next) => {
       title: "매직넘버:마이페이지",
       host: host,
       user: req.user,
+      msg: req.query.msg,
       counselingHistory: counselingHistory,
     });
   } catch (error) {

@@ -37,7 +37,7 @@
         <a href="/mypage-history" class="fs-6 d-flex align-items-center text-txtDisabled">더 보기<span class="material-symbols-outlined">navigate_next</span></a>
     </h3>
     <div class="history-list">
-        {% if counselingHistory.length %} 
+        {% if counselingHistory.length %}
             {% for item in counselingHistory %}
             <!--
                 num: 26,
@@ -93,4 +93,10 @@
         {% endif %}
     </div>
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href = location.pathname
+</script>
+{% endif %}
 {% endblock %}
