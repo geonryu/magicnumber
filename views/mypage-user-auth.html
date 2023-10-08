@@ -12,11 +12,17 @@
     <h3 class="fw-bold mb-3 text-center">비밀번호 재확인</h3>
     <p class="mb-5 text-center">회원 정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 확인합니다.</p>
     <div class="user-pw text-center">
-        <form action="">
-            <input type="password" class="border bg-white py-2 px-3">
+        <form action="mypage-user-auth" method="post">
+            <input type="password" name="password" class="border bg-white py-2 px-3">
             <button type="submit" class="bg-primary py-2 px-3 text-white">확인</button>
         </form>
     </div>
     <!-- 비밀번호 확인 후 /mypage-info(mypage-user-info.html)로 리디렉션 됩니다. -->
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href = location.pathname
+</script>
+{% endif %}
 {% endblock %}
