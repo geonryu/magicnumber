@@ -32,6 +32,62 @@
             </div>
         </div>
     </div>
+    <script>
+        const $currentInput = document.getElementById("resetPw");
+        const $userRepeat = document.getElementById("resetPwCk");
+
+        const checkTyped = () => {
+            const changePwBtn = document.getElementById("changePw");
+            let userPW = $currentInput.value;
+            // userPW.search(/[a-z]/gi) > 0 && userPW.search(/[0-9]/g) > 1 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2
+            console.log(userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2)
+
+            if ($currentInput.value === $userRepeat.value && userPW.length >= 8 && userPW.length <= 20 && userPW.search(/[a-z]/gi) >= 0 && userPW.search(/[0-9]/g) >= 0 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) >= 0) {
+                document.getElementById("changePw").removeAttribute("disabled");
+                document.getElementById("changePw").classList.remove("bg-bgDisabled");
+            } else {
+                document.getElementById("changePw").setAttribute("disabled", "");
+                document.getElementById("changePw").classList.add("bg-bgDisabled");
+            }
+        }
+
+        $currentInput.addEventListener("keyup", (e) => {
+            let userPW = $currentInput.value;
+
+            const ckInc = document.querySelectorAll(".ck-pw-eff span");
+
+            const num = userPW.search(/[0-9]/g);
+            const eng = userPW.search(/[a-z]/gi);
+            const spe = userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+            userPW.length < 8 || userPW.length > 20
+            ? (ckInc[3].style.color = "#CCCCCC")
+            : (ckInc[3].style.color = "#EB5602");
+            eng < 0
+            ? (ckInc[0].style.color = "#CCCCCC")
+            : (ckInc[0].style.color = "#EB5602");
+            num < 0
+            ? (ckInc[1].style.color = "#CCCCCC")
+            : (ckInc[1].style.color = "#EB5602");
+            spe < 0
+            ? (ckInc[2].style.color = "#CCCCCC")
+            : (ckInc[2].style.color = "#EB5602");
+
+            checkTyped();
+        });
+
+        const ckPwRe = document.getElementById("resetPwCk").addEventListener("keyup", (e) => {
+            const $msgWarn = document.getElementById("pwWarn");
+            $currentInput.value === $userRepeat.value
+            ? ($msgWarn.style.display = "none")
+            : ($msgWarn.style.display = "block");
+
+            checkTyped();
+        });
+
+        document.getElementById("userPwChange").addEventListener("submit", () => {
+            // 비밀번호 변경 후 마이페이지 - 회원정보로 리디렉션합니다.
+        });
+    </script>
 </div>
 {% if msg %}
 <script>
@@ -39,61 +95,4 @@
   location.href = location.pathname
 </script>
 {% endif %}
-<script>
-    const $currentInput = document.getElementById("resetPw");
-    const $userRepeat = document.getElementById("resetPwCk");
-
-    const checkTyped = () => {
-        const changePwBtn = document.getElementById("changePw");
-        let userPW = $currentInput.value;
-        // userPW.search(/[a-z]/gi) > 0 && userPW.search(/[0-9]/g) > 1 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2
-        console.log(userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) > 2)
-
-        if ($currentInput.value === $userRepeat.value && userPW.length >= 8 && userPW.length <= 20 && userPW.search(/[a-z]/gi) >= 0 && userPW.search(/[0-9]/g) >= 0 && userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi) >= 0) {
-            document.getElementById("changePw").removeAttribute("disabled");
-            document.getElementById("changePw").classList.remove("bg-bgDisabled");
-        } else {
-            document.getElementById("changePw").setAttribute("disabled", "");
-            document.getElementById("changePw").classList.add("bg-bgDisabled");
-        }
-    }
-
-    $currentInput.addEventListener("keyup", (e) => {
-        let userPW = $currentInput.value;
-
-        const ckInc = document.querySelectorAll(".ck-pw-eff span");
-
-        const num = userPW.search(/[0-9]/g);
-        const eng = userPW.search(/[a-z]/gi);
-        const spe = userPW.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-        userPW.length < 8 || userPW.length > 20
-        ? (ckInc[3].style.color = "#CCCCCC")
-        : (ckInc[3].style.color = "#EB5602");
-        eng < 0
-        ? (ckInc[0].style.color = "#CCCCCC")
-        : (ckInc[0].style.color = "#EB5602");
-        num < 0
-        ? (ckInc[1].style.color = "#CCCCCC")
-        : (ckInc[1].style.color = "#EB5602");
-        spe < 0
-        ? (ckInc[2].style.color = "#CCCCCC")
-        : (ckInc[2].style.color = "#EB5602");
-
-        checkTyped();
-    });
-
-    const ckPwRe = document.getElementById("resetPwCk").addEventListener("keyup", (e) => {
-        const $msgWarn = document.getElementById("pwWarn");
-        $currentInput.value === $userRepeat.value
-        ? ($msgWarn.style.display = "none")
-        : ($msgWarn.style.display = "block");
-
-        checkTyped();
-    });
-
-    document.getElementById("userPwChange").addEventListener("submit", () => {
-        // 비밀번호 변경 후 마이페이지 - 회원정보로 리디렉션합니다.
-    });
-
-</script>
 {% endblock %}
