@@ -273,11 +273,7 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
   }
 }); // 상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 프로필 라우터 & 프로필 랜딩 라우터
 
-router.get("/counselorInfoReview", async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
-  }
-
+router.get("/counselorInfoReview", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
     const csrid = req.query.csrid;
@@ -324,11 +320,43 @@ router.get("/counselorInfoQnA", async (req, res, next) => {
   });
 }); // 상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 문의하기
 
-router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
+router.get("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) => {
+  try {
+    res.render("mypage-user-auth", {
+      title: "마이페이지:비밀번호 확인",
+      host: host,
+      user: req.user,
+      msg: req.query.msg,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
+}); // 마이페이지-비밀번호확인 라우터
+router.post("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) => {
+  try {
+    const accessToken = req.user.accessToken;
 
+    const params = {
+      password: req.body.password,
+    };
+
+    const responseData = await mypage.confirmPassword(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    if (responseData.code === 200 && responseData.status === "success") {
+      res.redirect("/mypage");
+    }else{
+      const msg = responseData.message;
+      res.redirect(`/mypage-user-auth?msg=${msg}`);
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 마이페이지-비밀번호확인 cjfl
+
+router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
     const params = {};
@@ -383,11 +411,7 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
   }
 }); // 마이페이지-기본정보 라우터
 
-router.get("/mypage-info", async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
-  }
-
+router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
     const params = {};
@@ -414,11 +438,7 @@ router.get("/mypage-info", async (req, res, next) => {
   }
 }); // 마이페이지-회원정보 라우터
 
-router.post("/mypage-info", async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
-  }
-
+router.post("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
 
@@ -454,11 +474,7 @@ router.get("/pwChange", async (req, res, next) => {
   });
 }); // 마이페이지-회원정보 - 비밀번호 변경 라우터
 
-router.post("/pwChange", async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
-  }
-
+router.post("/pwChange", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
 
@@ -493,11 +509,7 @@ router.get("/mypage-coin", async (req, res, next) => {
   });
 }); // 마이페이지-코인정보 라우터
 
-router.get("/mypage-history", async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
-  }
-
+router.get("/mypage-history", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
 
@@ -527,11 +539,7 @@ router.get("/mypage-history", async (req, res, next) => {
   }
 }); // 마이페이지-상담내역 라우터
 
-router.post("/review", async (req, res, next) => {
-  if(!req.user){
-    res.redirect("/");
-  }
-
+router.post("/review", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken;
 

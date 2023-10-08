@@ -36,12 +36,36 @@ const mypage = {
   },
 
   // 3.2 [POST] 마이페이지 (비밀번호 확인)
-  async confirmPassword(params) {
-    console.log("confirmPassword(params)", params);
+  async confirmPassword(params, accessToken) {
+    console.log("confirmPassword(params, accessToken)", params, accessToken);
     try {
       // API URL
       const apiUrl = "/api/v1/user/mypage/confirm/password";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: accessToken,
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.post(apiUrl, params);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 3.3 [GET] 마이페이지 호출

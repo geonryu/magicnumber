@@ -31,7 +31,7 @@
                             <div class="join"><a href="/join">회원가입</a></div>
                         {% endif %}
                         {% if user %}
-                            <div class="mypage"><a href="/mypage">{{user.nick_name}}</a></div>
+                            <div class="mypage"><a href="/mypage-user-auth">{{user.nick_name}}</a></div>
                             <div class="coin"><a href="/charge">코인충전</a></div>
                             <div class="logout"><a href="/logout">로그아웃</a></div>
                         {% endif %}
@@ -88,7 +88,7 @@
                                 <div class="loggedIn bg-primary p-3 rounded text-white">
                                     <div class="user-name fs-4 fw-bold mb-3 d-flex align-items-center justify-content-between">
                                         <span class="name">사용자1</span>
-                                        <span class="material-symbols-outlined fw-bold"><a href="/mypage">more_horiz</a></span>
+                                        <span class="material-symbols-outlined fw-bold"><a href="/mypage-user-auth">more_horiz</a></span>
                                     </div>
                                     <div class="user-mileage">
                                         <div class="coin-info d-flex align-items-center flex-wrap">
@@ -116,7 +116,7 @@
                                     <!-- <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-5 mb-md-0"><a class="activable" href="#">수비학이란?</a></div> -->
                                     <!-- 수비학 소개 페이지 보류 (컨텐츠 기획 후 추후 삽입 예정) -->
                                     {% if user %}
-                                    <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/mypage">마이페이지</a></div>
+                                    <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/mypage-user-auth">마이페이지</a></div>
                                     {% endif %}
                                     <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/howToUse">이용방법 안내</a></div>
                                     <!-- <div class="fw-bold fs-4 ms-md-4 fs-md-5 mb-3 mb-md-0"><a class="activable" href="/notice">공지사항</a></div> -->
