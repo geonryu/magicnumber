@@ -16,14 +16,14 @@
         2. 불량 이용자의 재가입 방지, 명예훼손 등 권리침해 분쟁 및 수사협조 등를 위한 한시적인 개인정보 보존 조치는 개인정보 취급방침을 따릅니다.
     </div>
     <div class="user-pw text-center">
-        <form action="">
+        <form action="userWithdrawal" method="post">
             <p class="text-center mb-3 text-point">탈퇴를 위해 비밀번호를 입력해주세요.</p>
-            <input type="password" class="border bg-white py-2 px-3">
+            <input type="password" name="password" class="border bg-white py-2 px-3">
             <button type="submit" id="btnWithdrawal" class="bg-primary py-2 px-3 text-white">확인</button>
         </form>
     </div>
-    <!-- 비밀번호 확인 후 /mypage-info(mypage-user-info.html)로 리디렉션 됩니다. -->
-    <div id="popup" class="modal-popup review-modal">
+    {% if withdraw %}
+    <div id="popup" class="modal-popup review-modal" style="display:block">
         <div id="layer" class="layer">
             <div id="content" class="content bg-white col-6 col-md-4">
                 <div class="inner p-3 p-md-5 col-12">
@@ -34,17 +34,18 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.querySelector("#btnWithdrawal").addEventListener("click", (e) => {
-                e.preventDefault();
-                document.querySelector("#popup").style.display = "block"; 
-            });
-
-            document.querySelector("#btnHome").addEventListener("click", () => {
-                location.href = "/";//탈퇴 완료 피드백 후 메인페이지 리디렉션
-            });
-
-        </script>
     </div>
+    {% endif %}
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href = location.pathname
+</script>
+{% endif %}
+<script>
+    document.querySelector("#btnHome").addEventListener("click", () => {
+        location.href = "/logout"; //탈퇴 완료 후 로그아웃
+    });
+</script>
 {% endblock %}
