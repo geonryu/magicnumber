@@ -51,7 +51,7 @@
                                         name="phone_num" id="joinTel" type="text" value="010-" maxlength="13" required />
                                     <button id="authPhone" class="d-block px-1 py-2 d-block w-25 bg-primary rounded text-white fw-bold bg-bgDisabled text-center">인증</button>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="w-100 d-flex border border-primary rounded p-2">
                                 <input class="px-3 py-2 bg-white d-block w-75 me-1 d-block" type="text" placeholder="인증번호(6자리)">
                                 <button class="d-block px-1 py-2 d-block w-25 bg-primary rounded text-white fw-bold bg-bgDisabled text-center">확인</button>
@@ -180,16 +180,10 @@
                     let policyType = btn.getAttribute("data-policy-type");
                     if (policyType === "termsOfUse") {
                         policyTitle.innerText = "매직넘버 서비스 이용약관"
-                        policyBody.innerText = `
-                        더미텍스트입니다. 
-                        이 곳에 서비스 이용약관 본문이 포함됩니다.
-                    `;
+                        policyBody.innerText = "{{termsofUse}}";
                     } else if (policyType === "privacyPolicy") {
                         policyTitle.innerText = "개인정보처리방침"
-                        policyBody.innerText = `
-                        더미텍스트입니다. 
-                        이 곳에 개인정보처리방침 본문이 포함됩니다.
-                    `;
+                        policyBody.innerText = "{{policyType}}";
                     }
                 });
             });
