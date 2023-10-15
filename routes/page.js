@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
     const params = {
       page: 1,
     };
-    const responseData = await counselor.getCounselor(params);
+    const responseData = await counselor.getCounselor(params, accessToken);
 
     const state = req.query.state;
     let counselorList = [];
@@ -105,7 +105,7 @@ router.post("/join", async (req, res, next) => {
       advertisement: req.body.advertisement,
     };
 
-    const responseData = await user.signUp(params);
+    const responseData = await user.signUp(params, accessToken);
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
@@ -131,7 +131,7 @@ router.post("/checkNickname", async (req, res, next) => {
       nick_name: req.body.nick_name
     };
 
-    const responseData = await user.checkNickname(params);
+    const responseData = await user.checkNickname(params, accessToken);
     console.log("responseData: ", responseData);
 
     res.status(200).json(responseData);
@@ -158,7 +158,7 @@ router.post("/forgotId", async (req, res, next) => {
       phone_num: req.body.phone_num,
     };
 
-    const responseData = await user.findId(params);
+    const responseData = await user.findId(params, accessToken);
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result.email) {
@@ -201,7 +201,7 @@ router.post("/forgotPw", async (req, res, next) => {
       phone_num: req.body.phone_num,
     };
 
-    const responseData = await user.findPw(params);
+    const responseData = await user.findPw(params, accessToken);
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
@@ -234,7 +234,7 @@ router.post("/forgotPwResult", async (req, res, next) => {
       confirm_password: req.body.confirm_password,
     };
 
-    const responseData = await user.changeFindPw(params);
+    const responseData = await user.changeFindPw(params, accessToken);
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
@@ -254,7 +254,7 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
     const params = {
       csrid: csrid,
     };
-    const responseData = await counselor.getCounselor(params);
+    const responseData = await counselor.getCounselor(params, accessToken);
     let counselorInfo = {};
     if (responseData.code === 200 && responseData.status === "success") {
       counselorInfo = responseData.result[0];
@@ -280,7 +280,7 @@ router.get("/counselorInfoReview", auth.isAuthenticated, async (req, res, next) 
     const params = {
       csrid: csrid,
     };
-    const responseData = await counselor.getCounselor(params);
+    const responseData = await counselor.getCounselor(params, accessToken);
     let counselorInfo = {};
     if (responseData.code === 200 && responseData.status === "success") {
       counselorInfo = responseData.result[0];
@@ -447,7 +447,7 @@ router.post("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
       birth: req.body.birth,
     };
 
-    console.log("params: ", params);
+    console.log("params: ", params, accessToken);
 
     const responseData = await mypage.changeUserInfo(params, accessToken);
     console.log("responseData: ", responseData);
@@ -548,7 +548,7 @@ router.post("/review", auth.isAuthenticated, async (req, res, next) => {
       contents: req.body.contents,
       score: req.body.score,
     };
-    console.log("params: ", params);
+    console.log("params: ", params, accessToken);
 
     const responseData = await counselor.createReview(params, accessToken);
     console.log("responseData: ", responseData);

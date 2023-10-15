@@ -3,8 +3,9 @@ const axios = require("axios");
 // 2. 인증
 const auth = {
   // 2.1 [POST] 로그인 (AccessToken 생성)
-  async getAccessToken(params) {
-    console.log("getAccessToken(params)", params);
+  async getAccessToken(params, accessToken) {
+    console.log("getAccessToken(params, accessToken)", params, accessToken);
+
     try {
       // API URL
       const apiUrl = "/api/auth/login";
@@ -14,12 +15,12 @@ const auth = {
         baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
-          authorization: "",
+          authorization: accessToken,
         }, // 헤더 설정
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params);
+      const response = await axiosInstance.post(apiUrl, params, accessToken);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -36,8 +37,8 @@ const auth = {
   },
 
   // 2.2 [GET] 로그인 시, 회원 기본 정보 호출
-  async getUserInfo(accessToken) {
-    console.log("getUserInfo(accessToken)", accessToken);
+  async getUserInfo(params, accessToken) {
+    console.log("getUserInfo(params, accessToken)", params, accessToken);
 
     try {
       // API URL
@@ -52,18 +53,12 @@ const auth = {
         }, // 헤더 설정
       });
 
-      // POST 요청 보내기
+      // GET 요청 보내기
       const response = await axiosInstance.get(apiUrl);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
       const responseData = response.data;
-
-      // console.log("=== success start ===========================");
-      // console.log(responseStatus);
-      // console.log(responseStatusText);
-      // console.log(responseData);
-      // console.log("=== success end ============================");
 
       return responseData;
     } catch (error) {
@@ -71,32 +66,74 @@ const auth = {
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;
 
-      // console.log("=== error start =============================");
-      // console.log(responseStatus);
-      // console.log(responseStatusText);
-      // console.log(responseData);
-      // console.log("=== error end ==============================");
-
       return responseData;
     }
   },
 
   // 2.3 [POST] 로그아웃
-  async logout(params) {
-    console.log("logout(params)", params);
+  async logout(params, accessToken) {
+    console.log("logout(params, accessToken)", params, accessToken);
     try {
       // API URL
       const apiUrl = "/api/auth/logout/";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: accessToken,
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.post(apiUrl);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 2.4 [POST] access_token 만료 시, 토큰 재발급
-  async reissuance(params) {
-    console.log("reissuance(params)", params);
+  async reissuance(params, accessToken) {
+    console.log("reissuance(params, accessToken)", params, accessToken);
     try {
       // API URL
       const apiUrl = "/api/auth/reissuance";
-    } catch (error) {}
+
+      // Axios 인스턴스 생성
+      const axiosInstance = axios.create({
+        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        headers: {
+          "content-Type": "application/json",
+          authorization: accessToken,
+        }, // 헤더 설정
+      });
+
+      // POST 요청 보내기
+      const response = await axiosInstance.post(apiUrl);
+
+      const responseStatus = response.status;
+      const responseStatusText = response.statusText;
+      const responseData = response.data;
+
+      return responseData;
+    } catch (error) {
+      const responseStatus = error.response.status;
+      const responseStatusText = error.response.statusText;
+      const responseData = error.response.data;
+
+      return responseData;
+    }
   },
 
   // 인증 상태 확인

@@ -52,7 +52,7 @@ passport.use(
         password: password,
       };
 
-      const responseData = await auth.getAccessToken(params);
+      const responseData = await auth.getAccessToken(params, accessToken);
 
       if (responseData.code === 200 && responseData.status === "success") {
         return done(null, { accessToken: responseData.result });

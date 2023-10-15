@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify(params, accessToken),
     })
       .then((response) => response.json())
       .then((data) => {
