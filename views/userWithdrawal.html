@@ -1,0 +1,50 @@
+{% extends 'mypage.html' %}
+
+{% block myPageComp %}
+<script>
+    const lnb = document.querySelectorAll(".sub-lnb .list a");
+    lnb.forEach((list, i) => {
+        i === 1 ? list.classList.add("active") : list.classList.remove("active");
+    });
+    // local navigation highlight
+</script>
+<div class="user-info py-5">
+    <h3 class="fw-bold mb-3 text-center">비밀번호 재확인</h3>
+    <p class="mb-3 text-center fw-bold">아래의 내용에 동의하고 탈퇴를 원하시면 비밀번호를 입력해주세요.</p>
+    <div class="mb-5 col-10 mx-auto">
+        1. 회원정보(아이디, 이메일, 휴대전화번호 등)는 탈퇴 후 삭제 또는 서비스와 격리하여 보존 조치합니다.<br>
+        2. 불량 이용자의 재가입 방지, 명예훼손 등 권리침해 분쟁 및 수사협조 등를 위한 한시적인 개인정보 보존 조치는 개인정보 취급방침을 따릅니다.
+    </div>
+    <div class="user-pw text-center">
+        <form action="">
+            <p class="text-center mb-3 text-point">탈퇴를 위해 비밀번호를 입력해주세요.</p>
+            <input type="password" class="border bg-white py-2 px-3">
+            <button type="submit" id="btnWithdrawal" class="bg-primary py-2 px-3 text-white">확인</button>
+        </form>
+    </div>
+    <!-- 비밀번호 확인 후 /mypage-info(mypage-user-info.html)로 리디렉션 됩니다. -->
+    <div id="popup" class="modal-popup review-modal">
+        <div id="layer" class="layer">
+            <div id="content" class="content bg-white col-6 col-md-4">
+                <div class="inner p-3 p-md-5 col-12">
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <h4 class="mb-3 fw-bold fs-4">탈퇴가 완료되었습니다.</h4>
+                    </div>
+                    <div class="btn-home"><button id="btnHome" class="px-4 py-3 d-block w-100 bg-primary text-white rounded">홈으로</button></div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.querySelector("#btnWithdrawal").addEventListener("click", (e) => {
+                e.preventDefault();
+                document.querySelector("#popup").style.display = "block"; 
+            });
+
+            document.querySelector("#btnHome").addEventListener("click", () => {
+                location.href = "/";//탈퇴 완료 피드백 후 메인페이지 리디렉션
+            });
+
+        </script>
+    </div>
+</div>
+{% endblock %}
