@@ -1,4 +1,9 @@
-{% extends 'policy.html' %} {% block policy %}
-<div class="">
+{% extends 'layout.html' %} {% block content %}
+<div class="login py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto">
+            {{privatePolicy}}
+        </div>
+    </div>
 </div>
 {% endblock %}

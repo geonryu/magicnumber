@@ -112,7 +112,7 @@
                                     class="allow-priv position-relative border-bottom px-4 py-3 d-flex justify-content-between">
                                     <input id="allowPriv" class="ck" type="checkbox" name="privacy" value="1" />
                                     <label class="label-for-ck w-80 h-100" for="allowPriv">개인정보수집 및 이용동의(필수)</label>
-                                    <button class="btn-pop-opn" id="privacyPolicy" data-policy-type="privacyPolicy"
+                                    <button class="btn-pop-opn" id="privatePolicy" data-policy-type="privatePolicy"
                                         class="d-flex">[보기]</button>
                                 </div>
                                 <div
@@ -138,13 +138,14 @@
                     <div class="title d-flex justify-content-between align-items-center">
                         <h4 id="policyTit" class="mb-3 fw-bold fs-4"></h4>
                         <div class="close">
-                            <button class="text-black"><span
-                                    class="material-symbols-outlined fw-bold fs-3">close</span></button>
+                            <button class="text-black"><span class="material-symbols-outlined fw-bold fs-3">close</span></button>
                         </div>
                     </div>
-                    <div id="policyBody"
-                        class="d-md-flex justify-content-between align-items-center border-top border-bottom py-2">
-
+                    <div id="policyBody1" class="d-md-flex justify-content-between align-items-center border-top border-bottom py-2">
+                        {{termsOfUse}}
+                    </div>
+                    <div id="policyBody2" class="d-md-flex justify-content-between align-items-center border-top border-bottom py-2">
+                        {{privatePolicy}}
                     </div>
                 </div>
             </div>
@@ -176,10 +177,12 @@
                     let policyType = btn.getAttribute("data-policy-type");
                     if (policyType === "termsOfUse") {
                         policyTitle.innerText = "매직넘버 서비스 이용약관"
-                        policyBody.innerText = "{{termsofUse}}";
-                    } else if (policyType === "privacyPolicy") {
+                        policyBody1.style.display = "block";
+                        policyBody2.style.display = "none";
+                    } else if (policyType === "privatePolicy") {
                         policyTitle.innerText = "개인정보처리방침"
-                        policyBody.innerText = "{{policyType}}";
+                        policyBody1.style.display = "none";
+                        policyBody2.style.display = "block";
                     }
                 });
             });

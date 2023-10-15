@@ -126,18 +126,16 @@ router.get("/join", async (req, res, next) => {
     if (responseData.code === 200 && responseData.status === "success") {
       termsOfUse = responseData.result;
     }
+
     // 개인정보처리방침
     const params2 = {
       agreement_type: 3,
     };
     const responseData2 = await etc.getAgreement(params2, "");
-    let privacyPolicy = "";
+    let privatePolicy = "";
     if (responseData2.code === 200 && responseData2.status === "success") {
-      privacyPolicy = responseData2.result;
+      privatePolicy = responseData2.result;
     }
-
-    // console.log("termsOfUse: ", termsOfUse);
-    // console.log("privacyPolicy: ", privacyPolicy);
 
     res.render("join", {
       title: "매직넘버:회원가입",
@@ -145,7 +143,7 @@ router.get("/join", async (req, res, next) => {
       user: req.user,
       msg: req.query.msg,
       termsOfUse: termsOfUse,
-      privacyPolicy: privacyPolicy,
+      privatePolicy: privatePolicy,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -937,5 +935,71 @@ router.post("/userWithdrawal", async (req, res, next) => {
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); // 회원탈퇴 처리
+
+router.get("/termsOfUse", async (req, res, next) => {
+  try {
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
+
+    // 이용약관
+    const params = {
+      agreement_type: 1,
+    };
+    const responseData = await etc.getAgreement(params, "");
+    let termsOfUse = "";
+    if (responseData.code === 200 && responseData.status === "success") {
+      termsOfUse = responseData.result;
+    }
+
+    res.render("termsOfUse", {
+      title: "매직넘버:이용약관",
+      host: host,
+      user: req.user,
+      msg: req.query.msg,
+      userInfo: userInfo,
+      termsOfUse: termsOfUse,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 이용약관 라우터
+
+router.get("/privatePolicy", async (req, res, next) => {
+  try {
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
+
+    // 개인정보처리방침
+    const params = {
+      agreement_type: 3,
+    };
+    const responseData = await etc.getAgreement(params, "");
+    let privatePolicy = "";
+    if (responseData.code === 200 && responseData.status === "success") {
+      privatePolicy = responseData.result;
+    }
+
+    res.render("privatePolicy", {
+      title: "매직넘버:개인정보처리방침",
+      host: host,
+      user: req.user,
+      msg: req.query.msg,
+      userInfo: userInfo,
+      privatePolicy: privatePolicy,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 개인정보처리방침 라우터
 
 module.exports = router;
