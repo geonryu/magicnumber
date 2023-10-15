@@ -1,5 +1,5 @@
 {% extends 'layout.html' %} {% block content %}
-<script type="module" src="js/join.js"></script>
+<script src="js/join.js"></script>
 <div class="join py-5">
     <div class="container">
         <div class="wrapper col-12 col-lg-6 mx-lg-auto">
@@ -45,7 +45,6 @@
                                     </select>
                                 </div>
                                 <div class="w-75 border border-primary d-flex rounded p-2">
-                                <!-- <div class="col-12"> -->
                                     <input
                                         class="px-3 py-2 me-1 bg-white d-block rounded w-75 d-block"
                                         name="phone_num" id="joinTel" type="text" value="010-" maxlength="13" required />
@@ -57,9 +56,6 @@
                                 <button class="d-block px-1 py-2 d-block w-25 bg-primary rounded text-white fw-bold bg-bgDisabled text-center">확인</button>
                             </div>
                         </div>
-                        <!-- <div class="join-auth">
-              <input id="verifyCall" class="auth-btn px-4 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" value="본인인증" disabled />
-            </div> -->
                     </div>
 
                     <div class="join-basic-info px-2 py-4 bg-white rounded mb-3">

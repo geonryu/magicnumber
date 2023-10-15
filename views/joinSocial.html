@@ -1,5 +1,5 @@
 {% extends 'layout.html' %} {% block content %}
-<script type="module" src="js/join.js"></script>
+<script src="js/join.js"></script>
 <div class="join py-5">
     <div class="container">
         <div class="wrapper col-12 col-lg-6 mx-lg-auto">
@@ -130,16 +130,10 @@
                     let policyType = btn.getAttribute("data-policy-type");
                     if (policyType === "termsOfUse") {
                         policyTitle.innerText = "매직넘버 서비스 이용약관"
-                        policyBody.innerText = `
-                        더미텍스트입니다. 
-                        이 곳에 서비스 이용약관 본문이 포함됩니다.
-                    `;
+                        policyBody.innerText = "{{termsofUse}}";
                     } else if (policyType === "privacyPolicy") {
                         policyTitle.innerText = "개인정보처리방침"
-                        policyBody.innerText = `
-                        더미텍스트입니다. 
-                        이 곳에 개인정보처리방침 본문이 포함됩니다.
-                    `;
+                        policyBody.innerText = "{{policyType}}";
                     }
                 });
             });
