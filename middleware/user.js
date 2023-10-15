@@ -20,7 +20,7 @@ const user = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -54,7 +54,7 @@ const user = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -88,7 +88,7 @@ const user = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -122,7 +122,7 @@ const user = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -156,7 +156,7 @@ const user = {
       });
 
       // PUT 요청 보내기
-      const response = await axiosInstance.put(apiUrl, params, accessToken);
+      const response = await axiosInstance.put(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -190,7 +190,7 @@ const user = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -224,7 +224,7 @@ const user = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;

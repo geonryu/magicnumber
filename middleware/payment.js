@@ -20,7 +20,7 @@ const payment = {
       });
 
       // GET 요청 보내기
-      const response = await axiosInstance.get(apiUrl, params, accessToken);
+      const response = await axiosInstance.get(apiUrl, { params: params });
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -54,7 +54,7 @@ const payment = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -88,7 +88,7 @@ const payment = {
       });
 
       // GET 요청 보내기
-      const response = await axiosInstance.get(apiUrl, params, accessToken);
+      const response = await axiosInstance.get(apiUrl, { params: params });
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;

@@ -20,7 +20,7 @@ const auth = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;

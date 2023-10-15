@@ -20,7 +20,7 @@ const counselor = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -62,7 +62,6 @@ const counselor = {
 
       return responseData;
     } catch (error) {
-      console.log(error);
       const responseStatus = error.response.status;
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;
@@ -88,7 +87,7 @@ const counselor = {
       });
 
       // PUT 요청 보내기
-      const response = await axiosInstance.put(apiUrl);
+      const response = await axiosInstance.put(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -130,7 +129,6 @@ const counselor = {
 
       return responseData;
     } catch (error) {
-      console.log(error);
       const responseStatus = error.response.status;
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;
@@ -189,7 +187,7 @@ const counselor = {
       });
 
       // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      const response = await axiosInstance.post(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -197,7 +195,6 @@ const counselor = {
 
       return responseData;
     } catch (error) {
-      console.log(error);
       const responseStatus = error.response.status;
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;
@@ -231,7 +228,6 @@ const counselor = {
 
       return responseData;
     } catch (error) {
-      console.log(error);
       const responseStatus = error.response.status;
       const responseStatusText = error.response.statusText;
       const responseData = error.response.data;

@@ -20,7 +20,7 @@ const etc = {
       });
 
       // GET 요청 보내기
-      const response = await axiosInstance.get(apiUrl, params, accessToken);
+      const response = await axiosInstance.get(apiUrl, { params: params });
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -53,8 +53,12 @@ const etc = {
         }, // 헤더 설정
       });
 
-      // POST 요청 보내기
-      const response = await axiosInstance.post(apiUrl, params, accessToken);
+      console.log("params", params);
+
+      // GET 요청 보내기
+      const response = await axiosInstance.get(apiUrl, {params: params});
+
+      console.log("response", response.result);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
