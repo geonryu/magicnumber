@@ -14,10 +14,17 @@ const host = "http://api.magicnumber.co.kr";
 
 router.get("/", async (req, res, next) => {
   try {
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
+
     const params = {
       page: 1,
     };
-    const responseData = await counselor.getCounselor(params, accessToken);
+    const responseData = await counselor.getCounselor(params, "");
 
     const state = req.query.state;
     let counselorList = [];
@@ -29,7 +36,7 @@ router.get("/", async (req, res, next) => {
     }
 
     const params2 = {};
-    const responseData2 = await etc.getBanner(params2);
+    const responseData2 = await etc.getBanner(params2, "");
 
     if (responseData2.code === 200 && responseData2.status === "success") {
       bannerList = responseData2.result;
@@ -40,6 +47,7 @@ router.get("/", async (req, res, next) => {
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
       counselorList: counselorList,
       bannerList: bannerList,
       state: state,
@@ -105,7 +113,7 @@ router.post("/join", async (req, res, next) => {
       advertisement: req.body.advertisement,
     };
 
-    const responseData = await user.signUp(params, accessToken);
+    const responseData = await user.signUp(params, "");
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
@@ -131,7 +139,7 @@ router.post("/checkNickname", async (req, res, next) => {
       nick_name: req.body.nick_name
     };
 
-    const responseData = await user.checkNickname(params, accessToken);
+    const responseData = await user.checkNickname(params, "");
     console.log("responseData: ", responseData);
 
     res.status(200).json(responseData);
@@ -147,6 +155,7 @@ router.get("/forgotId", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 아이디 찾기 라우터
 
@@ -158,7 +167,7 @@ router.post("/forgotId", async (req, res, next) => {
       phone_num: req.body.phone_num,
     };
 
-    const responseData = await user.findId(params, accessToken);
+    const responseData = await user.findId(params, "");
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result.email) {
@@ -179,6 +188,7 @@ router.get("/forgotIdResult", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
     email: email,
   });
 }); // 아이디 찾기 결과 라우터
@@ -189,6 +199,7 @@ router.get("/forgotPw", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 비밀번호 찾기 라우터
 
@@ -201,7 +212,7 @@ router.post("/forgotPw", async (req, res, next) => {
       phone_num: req.body.phone_num,
     };
 
-    const responseData = await user.findPw(params, accessToken);
+    const responseData = await user.findPw(params, "");
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
@@ -222,6 +233,7 @@ router.get("/forgotPwResult", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
     temp_token: temp_token,
   });
 }); // 비밀번호 찾기 결과 라우터
@@ -234,7 +246,7 @@ router.post("/forgotPwResult", async (req, res, next) => {
       confirm_password: req.body.confirm_password,
     };
 
-    const responseData = await user.changeFindPw(params, accessToken);
+    const responseData = await user.changeFindPw(params, "");
     console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
@@ -250,11 +262,18 @@ router.post("/forgotPwResult", async (req, res, next) => {
 
 router.get("/counselorInfoProfile", async (req, res, next) => {
   try {
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
+
     const csrid = req.query.csrid;
     const params = {
       csrid: csrid,
     };
-    const responseData = await counselor.getCounselor(params, accessToken);
+    const responseData = await counselor.getCounselor(params, "");
     let counselorInfo = {};
     if (responseData.code === 200 && responseData.status === "success") {
       counselorInfo = responseData.result[0];
@@ -265,6 +284,7 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
       counselorInfo: counselorInfo,
     });
   } catch (error) {
@@ -275,7 +295,12 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
 
 router.get("/counselorInfoReview", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
     const csrid = req.query.csrid;
     const params = {
       csrid: csrid,
@@ -302,6 +327,7 @@ router.get("/counselorInfoReview", auth.isAuthenticated, async (req, res, next) 
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
       counselorInfo: counselorInfo,
       reviewList: reviewList,
     });
@@ -317,6 +343,7 @@ router.get("/counselorInfoQnA", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 상담사 개별 페이지 (상담사 ui카드 클릭시 이동) - 문의하기
 
@@ -327,6 +354,7 @@ router.get("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) => 
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -335,7 +363,12 @@ router.get("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) => 
 }); // 마이페이지-비밀번호확인 라우터
 router.post("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
 
     const params = {
       password: req.body.password,
@@ -358,7 +391,12 @@ router.post("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) =>
 
 router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
     const params = {};
 
     const responseData = await mypage.getMypage(params, accessToken);
@@ -401,6 +439,7 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
       mypageInfo: mypageInfo,
       mypoint: mypoint,
       counselingHistory: counselingHistory,
@@ -413,7 +452,12 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
 
 router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
     const params = {};
 
     const responseData = await mypage.getMypage(params, accessToken);
@@ -430,6 +474,7 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
       mypageInfo: mypageInfo,
     });
   } catch (error) {
@@ -440,7 +485,12 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
 
 router.post("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
 
     const params = {
       nick_name: req.body.nick_name,
@@ -471,12 +521,18 @@ router.get("/pwChange", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 마이페이지-회원정보 - 비밀번호 변경 라우터
 
 router.post("/pwChange", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
 
     const params = {
       password: req.body.password,
@@ -506,12 +562,18 @@ router.get("/mypage-coin", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 마이페이지-코인정보 라우터
 
 router.get("/mypage-history", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
 
     const params3 = {
       page: 1,
@@ -531,6 +593,7 @@ router.get("/mypage-history", auth.isAuthenticated, async (req, res, next) => {
       host: host,
       user: req.user,
       msg: req.query.msg,
+      userInfo: userInfo,
       counselingHistory: counselingHistory,
     });
   } catch (error) {
@@ -541,7 +604,12 @@ router.get("/mypage-history", auth.isAuthenticated, async (req, res, next) => {
 
 router.post("/review", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const accessToken = req.user.accessToken;
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
 
     const params = {
       counsel_num: req.body.counsel_num,
@@ -570,6 +638,7 @@ router.get("/charge", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 코인충전 라우터
 
@@ -579,6 +648,7 @@ router.get("/howToUse", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 이용방법안내 라우터
 
@@ -588,6 +658,7 @@ router.get("/notice", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 게시판(공지사항) 라우터
 
@@ -597,6 +668,7 @@ router.get("/notice-post", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 게시판(공지사항) - 공지사항 게시글 라우터
 
@@ -606,6 +678,7 @@ router.get("/recruit", async (req, res, next) => {
     host: host,
     user: req.user,
     msg: req.query.msg,
+    userInfo: userInfo,
   });
 }); // 상담사 모집
 
