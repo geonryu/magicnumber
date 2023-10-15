@@ -46,7 +46,12 @@
                             <span class="material-symbols-outlined">call</span>
                             <span class="counselor-status ms-1">상담가능</span>
                         </a> 상담가능 -->
-                        <a href="javascript:alert('060 API 작업중')" class="d-block col-lg-6 mt-auto h-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
+                        {% if user === undefined %}
+                        <a href="javascript:alert('로그인후 상담 가능합니다.')" class="d-block col-lg-6 mt-auto h-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
+                        {% endif %}
+                        {% if user %}
+                        <a href="/sendCall?csrid={{counselorInfo.csrid}}" class="d-block col-lg-6 mt-auto h-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
+                        {% endif %}
                             <span class="counselor-status ms-1">
                                 {% if counselorInfo.state == 'IDLE' %}
                                     상담가능
@@ -85,4 +90,10 @@
         </div>
     </div>
 </div>
+{% if msg %}
+<script>
+  alert("{{msg}}");
+  location.href = location.pathname + "?csrid={{counselorInfo.csrid}}";
+</script>
+{% endif %}
 {% endblock %}
