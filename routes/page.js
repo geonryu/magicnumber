@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
     }
 
     const params = {
-      page: 1,
+      page: 2,
     };
     const responseData = await counselor.getCounselor(params, "");
 
