@@ -173,8 +173,8 @@ const user = {
   },
 
   // 1.6 [POST] 이메일 인증 요청
-  async reqEmailAuth(params, accessToken) {
-    console.log("reqEmailAuth(params, accessToken)", params, accessToken);
+  async reqAuthEmail(params, accessToken) {
+    console.log("reqAuthEmail(params, accessToken)", params, accessToken);
 
     try {
       // API URL
@@ -207,8 +207,8 @@ const user = {
   },
 
   // 1.7 [POST] 이메일 인증
-  async certEmailAuth(params, accessToken) {
-    console.log("certEmailAuth(params, accessToken)", params, accessToken);
+  async certAuthEmail(params, accessToken) {
+    console.log("certAuthEmail(params, accessToken)", params, accessToken);
 
     try {
       // API URL

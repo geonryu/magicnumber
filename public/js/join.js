@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const $joinId = document.getElementById("joinId");
   const $joinName = document.getElementById("joinName");
-  const $joinSoNum = document.getElementById("joinSoNum");
+  const $joinBirth = document.getElementById("joinBirth");
   const $joinGender = document.getElementById("joinGender");
-  // const $joinCarrier = document.getElementById("joinCarrier");
+  const $reqAuthEmail = document.getElementById("reqAuthEmail");
+  const $certCodeEmail = document.getElementById("certCodeEmail");
+  const $certAuthEmail = document.getElementById("certAuthEmail");
   const $joinTel = document.getElementById("joinTel");
-  // const $verifyCallBtn = document.getElementById("verifyCall");
   const $joinNickName = document.getElementById("joinNickName");
   const $joinPw = document.getElementById("joinPw");
   const $joinPwCk = document.getElementById("joinPwCk");
@@ -13,8 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const $selects = document.querySelectorAll(".policy .allow-list div input");
   const $selectAll = document.getElementById("allowAll");
 
-  const $checkNickname = document.getElementById("checkNickname");
+  const $ckNickname = document.getElementById("ckNickname");
+  const $ckReqAuthEmail = document.getElementById("ckReqAuthEmail");
+  const $ckCertAuthEmail = document.getElementById("ckCertAuthEmail");
   const $ckDupResult = document.getElementById("ckDupResult");
+  const $joinSubmit = document.getElementById("joinSubmit");
+
+  const $authEmailOk = document.getElementById("authEmailOk");
+  const $nicknameOk = document.getElementById("nicknameOk");
 
   const ckRequired = () => {
     let required1 = $selects[0].checked;
@@ -26,34 +33,39 @@ document.addEventListener("DOMContentLoaded", () => {
       // nextBtns[0].disabled = true;
     }
   };
+
   const checkTypedAuth = () => {
     const joinName = $joinName.value;
     const joinTel = $joinTel.value;
     const joinTelInput = joinTel.slice(4);
-
     const userEmail = $joinId.value;
-    // const joinCarrier = $joinCarrier.value;
-    const joinSoNum = $joinSoNum.value;
+    const joinBirth = $joinBirth.value;
     const joinGender = $joinGender.value;
     const re = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; //email 유효성검사
+    const authEmailOk = $authEmailOk.value;
+    const nicknameOk = $nicknameOk.value;
+
     if (
       joinName &&
       joinTelInput.length >= 8 &&
       joinTel.replace(/-/g, "").length >= 10 &&
-      (userEmail !== "" || !re.test(userEmail)) &&
-      joinSoNum.length === 8 &&
-      // joinCarrier !== "default" &&
-      joinGender !== "default"
+      re.test(userEmail) &&
+      joinBirth.length === 8 &&
+      joinGender !== "default" &&
+      authEmailOk === "1" &&
+      nicknameOk === "1"
     ) {
-      // document.getElementById("verifyCall").removeAttribute("disabled");
-      // document.getElementById("verifyCall").classList.remove("bg-bgDisabled");
+      $joinSubmit.removeAttribute("disabled");
+      $joinSubmit.classList.remove("bg-bgDisabled");
     } else {
-      // document.getElementById("verifyCall").setAttribute("disabled", "");
-      // document.getElementById("verifyCall").classList.add("bg-bgDisabled");
+      $joinSubmit.setAttribute("disabled", "");
+      $joinSubmit.classList.add("bg-bgDisabled");
     }
   };
 
   $joinName.addEventListener("keyup", checkTypedAuth);
+  $joinBirth.addEventListener("keyup", checkTypedAuth);
+  $joinGender.addEventListener("change", checkTypedAuth);
 
   $joinTel.addEventListener("keyup", (e) => {
     e.target.value = e.target.value
@@ -71,12 +83,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const messageWarn = document.getElementById("emailWarn");
     if (userEmail == "" || !re.test(userEmail)) {
       messageWarn.style.display = "block";
+      $reqAuthEmail.setAttribute("disabled", "");
+      $reqAuthEmail.classList.add("bg-bgDisabled");
       return false;
     } else {
       messageWarn.style.display = "none";
+      $reqAuthEmail.removeAttribute("disabled");
+      $reqAuthEmail.classList.remove("bg-bgDisabled");
     }
   });
-  // // 이메일 유효성 검사 끝
+  // 이메일 유효성 검사 끝
+
+  $certCodeEmail.addEventListener("keyup", (e) => {
+    const certCode = $certCodeEmail.value;
+    console.log(certCode);
+
+    if (certCode == "" || certCode.length < 6) {
+      $certAuthEmail.setAttribute("disabled", "");
+      $certAuthEmail.classList.add("bg-bgDisabled");
+      return false;
+    } else {
+      $certAuthEmail.removeAttribute("disabled");
+      $certAuthEmail.classList.remove("bg-bgDisabled");
+    }
+  });
+  // 이메일 인증 입력 이벤트
+
+  $joinNickName.addEventListener("change", checkTypedAuth);
+
+  $joinNickName.addEventListener("keyup", (e) => {
+    const nickName = $joinNickName.value;
+
+    if (!nickName) {
+      $ckNickname.setAttribute("disabled", "");
+      $ckNickname.classList.add("bg-bgDisabled");
+    } else {
+      $ckNickname.removeAttribute("disabled");
+      $ckNickname.classList.remove("bg-bgDisabled");
+    }
+  });
+  // 닉네임 입력 이벤트
 
   $joinPw.addEventListener("keyup", (e) => {
     const userPW = $joinPw.value;
@@ -124,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // 약관 전체 동의 끝
 
-  $checkNickname.addEventListener("click", function (ev) {
+  $ckNickname.addEventListener("click", (ev) => {
     ev.preventDefault();
     const nick_name = $joinNickName.value;
     const params = {
@@ -136,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(params, accessToken),
+      body: JSON.stringify(params),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -144,14 +190,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.result === 1) {
           // 이미 사용중인 닉네임입니다.
+          $authEmailOk.value = 0;
           $ckDupResult.innerText = data.message;
           $ckDupResult.style.display = "block";
           $ckDupResult.classList.add("text-point");
         } else if (data.result === 2) {
           // 사용가능한 닉네임입니다.
+          $authEmailOk.value = 1;
           $ckDupResult.innerText = data.message;
           $ckDupResult.style.display = "block";
           $ckDupResult.classList.remove("text-point");
+        }
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error);
+      });
+  });
+
+  $reqAuthEmail.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    const email = $joinId.value;
+    const params = {
+      email: email,
+    };
+
+    fetch("/reqAuthEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("서버에서 받은 데이터: ", data);
+        $ckReqAuthEmail.innerText = data.message;
+        $ckReqAuthEmail.style.display = "block";
+        if(data.code === 200 && data.status === "success"){
+          localStorage.setItem("temp_token", data.result)
+          $certCodeEmail.removeAttribute("disabled");
+        }
+      })
+      .catch((error) => {
+        console.error("에러 발생: ", error);
+      });
+  });
+
+  $certAuthEmail.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    const email = $joinId.value;
+    const temp_token = localStorage.getItem("temp_token");
+    const cert_code = $certCodeEmail.value;
+    const params = {
+      email: email,
+      temp_token: temp_token,
+      cert_code: cert_code,
+    };
+
+    fetch("/certAuthEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("서버에서 받은 데이터: ", data);
+        $ckCertAuthEmail.innerText = data.message;
+        $ckCertAuthEmail.style.display = "block";
+        if(data.code === 200 && data.status === "success"){
+          $authEmailOk.value = 1;
+        }else{
+          $authEmailOk.value = 0;
         }
       })
       .catch((error) => {
