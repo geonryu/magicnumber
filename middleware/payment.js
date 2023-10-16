@@ -2,7 +2,7 @@ const axios = require("axios");
 
 // 5. 구매
 const payment = {
-  // 3.1 [GET] 포인트 상품 목록 호출
+  // 5.1 [GET] 포인트 상품 목록 호출
   async getProduct(params, accessToken) {
     console.log("getMyPoint(params, accessToken)", params, accessToken);
 
@@ -22,6 +22,12 @@ const payment = {
       // GET 요청 보내기
       const response = await axiosInstance.get(apiUrl, { params: params });
 
+      // 콤마(,) 처리
+      // response.data.result = response.data.result.map(item => {
+      //   item.coinamt = Intl.NumberFormat().format(item.coinamt);
+      //   return item;
+      // })
+
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
       const responseData = response.data;
@@ -36,7 +42,7 @@ const payment = {
     }
   },
 
-  // 3.2 [POST] 포인트 구매 전처리
+  // 5.2 [POST] 포인트 구매 전처리
   async preprocessPayment(params, accessToken) {
     console.log("confirmPassword(params, accessToken)", params, accessToken);
 
@@ -70,7 +76,7 @@ const payment = {
     }
   },
 
-  // 3.3 [GET] 포인트 충전 내역
+  // 5.3 [GET] 포인트 충전 내역
   async getPaymentHistory(params, accessToken) {
     console.log("getMypage(params, accessToken)", params, accessToken);
 

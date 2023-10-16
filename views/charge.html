@@ -22,54 +22,21 @@
                                     <th scope="col" class="text-darkGray">금액</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>                                
+                                {% for item in productList %}
                                 <tr class="py-5">
                                     <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price1" value="30000">
+                                        <input class="rdo" type="radio" name="amount" id="price{{item.num}}" value="30000">
                                     </th>
-                                    <th><label for="price1" class="d-block">30,000원</label></th>
-                                    <th><label for="price1" class="d-block">30,000</label></th>
+                                    <th><label for="price{{item.num}}" class="d-block">{{item.name}}</label></th>
+                                    <th><label for="price{{item.num}}" class="d-block">{{item.coinamt}}</label></th>
                                 </tr>
-                                <tr class="py-5">
-                                    <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price2" value="50000">
-                                    </th>
-                                    <th><label for="price2" class="d-block">50,000원</label></th>
-                                    <th><label for="price2" class="d-block">50,000</label></th>
-                                </tr>
-                                <tr class="py-5">
-                                    <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price3" value="100000">
-                                    </th>
-                                    <th><label for="price3" class="d-block">100,000원</label></th>
-                                    <th><label for="price3" class="d-block">105,000</label></th>
-                                </tr>
-                                <tr class="py-5">
-                                    <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price4" value="200000">
-                                    </th>
-                                    <th><label for="price4" class="d-block">200,000원</label></th>
-                                    <th><label for="price4" class="d-block">210,000</label></th>
-                                </tr>
-                                <tr class="py-5">
-                                    <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price5" value="300000">
-                                    </th>
-                                    <th><label for="price5" class="d-block">300,000원</label></th>
-                                    <th><label for="price5" class="d-block">320,000</label></th>
-                                </tr>
-                                <tr class="py-5">
-                                    <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price6" value="500000">
-                                    </th>
-                                    <th><label for="price6" class="d-block">500,000원</label></th>
-                                    <th><label for="price6" class="d-block">550,000</label></th>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="method-select py-3">
+                <!-- <div class="method-select py-3">
                     <h3 class="fw-bold mb-3">결제방식 선택</h3>
                     <div class="bg-white p-3 text-center rounded border border-darkgray">
                         <table class="w-100 table table-hover">
@@ -101,8 +68,8 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="print-info py-3">
+                </div> -->
+                <!-- <div class="print-info py-3">
                     <h3 class="fw-bold mb-3">결제정보 확인</h3>
                     <div class="print bg-white border border-darkgray rounded p-3">
                         <div class="pay-price d-flex justify-content-between align-items-center mb-1">
@@ -123,7 +90,7 @@
                         </div>
                         <button type="submit" class="btn btn-md bg-primary text-white w-100 mt-3 fw-bold">결제하기</button>
                     </div>
-                </div>
+                </div> -->
             </form>
         </div>
 
