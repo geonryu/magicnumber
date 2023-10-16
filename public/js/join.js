@@ -190,13 +190,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.result === 1) {
           // 이미 사용중인 닉네임입니다.
-          $authEmailOk.value = 0;
+          $nicknameOk.value = 0;
           $ckDupResult.innerText = data.message;
           $ckDupResult.style.display = "block";
           $ckDupResult.classList.add("text-point");
         } else if (data.result === 2) {
           // 사용가능한 닉네임입니다.
-          $authEmailOk.value = 1;
+          $nicknameOk.value = 1;
           $ckDupResult.innerText = data.message;
           $ckDupResult.style.display = "block";
           $ckDupResult.classList.remove("text-point");
