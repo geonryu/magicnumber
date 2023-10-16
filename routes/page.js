@@ -798,12 +798,26 @@ router.get("/charge", auth.isAuthenticated, async (req, res, next) => {
       userInfo = userData.result;
     }
 
+    // 포인트 상품 목록
+    const params = {
+    };
+
+    const responseData = await payment.getProduct(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    let productList = [];
+    if (responseData.code === 200 && responseData.status === "success") {
+      productList = responseData.result;
+    }
+    console.log("productList: ", productList);
+
     res.render("charge", {
-      title: "매직넘버:마이페이지",
+      title: "매직넘버:코인충전",
       host: host,
       user: req.user,
       msg: req.query.msg,
       userInfo: userInfo,
+      productList: productList,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);

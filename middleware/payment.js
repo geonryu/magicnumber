@@ -22,6 +22,12 @@ const payment = {
       // GET 요청 보내기
       const response = await axiosInstance.get(apiUrl, { params: params });
 
+      // 콤마(,) 처리
+      // response.data.result = response.data.result.map(item => {
+      //   item.coinamt = Intl.NumberFormat().format(item.coinamt);
+      //   return item;
+      // })
+
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
       const responseData = response.data;
