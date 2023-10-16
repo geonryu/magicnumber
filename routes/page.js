@@ -60,13 +60,6 @@ router.get("/", async (req, res, next) => {
 
 router.get("/login", async (req, res, next) => {
   try {
-    const accessToken = (req.user) ? req.user.accessToken : "";
-    let userInfo = [];
-    const userData = await auth.getUserInfo("", accessToken);
-    if (userData.code === 200 && userData.status === "success") {
-      userInfo = userData.result;
-    }
-
     if (req.isAuthenticated()) {
       res.redirect("/");
     } else {
@@ -92,13 +85,6 @@ router.post("/login", passport.authenticate("local", {
 
 router.get("/logout", async (req, res, next) => {
   try {
-    const accessToken = (req.user) ? req.user.accessToken : "";
-    let userInfo = [];
-    const userData = await auth.getUserInfo("", accessToken);
-    if (userData.code === 200 && userData.status === "success") {
-      userInfo = userData.result;
-    }
-
     req.logout(() => {
       res.redirect("/"); // 로그아웃 후 리디렉션
     }); // Passport에서 세션 제거
@@ -188,6 +174,40 @@ router.post("/join", async (req, res, next) => {
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); // 회원가입 처리
+
+router.post("/reqAuthEmail", async (req, res, next) => {
+  try {
+    const params = {
+      email: req.body.email
+    };
+
+    const responseData = await user.reqAuthEmail(params, "");
+    console.log("responseData: ", responseData);
+
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 이메일 인증 요청 처리
+
+router.post("/certAuthEmail", async (req, res, next) => {
+  try {
+    const params = {
+      email: req.body.email,
+      temp_token: req.body.temp_token,
+      cert_code: req.body.cert_code,
+    };
+
+    const responseData = await user.certAuthEmail(params, "");
+    console.log("responseData: ", responseData);
+
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 이메일 인증 처리
 
 router.post("/checkNickname", async (req, res, next) => {
   try {
