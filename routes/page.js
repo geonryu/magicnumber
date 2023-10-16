@@ -521,38 +521,30 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
     if (userData.code === 200 && userData.status === "success") {
       userInfo = userData.result;
     }
-    const params = {};
-
-    const responseData = await mypage.getMypage(params, accessToken);
-    // console.log("responseData: ", responseData)
 
     // 내 정보
+    const params = {};
+    const responseData = await mypage.getMypage(params, accessToken);
     let mypageInfo = {};
     if (responseData.code === 200 && responseData.status === "success") {
       mypageInfo = responseData.result;
     }
-    const params2 = {};
-
-    const responseData2 = await mypage.getMypoint(params2, accessToken);
-    console.log("responseData2: ", responseData2)
 
     // 내 포인트
+    const params2 = {};
+    const responseData2 = await mypage.getMypoint(params2, accessToken);
     let mypoint = {};
     if (responseData2.code === 200 && responseData2.status === "success") {
       mypoint = responseData2.result;
     }
-
     // 지역화된 숫자 서식 처리 - 3자리마다 콤마(,)
     mypoint = new Intl.NumberFormat().format(mypoint);
 
+    // 내 상담내역
     const params3 = {
       page: 1,
     };
-
     const responseData3 = await counselor.getMyCounselingHistory(params3, accessToken);
-    console.log("responseData3: ", responseData3)
-
-    // 내 상담내역
     let counselingHistory = {};
     if (responseData3.code === 200 && responseData3.status === "success") {
       counselingHistory = responseData3.result;
@@ -582,12 +574,10 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
     if (userData.code === 200 && userData.status === "success") {
       userInfo = userData.result;
     }
-    const params = {};
-
-    const responseData = await mypage.getMypage(params, accessToken);
-    // console.log("responseData: ", responseData)
-
+    
     // 내 정보
+    const params = {};
+    const responseData = await mypage.getMypage(params, accessToken);
     let mypageInfo = {};
     if (responseData.code === 200 && responseData.status === "success") {
       mypageInfo = responseData.result;
@@ -599,7 +589,6 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
       user: req.user,
       msg: req.query.msg,
       userInfo: userInfo,
-      mypageInfo: mypageInfo,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -610,11 +599,6 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
 router.post("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = (req.user) ? req.user.accessToken : "";
-    let userInfo = [];
-    const userData = await auth.getUserInfo("", accessToken);
-    if (userData.code === 200 && userData.status === "success") {
-      userInfo = userData.result;
-    }
 
     const params = {
       nick_name: req.body.nick_name,
@@ -694,12 +678,44 @@ router.get("/mypage-coin", auth.isAuthenticated, async (req, res, next) => {
       userInfo = userData.result;
     }
 
+    // 내 정보
+    const params = {};
+    const responseData = await mypage.getMypage(params, accessToken);
+    let mypageInfo = {};
+    if (responseData.code === 200 && responseData.status === "success") {
+      mypageInfo = responseData.result;
+    }
+
+    // 내 포인트
+    const params2 = {};
+    const responseData2 = await mypage.getMypoint(params2, accessToken);
+    let mypoint = {};
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      mypoint = responseData2.result;
+    }
+    // 지역화된 숫자 서식 처리 - 3자리마다 콤마(,)
+    mypoint = new Intl.NumberFormat().format(mypoint);
+
+    // 충전내역
+    const params3 = {
+      page: 1,
+    };
+    const responseData3 = await payment.getPaymentHistory(params3, accessToken);
+    console.log("responseData3: ", responseData3);
+    let paymentHistory = {};
+    if (responseData3.code === 200 && responseData3.status === "success") {
+      paymentHistory = responseData3.result;
+    }
+
     res.render("mypage-coin", {
       title: "매직넘버:마이페이지",
       host: host,
       user: req.user,
       msg: req.query.msg,
       userInfo: userInfo,
+      mypageInfo: mypageInfo,
+      mypoint: mypoint,
+      paymentHistory: paymentHistory,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);

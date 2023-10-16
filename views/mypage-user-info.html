@@ -48,41 +48,10 @@
                 <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="userNickName" value="{{mypageInfo.nick_name}}">
             </div>
             <div class="user-auth">
-                <label class="mb-1" for="userAuthTel">본인인증</label>
+                <label class="mb-1" for="userAuthTel">휴대폰</label>
                 <div class="row">
-                    <div class="output col-9"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" name="phone_num" id="userAuthTel" value="{{mypageInfo.phone_num}}" maxlength="13" required></div>
-                    <div class="status col-3"><input class="sms px-2 py-3 d-block w-100 bg-primary rounded text-white fw-bold bg-bgDisabled" type="button" id="verifyCall" value="본인인증" disabled></div>
+                    <div class="output col-12"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" name="phone_num" id="userAuthTel" value="{{mypageInfo.phone_num}}" maxlength="13" required></div>
                 </div>
-            </div>
-            <!-- mypageInfo 에 해당 값 없음 -->
-            <!-- <div class="policy">
-                <div class="label-policy pt-3 mb-1">약관 및 혜택 알림 동의</div>
-                <div class="allow-list rounded bg-white">
-                    <div class="allow-service position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                        {% if user.terms_of_service == '1' %}
-                        <input class="ck" type="checkbox" name="terms_of_service" id="allowService" value="1" required disabled checked>
-                        {% endif %}
-                        {% if user.terms_of_service != '1' %}
-                        <input class="ck" type="checkbox" name="terms_of_service" id="allowService" value="1" required disabled>
-                        {% endif %}
-                        <label class="label-for-ck w-80 h-100" for="allowService">이용약관(필수)</label>
-                        <a href="#" class="d-flex">[보기]</a>
-                    </div>
-                    <div class="allow-priv position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                        {% if user.privacy == '1' %}
-                        <input class="ck" type="checkbox" name="privacy" id="allowPriv" value="1" required disabled checked>
-                        {% endif %}
-                        {% if user.privacy != '1' %}
-                        <input class="ck" type="checkbox" name="privacy" id="allowPriv" value="1" required disabled>
-                        {% endif %}
-                        <label class="label-for-ck w-80 h-100" for="allowPriv">개인정보수집 및 이용동의(필수)</label>
-                        <a href="#" class="d-flex">[보기]</a>
-                    </div>
-                    <div class="allow-opt position-relative border-bottom px-4 py-3 d-flex justify-content-between">
-                        <input class="ck" type="checkbox" name="advertisement" id="allowOpt" value="1">
-                        <label class="label-for-ck w-80 h-100" for="allowOpt">이벤트, 쿠폰 알림 메일 및 SNS 수신(선택)</label>
-                    </div>
-                </div> -->
             </div>
             <div class="btn-my-info">
                 <button class="px-4 py-3 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">정보 수정</button>
