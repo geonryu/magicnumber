@@ -845,7 +845,7 @@ router.post("/review", auth.isAuthenticated, async (req, res, next) => {
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
-}); // 리뷰 작성 처리 처리
+}); // 리뷰 작성 처리
 
 router.get("/charge", auth.isAuthenticated, async (req, res, next) => {
   try {
@@ -882,6 +882,48 @@ router.get("/charge", auth.isAuthenticated, async (req, res, next) => {
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); // 코인충전 라우터
+
+router.post("/charge", auth.isAuthenticated, async (req, res, next) => {
+  try {
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
+
+    const params = {
+      payment_type: req.body.payment_type,
+      product_num: req.body.product_num,
+      view_type: req.body.view_type,
+    };
+    console.log("params: ", params, accessToken);
+
+    const responseData = await payment.preprocessPayment(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    // 060 충전처리 API
+    const url = responseData.result.url; // https://passcall.co.kr:28737/CPTL/Pay2/Card/pay.jsp
+    const body = responseData.result.body; // oid=CS231021449C035739239&cpid=0015&membid=045383&amount=33000&coinamt=30300&membnm=홍길동&item=30000포인트&telno=01044445555&formurl=http://www.api.magicnumber.co.kr/api/v1/counselor/payment/form&returnurl=http://www.api.magicnumber.co.kr/api/v1/counselor/payment/log
+
+    if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
+      res.render("chargeResult", {
+        title: "매직넘버:결제",
+        host: host,
+        user: req.user,
+        msg: req.query.msg,
+        userInfo: userInfo,
+        url: url,
+        body: body,
+      });
+    }else{
+      res.redirect(`/charge?msg=${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 코인충전 처리
 
 router.get("/howToUse", async (req, res, next) => {
   try {
