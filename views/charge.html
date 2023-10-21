@@ -10,7 +10,8 @@
             </ul>
         </div>
         <div class="charge-info">
-            <form action="" id="coinChargeForm">
+            <form action="charge" method="post" id="coinChargeForm">
+                <input type="hidden" name="view_type" value="2">
                 <div class="charge-select py-3">
                     <h3 class="fw-bold mb-3">충전금액 선택</h3>
                     <div class="bg-white p-3 text-center rounded border border-darkgray">
@@ -22,11 +23,11 @@
                                     <th scope="col" class="text-darkGray">금액</th>
                                 </tr>
                             </thead>
-                            <tbody>                                
+                            <tbody>
                                 {% for item in productList %}
                                 <tr class="py-5">
                                     <th scope="row">
-                                        <input class="rdo" type="radio" name="amount" id="price{{item.num}}" value="30000">
+                                        <input class="rdo" type="radio" name="product_num" id="price{{item.num}}" value="{{item.num}}">
                                     </th>
                                     <th><label for="price{{item.num}}" class="d-block">{{item.name}}</label></th>
                                     <th><label for="price{{item.num}}" class="d-block">{{item.coinamt}}</label></th>
@@ -36,43 +37,43 @@
                         </table>
                     </div>
                 </div>
-                <!-- <div class="method-select py-3">
+                <div class="method-select py-3">
                     <h3 class="fw-bold mb-3">결제방식 선택</h3>
                     <div class="bg-white p-3 text-center rounded border border-darkgray">
                         <table class="w-100 table table-hover">
                             <tbody>
                                 <tr class="py-5">
                                     <th scope="row">
-                                        <input class="rdo" type="radio" name="method" id="payWidthCreditCard" value="credit-card">
+                                        <input class="rdo" type="radio" name="payment_type" id="dirCard" value="DIR_CARD">
                                     </th>
-                                    <th class="text-start"><label for="payWidthCreditCard" class="d-block text-darkGray">신용카드</label></th>
+                                    <th class="text-start"><label for="dirCard" class="d-block text-darkGray">신용카드</label></th>
                                 </tr>
                                 <tr class="py-5">
                                     <th scope="row">
-                                        <input class="rdo" type="radio" name="method" id="payWidthAccount" value="credit-card">
+                                        <input class="rdo" type="radio" name="payment_type" id="paycoPay" value="PAYCO_PAY">
                                     </th>
-                                    <th class="text-start"><label for="payWidthAccount" class="d-block text-darkGray">무통장입금(가상계좌)</label></th>
+                                    <th class="text-start"><label for="paycoPay" class="d-block text-darkGray">페이코</label></th>
                                 </tr>
                                 <tr class="py-5">
                                     <th scope="row">
-                                        <input class="rdo" type="radio" name="method" id="payWidthTransfer" value="credit-card">
+                                        <input class="rdo" type="radio" name="payment_type" id="kakaoPay" value="KAKAO_PAY">
                                     </th>
-                                    <th class="text-start"><label for="payWidthTransfer" class="d-block text-darkGray">실시간 계좌이체</label></th>
+                                    <th class="text-start"><label for="kakaoPay" class="d-block text-darkGray">카카오페이</label></th>
                                 </tr>
                                 <tr class="py-5">
                                     <th scope="row">
-                                        <input class="rdo" type="radio" name="method" id="payWidthKakao" value="credit-card">
+                                        <input class="rdo" type="radio" name="payment_type" id="naverPay" value="NAVER_PAY">
                                     </th>
-                                    <th class="text-start"><label for="payWidthKakao" class="d-block text-darkGray">카카오페이</label></th>
+                                    <th class="text-start"><label for="naverPay" class="d-block text-darkGray">네이버페이</label></th>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div> -->
-                <!-- <div class="print-info py-3">
-                    <h3 class="fw-bold mb-3">결제정보 확인</h3>
+                </div>
+                <div class="print-info py-3">
+                    <!-- <h3 class="fw-bold mb-3">결제정보 확인</h3> -->
                     <div class="print bg-white border border-darkgray rounded p-3">
-                        <div class="pay-price d-flex justify-content-between align-items-center mb-1">
+                        <!-- <div class="pay-price d-flex justify-content-between align-items-center mb-1">
                             <div class="t text-darkGray">결제금액</div>
                             <div class="price fw-bold text-darkGray"><span>50,000</span>원</div>
                         </div>
@@ -87,12 +88,17 @@
                         <div class="total-rpice d-flex justify-content-between align-items-center mb-1">
                             <div class="t text-darkGray">최종결제금액</div>
                             <div class="price fw-bold text-primary"><span>55,000</span>원</div>
-                        </div>
-                        <button type="submit" class="btn btn-md bg-primary text-white w-100 mt-3 fw-bold">결제하기</button>
+                        </div> -->
+                        <button type="submit" class="btn btn-md bg-primary text-white w-100 fw-bold">결제하기</button>
                     </div>
-                </div> -->
+                </div>
             </form>
         </div>
-
     </div>
+{% if msg %}
+<script>
+    alert("{{msg}}");
+    location.href = location.pathname;
+</script>
+{% endif %}
 {% endblock %}

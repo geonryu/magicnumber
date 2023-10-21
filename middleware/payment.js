@@ -4,7 +4,7 @@ const axios = require("axios");
 const payment = {
   // 5.1 [GET] 포인트 상품 목록 호출
   async getProduct(params, accessToken) {
-    console.log("getMyPoint(params, accessToken)", params, accessToken);
+    console.log("getProduct(params, accessToken)", params, accessToken);
 
     try {
       // API URL
@@ -44,7 +44,7 @@ const payment = {
 
   // 5.2 [POST] 포인트 구매 전처리
   async preprocessPayment(params, accessToken) {
-    console.log("confirmPassword(params, accessToken)", params, accessToken);
+    console.log("preprocessPayment(params, accessToken)", params, accessToken);
 
     try {
       // API URL
@@ -78,7 +78,7 @@ const payment = {
 
   // 5.3 [GET] 포인트 충전 내역
   async getPaymentHistory(params, accessToken) {
-    console.log("getMypage(params, accessToken)", params, accessToken);
+    console.log("getPaymentHistory(params, accessToken)", params, accessToken);
 
     try {
       // API URL

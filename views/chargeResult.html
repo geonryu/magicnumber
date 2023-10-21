@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container py-5">
+        <div class="notice mb-3">
+            <h3>결제</h3>
+            <p>결제 진행중입니다.</p>
+        </div>
+        <div>
+            <a href="/charge" class="btn btn-md bg-primary text-white w-100 fw-bold">이전으로</a>
+        </div>
+    </div>
+{% if url %}
+<script>
+    let url = "{{url}}?{{body}}";
+    url = url.replaceAll('&amp;', '&');
+    window.open(url);
+</script>
+{% endif %}
+{% endblock %}

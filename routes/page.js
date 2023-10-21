@@ -83,6 +83,26 @@ router.post("/login", passport.authenticate("local", {
   })
 ); // 로그인 처리
 
+router.get("/auth/naver", passport.authenticate("naver")); // 네이버 로그인 라우터
+
+router.get("/auth/naver/callback", passport.authenticate("naver", {
+    // successRedirect: "/join",
+    failureRedirect: "/login",
+    failureFlash: true, // 실패할 때 플래시 메시지 사용
+  })
+  , async (req, res, next) => {
+    try {
+      console.log("/auth/naver/callback - req.user", req.user);
+
+      const nickname = req.user._json.nickname;
+      res.redirect(`/joinSocial?nickname=${nickname}`)
+    } catch (error) {
+      console.error("외부 API와의 통신 중 에러 발생:", error);
+      res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+    }
+  }
+); // 네이버 로그인 처리
+
 router.get("/logout", async (req, res, next) => {
   try {
     req.logout(() => {
@@ -130,12 +150,50 @@ router.get("/join", async (req, res, next) => {
       msg: req.query.msg,
       termsOfUse: termsOfUse,
       privatePolicy: privatePolicy,
+      profile: null,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); // 회원가입 라우터
+
+router.get("/joinSocial", async (req, res, next) => {
+  try {
+    // 이용약관
+    const params = {
+      agreement_type: 1,
+    };
+    const responseData = await etc.getAgreement(params, "");
+    let termsOfUse = "";
+    if (responseData.code === 200 && responseData.status === "success") {
+      termsOfUse = responseData.result;
+    }
+
+    // 개인정보처리방침
+    const params2 = {
+      agreement_type: 3,
+    };
+    const responseData2 = await etc.getAgreement(params2, "");
+    let privatePolicy = "";
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      privatePolicy = responseData2.result;
+    }
+
+    res.render("joinSocial", {
+      title: "매직넘버:소셜회원가입",
+      host: host,
+      user: "",
+      msg: req.query.msg,
+      termsOfUse: termsOfUse,
+      privatePolicy: privatePolicy,
+      nick_name: req.query.nickname,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 소셜회원가입 라우터
 
 router.post("/join", async (req, res, next) => {
   try {
@@ -144,8 +202,8 @@ router.post("/join", async (req, res, next) => {
       password: req.body.password,
       check_password: req.body.check_password,
       nick_name: req.body.nick_name,
-      sns_type: req.body.sns_type,
-      user_status: req.body.user_status,
+      sns_type: 1, // 1:로컬, 2:구글, 3:카카오, 4:네이버
+      user_status: 2, // 1:비회원(모바일), 2:회원, 3:휴면, 4:탈퇴
       name: req.body.name,
       birth: req.body.birth,
       gender: req.body.gender,
@@ -574,7 +632,7 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
     if (userData.code === 200 && userData.status === "success") {
       userInfo = userData.result;
     }
-    
+
     // 내 정보
     const params = {};
     const responseData = await mypage.getMypage(params, accessToken);
@@ -787,7 +845,7 @@ router.post("/review", auth.isAuthenticated, async (req, res, next) => {
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
-}); // 리뷰 작성 처리 처리
+}); // 리뷰 작성 처리
 
 router.get("/charge", auth.isAuthenticated, async (req, res, next) => {
   try {
@@ -824,6 +882,48 @@ router.get("/charge", auth.isAuthenticated, async (req, res, next) => {
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
 }); // 코인충전 라우터
+
+router.post("/charge", auth.isAuthenticated, async (req, res, next) => {
+  try {
+    const accessToken = (req.user) ? req.user.accessToken : "";
+    let userInfo = [];
+    const userData = await auth.getUserInfo("", accessToken);
+    if (userData.code === 200 && userData.status === "success") {
+      userInfo = userData.result;
+    }
+
+    const params = {
+      payment_type: req.body.payment_type,
+      product_num: req.body.product_num,
+      view_type: req.body.view_type,
+    };
+    console.log("params: ", params, accessToken);
+
+    const responseData = await payment.preprocessPayment(params, accessToken);
+    console.log("responseData: ", responseData);
+
+    // 060 충전처리 API
+    const url = responseData.result.url; // https://passcall.co.kr:28737/CPTL/Pay2/Card/pay.jsp
+    const body = responseData.result.body; // oid=CS231021449C035739239&cpid=0015&membid=045383&amount=33000&coinamt=30300&membnm=홍길동&item=30000포인트&telno=01044445555&formurl=http://www.api.magicnumber.co.kr/api/v1/counselor/payment/form&returnurl=http://www.api.magicnumber.co.kr/api/v1/counselor/payment/log
+
+    if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
+      res.render("chargeResult", {
+        title: "매직넘버:결제",
+        host: host,
+        user: req.user,
+        msg: req.query.msg,
+        userInfo: userInfo,
+        url: url,
+        body: body,
+      });
+    }else{
+      res.redirect(`/charge?msg=${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 코인충전 처리
 
 router.get("/howToUse", async (req, res, next) => {
   try {
