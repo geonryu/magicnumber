@@ -9,33 +9,41 @@
     // local navigation highlight
 </script>
 <div class="review-info py-3">
-    <h3 class="fw-bold mb-3">리뷰작성내역</h3>
+    <h3 class="fw-bold mb-3">리뷰내역</h3>
+    <div class="track d-flex w-lg-100 d-lg-block justify-content-around">
+        <div class="list p-2 mx-1 w-lg-100"><a href="/mypage-review1" class="h-100 w-100 d-block text-center text-lg-start text-darkGray fs-xs-6">작성가능</a></div>
+        <div class="list p-2 mx-1 w-lg-100"><a href="/mypage-review2" class="h-100 w-100 d-block text-center text-lg-start text-darkGray fs-xs-6 active">작성완료(수정)</a></div>
+    </div>
     <div class="review-list">
-        {% if counselingHistory.length %} 
-            {% for item in counselingHistory %}
+        {% if myReviewList.length %} 
+            {% for item in myReviewList %}
             <!--
-                num: 26,
+                num: 28,
                 csrid: 12978,
-                nicknm: '매직넘버',
-                profile_path: '/csr_profile/1694237905204_NhscwjNrYp.png',
-                dtmfno: 12,
-                start: '2023-09-09 14:38:45',
-                end: '2023-09-09 14:39:15',
-                from: '01034339941',
-                to: '07080175431',
-                telno: '01040331299',
-                preflag: 'Y',
-                amt: 1,
-                usetm: '00:00:30'
+                nicknm: 매직넘버,
+                end: 2023-09-25 21:38:38,
+                interval: 1,
+                profile_path: /csr_profile/1695645331254_XqCNhzPKro.png,
+                dtmfno: 99,
+                usetm: 17,
+                usetm_str: 00:00:17,
+                review_num: 33,
+                score: 5,
+                contents: 상담감사합니다,
+                review_create_time: 2023-10-04 00:44:29,
+                review_update_time: null,
+                comment: null,
+                comment_create_time: null,
+                comment_update_time: null
             -->
             <div class="profile col col-12 mb-3 mb-sm-4 rounded bg-white p-2">
                 <div class="inner my-order-tbl">
                     <div class="row align-items-center">
                         <div class="col col-12 d-flex justify-content-between pb-2">
                             <div class="date fw-bold">
-                                <span class="year">{{item.start.substring(0,4)}}</span>.
-                                <span class="mm">{{item.start.substring(5,7)}}</span>.
-                                <span class="hh">{{item.start.substring(8,10)}}</span>
+                                <span class="year">{{item.review_create_time.substring(0,4)}}</span>.
+                                <span class="mm">{{item.review_create_time.substring(5,7)}}</span>.
+                                <span class="hh">{{item.review_create_time.substring(8,10)}}</span>
                             </div>
                             <!-- <div class="paid d-flex align-items-center justify-content-end">
                                 <div class="fw-bold">
@@ -55,7 +63,7 @@
                         </div>
                         <div class="review col col-12 col-md-12 mt-3">
                             <div class="content border-top">
-                                <div class="score score-1 d-flex justify-content-start align-items-center py-2 ms-auto">
+                                <div class="score score-{{item.score}} d-flex justify-content-start align-items-center py-2 ms-auto">
                                     <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                                     <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                                     <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
@@ -63,11 +71,11 @@
                                     <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                                 </div>
                                 <div class="review-body">
-                                    아주아주 좋아요~! 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세
+                                    {{item.contents}}
                                 </div>
                                 <div class="edit-util d-flex mt-3">
-                                    <div class="btn-edit me-2"><button class="btn border-darkGray text-darkGray fs-6" type="button">수정</button></div>
-                                    <div class="btn-delete"><button class="btn border-darkGray text-darkGray fs-6" type="button">삭제</button></div>
+                                    <div class="btn-edit me-2"><button class="btn border-darkGray text-darkGray fs-6" type="button" data-num="{{item.num}}" data-csrid="{{item.csrid}}" data-nick_name="{{item.nick_name}}" data-profile_path="{{item.profile_path}}" data-score="{{item.score}}" data-contents="{{item.contents}}">수정</button></div>
+                                    <!-- <div class="btn-delete"><button class="btn border-darkGray text-darkGray fs-6" type="button">삭제</button></div> -->
                                 </div>
                             </div>
                         </div>
@@ -104,7 +112,7 @@
                         </div>
                     </div><!--후기 작성 대상인 상담사의 프로필-->
                     <div class="give-score py-3">
-                        <form action="review" method="post" class="d-md-flex flex-wrap">
+                        <form action="editReview" method="post" class="d-md-flex flex-wrap">
                             <input type="hidden" name="counsel_num" id="popup_counsel_num">
                             <input type="hidden" name="score" id="popup_score">
                             <div class="fw-bold text-center">상담은 어떠셨나요?</div>
@@ -138,18 +146,25 @@
             const popup_csrid = document.querySelector("#popup_csrid");
             const popup_profile_path = document.querySelector("#popup_profile_path");
             const popup_score = document.querySelector("#popup_score");
+            const counselorScore = document.querySelector("#counselorScore");
+            const reviewTxt = document.querySelector("#reviewTxt");
 
             opnBtn.forEach((opn,i) => {
                 const counsel_num = opn.dataset.num;
                 const csrid = opn.dataset.csrid;
                 const nick_name = opn.dataset.nick_name;
                 const profile_path = opn.dataset.profile_path;
+                const score = opn.dataset.score;
+                const contents = opn.dataset.contents;
                 opn.addEventListener("click", (e) => {
                     popup.style.display = "block";                    
                     popup_counsel_num.value = counsel_num;
                     popup_nick_name.innerText = nick_name;
                     popup_csrid.innerText = csrid;
                     popup_profile_path.setAttribute("src", "{{host}}" + profile_path);
+                    counselorScore.classList.add('score-' + score);
+                    reviewTxt.value = contents;
+
                 });
             });
             clsBtn.addEventListener("click", (e) => {popup.style.display = "none";});
