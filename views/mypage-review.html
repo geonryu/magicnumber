@@ -4,13 +4,13 @@
 <script>
     const lnb = document.querySelectorAll(".sub-lnb .list a");
     lnb.forEach((list, i) => {
-        i === 3 ? list.classList.add("active") : list.classList.remove("active");
+        i === 4 ? list.classList.add("active") : list.classList.remove("active");
     });
     // local navigation highlight
 </script>
-<div class="history-info py-3">
-    <h3 class="fw-bold mb-3">상담내역</h3>
-    <div class="history-list">
+<div class="review-info py-3">
+    <h3 class="fw-bold mb-3">리뷰작성내역</h3>
+    <div class="review-list">
         {% if counselingHistory.length %} 
             {% for item in counselingHistory %}
             <!--
@@ -49,28 +49,37 @@
                                 <img src="{{host}}{{item.profile_path}}" alt="" />
                             </div>
                         </div>
-                        <div class="counselor col col-6">
+                        <div class="counselor col col-10">
                             <div class="name fw-bold fs-4">{{item.nicknm}} | <span class="cns-num text-secondary">{{item.csrid}}</span></div>
                             <div class="msg fs-6">수비학으로 당신의 미래를 속시원히 알려드립니다.</div>
                         </div>
-                        <div class="review col col-12 col-md-3 mt-3 mt-md-0 ms-auto">
-                            <!-- <button id="writeReview" class="d-block col-lg-6 mt-auto h-100 w-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
-                                <span class="counselor-status ms-1">리뷰작성완료</span>
-                            </button>
-                            리뷰 Disable -->
-                            <button class="writeReview d-block col-lg-6 mt-auto h-100 w-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold" data-num="{{item.num}}" data-csrid="{{item.csrid}}" data-nick_name="{{item.nick_name}}" data-profile_path="{{item.profile_path}}">
-                                <span class="counselor-status ms-1">리뷰쓰기</span>
-                            </button>
+                        <div class="review col col-12 col-md-12 mt-3">
+                            <div class="content border-top">
+                                <div class="score score-1 d-flex justify-content-start align-items-center py-2 ms-auto">
+                                    <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                    <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                    <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                    <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                    <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                </div>
+                                <div class="review-body">
+                                    아주아주 좋아요~! 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세
+                                </div>
+                                <div class="edit-util d-flex mt-3">
+                                    <div class="btn-edit me-2"><button class="btn border-darkGray text-darkGray fs-6" type="button">수정</button></div>
+                                    <div class="btn-delete"><button class="btn border-darkGray text-darkGray fs-6" type="button">삭제</button></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div><!--profile ui card 1-->
             {% endfor %}
-        {% else %}<!--구매 내역이 없을 때-->
-            <div class="empty-history py-2">
+        {% else %}<!--리뷰 내역이 없을 때-->
+            <div class="empty-review py-2">
                 <div class="inner py-2 col-7 mx-auto text-center">
                     <span class="material-symbols-rounded text-bgDisabled fs-1">hourglass_disabled</span>
-                    <p class="text-txtDisabled">아직 상담한 이력이 없습니다.</p>
+                    <p class="text-txtDisabled">아직 작성하신 리뷰가 없습니다.</p>
                 </div>
             </div>
         {% endif %}
@@ -82,7 +91,7 @@
                     <div class="title d-flex justify-content-between align-items-center">
                         <h4 class="mb-3 fw-bold fs-4">리뷰 작성하기</h4>
                         <div class="close">
-                            <button class="text-black"><span class="material-symbols-outlined fw-bold fs-3">close</span></button>
+                            <button class="text-black" type="button"><span class="material-symbols-outlined fw-bold fs-3">close</span></button>
                         </div>
                     </div>
                     <div id="counselorProfile" class="counselor-profile d-md-flex justify-content-between align-items-center border-top border-bottom py-2">
@@ -101,11 +110,11 @@
                             <div class="fw-bold text-center">상담은 어떠셨나요?</div>
                             <div class="text-center ms-md-1">별점을 통해 평가해주세요.</div>
                             <div id="counselorScore" class="score d-flex justify-content-center align-items-center py-3 py-md-0 ms-auto">
-                                <div class="score-star"><button class="star-btn" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                                <div class="score-star"><button class="star-btn" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                                <div class="score-star"><button class="star-btn" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                                <div class="score-star"><button class="star-btn" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
-                                <div class="score-star"><button class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button type="button" class="star-btn" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button type="button" class="star-btn" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button type="button" class="star-btn" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button type="button" class="star-btn" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                                <div class="score-star"><button type="button" class="star-btn" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                             </div>
                             <textarea id="reviewTxt" name="contents" placeholder="후기를 작성해주세요." class="border w-100 py-3 px-2" rows="6"></textarea>
                             <div id="warnMsg" class="warn text-point fs-6"></div>
@@ -121,7 +130,7 @@
 
             // 팝업 제어
             const popup = document.querySelector("#popup");
-            const opnBtn = document.querySelectorAll(".writeReview");
+            const opnBtn = document.querySelectorAll(".btn-edit button");
             const layer = document.querySelector("#layer");
             const cont = document.querySelector("#content");
             const clsBtn = document.querySelector(".modal-popup .close button");
