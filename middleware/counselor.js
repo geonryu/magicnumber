@@ -154,7 +154,7 @@ const counselor = {
       });
 
       // GET 요청 보내기
-      const response = await axiosInstance.get(apiUrl);
+      const response = await axiosInstance.get(apiUrl, { params: params });
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
@@ -219,8 +219,8 @@ const counselor = {
         }, // 헤더 설정
       });
 
-      // GET 요청 보내기
-      const response = await axiosInstance.get(apiUrl, { params: params });
+      // PUT 요청 보내기
+      const response = await axiosInstance.put(apiUrl, params);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;

@@ -79,6 +79,38 @@ h1 img {
 .history-info .score-5 .score-star:nth-child(4) .star-active{opacity: 1;}
 .history-info .score-5 .score-star:nth-child(5) .star-active{opacity: 1;}
 
+/* 마이페이지 리뷰 내역 별점 스코어 */
+.review-info{}
+.review-info .score-star{position: relative;}
+.review-info .score-star .material-symbols-rounded {font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;}
+.review-info .score-star .star-disabled{color: #929293;}
+.review-info .score-star .star-active{color: #EB5602; position: absolute; top: 0; left: 0; opacity: 0;}
+.review-info .score-1 .score-star:nth-child(1) .star-active{opacity: 1;}
+.review-info .score-1 .score-star:nth-child(2) .star-active{opacity: 0;}
+.review-info .score-1 .score-star:nth-child(3) .star-active{opacity: 0;}
+.review-info .score-1 .score-star:nth-child(4) .star-active{opacity: 0;}
+.review-info .score-1 .score-star:nth-child(5) .star-active{opacity: 0;}
+.review-info .score-2 .score-star:nth-child(1) .star-active{opacity: 1;}
+.review-info .score-2 .score-star:nth-child(2) .star-active{opacity: 1;}
+.review-info .score-2 .score-star:nth-child(3) .star-active{opacity: 0;}
+.review-info .score-2 .score-star:nth-child(4) .star-active{opacity: 0;}
+.review-info .score-2 .score-star:nth-child(5) .star-active{opacity: 0;}
+.review-info .score-3 .score-star:nth-child(1) .star-active{opacity: 1;}
+.review-info .score-3 .score-star:nth-child(2) .star-active{opacity: 1;}
+.review-info .score-3 .score-star:nth-child(3) .star-active{opacity: 1;}
+.review-info .score-3 .score-star:nth-child(4) .star-active{opacity: 0;}
+.review-info .score-3 .score-star:nth-child(5) .star-active{opacity: 0;}
+.review-info .score-4 .score-star:nth-child(1) .star-active{opacity: 1;}
+.review-info .score-4 .score-star:nth-child(2) .star-active{opacity: 1;}
+.review-info .score-4 .score-star:nth-child(3) .star-active{opacity: 1;}
+.review-info .score-4 .score-star:nth-child(4) .star-active{opacity: 1;}
+.review-info .score-4 .score-star:nth-child(5) .star-active{opacity: 0;}
+.review-info .score-5 .score-star:nth-child(1) .star-active{opacity: 1;}
+.review-info .score-5 .score-star:nth-child(2) .star-active{opacity: 1;}
+.review-info .score-5 .score-star:nth-child(3) .star-active{opacity: 1;}
+.review-info .score-5 .score-star:nth-child(4) .star-active{opacity: 1;}
+.review-info .score-5 .score-star:nth-child(5) .star-active{opacity: 1;}
+
 /* modal popup style*/
 .modal-popup{
   width: 100%;
