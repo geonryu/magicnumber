@@ -170,42 +170,44 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // 약관 전체 동의 끝
 
-  $ckNickname.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    const nick_name = $joinNickName.value;
-    const params = {
-      nick_name: nick_name,
-    };
+  if($ckNickname){
+    $ckNickname.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      const nick_name = $joinNickName.value;
+      const params = {
+        nick_name: nick_name,
+      };
 
-    fetch("/checkNickname", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("서버에서 받은 데이터: ", data);
-
-        if (data.result === 1) {
-          // 이미 사용중인 닉네임입니다.
-          $nicknameOk.value = 0;
-          $ckDupResult.innerText = data.message;
-          $ckDupResult.style.display = "block";
-          $ckDupResult.classList.add("text-point");
-        } else if (data.result === 2) {
-          // 사용가능한 닉네임입니다.
-          $nicknameOk.value = 1;
-          $ckDupResult.innerText = data.message;
-          $ckDupResult.style.display = "block";
-          $ckDupResult.classList.remove("text-point");
-        }
+      fetch("/checkNickname", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(params),
       })
-      .catch((error) => {
-        console.error("에러 발생: ", error);
-      });
-  });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("서버에서 받은 데이터: ", data);
+
+          if (data.result === 1) {
+            // 이미 사용중인 닉네임입니다.
+            $nicknameOk.value = 0;
+            $ckDupResult.innerText = data.message;
+            $ckDupResult.style.display = "block";
+            $ckDupResult.classList.add("text-point");
+          } else if (data.result === 2) {
+            // 사용가능한 닉네임입니다.
+            $nicknameOk.value = 1;
+            $ckDupResult.innerText = data.message;
+            $ckDupResult.style.display = "block";
+            $ckDupResult.classList.remove("text-point");
+          }
+        })
+        .catch((error) => {
+          console.error("에러 발생: ", error);
+        });
+    });
+  }
 
   $reqAuthEmail.addEventListener("click", (ev) => {
     ev.preventDefault();
