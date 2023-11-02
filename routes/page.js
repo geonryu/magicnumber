@@ -647,6 +647,7 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
       user: req.user,
       msg: req.query.msg,
       userInfo: userInfo,
+      mypageInfo: mypageInfo,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
