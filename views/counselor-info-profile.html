@@ -9,7 +9,7 @@
     // local navigation highlight
 </script>
 <div class="info-basic py-3">
-    <div class="notice py-3">
+    <!-- <div class="notice py-3">
         <h3 class="fw-bold">서비스 공지</h3>
         <div class="content rounded bg-white p-3">
             <pre>
@@ -18,14 +18,46 @@
 토~일 수시대기이지만 외부 스케쥴로 인해 변동 가능
             </pre>
         </div>
-    </div>
+    </div> -->
     <div class="intro py-3">
-        <h3 class="fw-bold">기본정보</h3>
-        <div class="content rounded bg-white p-3">
-            <pre>
-{{counselorInfo.profile_contents}}
-            </pre>
+        <div class="content">
+            {{counselorInfo.profile_contents}}
         </div>
+        <script>
+            const $content = document.querySelector(".intro .content");
+            const stringToHTML = (str) => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(str, 'text/html');
+                return doc.body;
+            };
+
+            const convertHtml = (code) => {
+                let result = code.replaceAll(`<p>&nbsp;</p>`, "");
+
+                const context1 = result.slice(0, result.indexOf("<p>상담사 소개 :</p>"));
+                const body1 = context1.slice(15);
+    
+                const context2 = result.slice(result.indexOf("<p>상담사 소개 :</p>"));
+                const body2 = context2.slice(15);
+    
+                return `
+                    <div class="notice py-3">
+                        <h3 class="fw-bold">상담사 소개</h3>
+                        <div class="content rounded bg-white p-3">
+                            ${body2 ? body2 : "안녕하세요. 상담사 {{counselorInfo.nicknm}}입니다."}
+                        </div>
+                    </div>
+                    <div class="notice py-3">
+                        <h3 class="fw-bold">상담사 이력</h3>
+                        <div class="content rounded bg-white p-3">
+                            ${body1.replaceAll("<p>", "<p>- ")}
+                        </div>
+                    </div>
+                `;
+            }
+
+            $content.innerHTML = convertHtml(stringToHTML($content.innerText).innerHTML);
+        </script>
     </div>
     <!-- <div class="career py-3">
         <h3 class="fw-bold">주요경력</h3>
