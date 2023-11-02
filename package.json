@@ -23,6 +23,8 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "passport-naver": "^1.0.6",
+    "passport-oauth": "^1.0.0",
+    "passport-oauth2": "^1.7.0",
     "path": "^0.12.7",
     "sass": "^1.62.1"
   }

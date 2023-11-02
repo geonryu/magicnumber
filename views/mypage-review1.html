@@ -10,11 +10,11 @@
 </script>
 <div class="review-info py-3">
     <h3 class="fw-bold mb-3">리뷰내역</h3>
-    <div class="track d-flex w-lg-100 d-lg-block justify-content-around">
-        <div class="list p-2 mx-1 w-lg-100"><a href="/mypage-review1" class="h-100 w-100 d-block text-center text-lg-start text-darkGray fs-xs-6 active">작성가능</a></div>
-        <div class="list p-2 mx-1 w-lg-100"><a href="/mypage-review2" class="h-100 w-100 d-block text-center text-lg-start text-darkGray fs-xs-6">작성완료(수정)</a></div>
+    <div class="track d-flex w-lg-100 justify-content-around">
+        <div class="list w-50 border-bottom border-primary"><a href="/mypage-review1" class="h-100 w-100 d-block text-center bg-white p-2 text-primary fw-bold">작성가능</a></div>
+        <div class="list w-50 border-bottom"><a href="/mypage-review2" class="h-100 w-100 d-block text-center bg-white p-2 text-darkGray">작성완료</a></div>
     </div>
-    <div class="review-list">
+    <div class="review-list py-3">
         {% if myReviewList.length %} 
             {% for item in myReviewList %}
             <!--

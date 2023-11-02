@@ -17,44 +17,44 @@
         <form action="mypage-info" method="post" id="userInfoForm">
             <div class="user-id mb-3">
                 <label for="userId" class="mb-1">아이디(이메일)</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="email" id="userId" value="{{mypageInfo.email}}" disabled>
+                <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="email" id="userId" value="{{mypageInfo.email}}" disabled>
             </div>
             <div class="user-pw mb-3">
                 <label class="mb-1" for="userPw">비밀번호</label>
                 <div class="row">
-                    <div class="output col-10"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="password" name="password" id="userPw" maxlength="20" readonly></div>
-                    <div class="change-pw col-2"><a href="/pwChange" class="d-block w-100 px-2 py-3 text-center text-white bg-primary fw-bold rounded">변경</a></div>
+                    <div class="output col-10"><input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="password" name="password" id="userPw" maxlength="20" readonly></div>
+                    <div class="change-pw col-2"><a href="/pwChange" class="d-block w-100 px-2 py-2 text-center text-white bg-primary fw-bold rounded">변경</a></div>
                 </div>
             </div>
             <div class="user-name mb-3">
                 <label class="mb-1" for="userName">이름</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="name" id="userName" value="{{mypageInfo.name}}" disabled>
+                <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="name" id="userName" value="{{mypageInfo.name}}" disabled>
             </div>
             <div class="user-birth mb-3">
                 <label class="mb-1" for="birth">생년월일</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="birth" id="birth" value="{{mypageInfo.birth}}">
+                <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="birth" id="birth" value="{{mypageInfo.birth}}">
             </div>
             <div class="user-gender mb-3">
                 <label class="mb-1" for="gender">성별</label>
                 {% if mypageInfo.gender == 1 %}
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="gender" id="gender" value="남자" disabled>
+                <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="gender" id="gender" value="남자" disabled>
                 {% endif %}
                 {% if mypageInfo.gender == 2 %}
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="gender" id="gender" value="여자" disabled>
+                <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="gender" id="gender" value="여자" disabled>
                 {% endif %}
             </div>
             <div class="user-nick-name mb-3">
                 <label class="mb-1" for="userNickName">닉네임</label>
-                <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="userNickName" value="{{mypageInfo.nick_name}}">
+                <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="userNickName" value="{{mypageInfo.nick_name}}">
             </div>
             <div class="user-auth">
                 <label class="mb-1" for="userAuthTel">휴대폰</label>
                 <div class="row">
-                    <div class="output col-12"><input class="px-4 py-3 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" name="phone_num" id="userAuthTel" value="{{mypageInfo.phone_num}}" maxlength="13" required></div>
+                    <div class="output col-12"><input class="px-3 py-2 bg-white border border-primary d-block rounded w-100 mb-3" type="tel" name="phone_num" id="userAuthTel" value="{{mypageInfo.phone_num}}" maxlength="13" required></div>
                 </div>
             </div>
             <div class="btn-my-info">
-                <button class="px-4 py-3 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">정보 수정</button>
+                <button class="px-3 py-2 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">정보 수정</button>
             </div>
         </form>
     </div>

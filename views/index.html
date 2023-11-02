@@ -38,11 +38,11 @@
         <div class="row">
             {% for item in counselorList %}
             <div class="profile col col-12 col-sm-6 col-md-4 mb-3 mb-sm-4">
-                <div class="inner bg-white">
-                    <a href="/counselorInfoProfile?csrid={{item.csrid}}">
+                <div class="inner bg-white rounded h-100">
+                    <a href="/counselorInfoProfile?csrid={{item.csrid}}" class="d-block h-100">
                         <div class="intro row p-2">
                             <div class="pic col col-5">
-                                <div class="profile-img">
+                                <div class="profile-img" >
                                     <img src="{{host}}{{item.profile_path}}" alt="" />
                                 </div>
                             </div>
