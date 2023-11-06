@@ -38,6 +38,7 @@ router.get("/", async (req, res, next) => {
     const params2 = {};
     const responseData2 = await etc.getBanner(params2, "");
 
+    let bannerList = [];
     if (responseData2.code === 200 && responseData2.status === "success") {
       bannerList = responseData2.result;
     }
