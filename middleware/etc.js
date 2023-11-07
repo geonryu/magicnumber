@@ -53,12 +53,8 @@ const etc = {
         }, // 헤더 설정
       });
 
-      console.log("params", params);
-
       // GET 요청 보내기
       const response = await axiosInstance.get(apiUrl, {params: params});
-
-      console.log("response", response.result);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
