@@ -8,13 +8,12 @@
                     <div class="user-id mb-3">
                         <input
                             class="px-3 py-2 bg-white border border-primary d-block rounded w-100 border d-block w-100"
-                            name="userId" id="userId" type="text" placeholder="아이디(이메일)을 입력하세요."
-                            value="test@magicnumber.co.kr" />
+                            name="userId" id="userId" type="text" placeholder="아이디(이메일)을 입력하세요." />
                     </div>
                     <div class="user-pw mb-3">
                         <input
                             class="px-3 py-2 bg-white border border-primary d-block rounded w-100 border d-block w-100"
-                            name="userPw" id="userPw" type="password" placeholder="비밀번호를 입력하세요." value="5555" />
+                            name="userPw" id="userPw" type="password" placeholder="비밀번호를 입력하세요." />
                     </div>
                     {% if messages.error %}
                     <div class="error-message mb-3" style="color: red">{{ messages.error }}</div>
@@ -27,13 +26,13 @@
                 <h3 class="fs-5 fw-bold text-center">다른 서비스 계정으로 간편 가입 또는 로그인</h3>
                 <div class="social-list d-flex justify-content-center align-items-center mt-3">
                     <div class="kakao mx-3">
-                        <a href="javascript:alert('준비중입니다.')"><img src="images/social-login-kakao.png" alt="" /></a>
+                        <a href="/auth/kakao"><img src="images/social-login-kakao.png" alt="" /></a>
                     </div>
                     <div class="fb mx-3">
                         <a href="/auth/naver"><img src="images/social-login-naver.png" alt="" /></a>
                     </div>
                     <div class="google mx-3">
-                        <a href="javascript:alert('준비중입니다.')"><img src="images/social-login-google.png" alt="" /></a>
+                        <a href="/auth/google"><img src="images/social-login-google.png" alt="" /></a>
                     </div>
                 </div>
             </div>

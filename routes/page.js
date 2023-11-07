@@ -38,6 +38,7 @@ router.get("/", async (req, res, next) => {
     const params2 = {};
     const responseData2 = await etc.getBanner(params2, "");
 
+    let bannerList = [];
     if (responseData2.code === 200 && responseData2.status === "success") {
       bannerList = responseData2.result;
     }
@@ -83,7 +84,9 @@ router.post("/login", passport.authenticate("local", {
   })
 ); // 로그인 처리
 
-router.get("/auth/naver", passport.authenticate("naver")); // 네이버 로그인 라우터
+router.get("/auth/naver",
+  passport.authenticate("naver")
+); // 네이버 로그인 라우터
 
 router.get("/auth/naver/callback", passport.authenticate("naver", {
     // successRedirect: "/join",
@@ -94,14 +97,99 @@ router.get("/auth/naver/callback", passport.authenticate("naver", {
     try {
       console.log("/auth/naver/callback - req.user", req.user);
 
+      /*
+      // 네이버에서 받은 로그인 정보
+      // => 닉네임 정보만 활용가능
+      email: undefined,
+      nickname: '닉네임',
+      profile_image: undefined,
+      age: undefined,
+      birthday: 'MM-DD',
+      id: '고유아이디'
+      */
+
       const nickname = req.user._json.nickname;
-      res.redirect(`/joinSocial?nickname=${nickname}`)
+      res.redirect(`/joinSocialNaver?nickname=${nickname}`)
     } catch (error) {
       console.error("외부 API와의 통신 중 에러 발생:", error);
       res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
     }
   }
 ); // 네이버 로그인 처리
+
+router.get("/auth/google",
+  passport.authenticate("google",  { scope: ['profile', 'email'] })
+); // 구글 로그인 라우터
+
+router.get("/auth/google/callback", passport.authenticate("google", {
+    // successRedirect: "/join",
+    failureRedirect: "/login",
+    failureFlash: true, // 실패할 때 플래시 메시지 사용
+  })
+  , async (req, res, next) => {
+    try {
+      console.log("/auth/google/callback - req.user", req.user);
+
+      /*
+      // 구글에서 받은 로그인 정보
+      // => 이름과 이메일 정보만 활용가능
+      sub: '고유번호',
+      name: '홍길동',
+      given_name: '길동',
+      family_name: '홍',
+      picture: '프로필이미지',
+      email: '이메일',
+      email_verified: true,
+      locale: 'ko'
+      */
+
+      const name = req.user._json.name;
+      const email = req.user._json.email;
+      res.redirect(`/joinSocialGoogle?name=${name}&email=${email}`)
+    } catch (error) {
+      console.error("외부 API와의 통신 중 에러 발생:", error);
+      res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+    }
+  }
+); // 구글 로그인 처리
+
+router.get("/auth/kakao",
+  passport.authenticate("kakao")
+); // 카카오 로그인 라우터
+
+router.get("/auth/kakao/callback", passport.authenticate("kakao", {
+    // successRedirect: "/join",
+    failureRedirect: "/login",
+    failureFlash: true, // 실패할 때 플래시 메시지 사용
+  })
+  , async (req, res, next) => {
+    try {
+      console.log("/auth/kakao/callback - req.user", req.user);
+
+      /*
+      // 카카오에서 받은 로그인 정보
+      // => 이메일 정보만 활용가능 (닉네임과 프로필이미지 선택 비동의 시)
+      id: 고유번호,
+      connected_at: 접근일시,
+      kakao_account: {
+        profile_nickname_needs_agreement: false,
+        profile_image_needs_agreement: false,
+        has_email: true,
+        email_needs_agreement: false,
+        is_email_valid: true,
+        is_email_verified: true,
+        email: '이메일'
+      }
+      */
+
+      const email = req.user._json.kakao_account.email;
+      res.redirect(`/joinSocialKakao?email=${email}`)
+    } catch (error) {
+      console.error("외부 API와의 통신 중 에러 발생:", error);
+      res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+    }
+  }
+); // 카카오 로그인 처리
 
 router.get("/logout", async (req, res, next) => {
   try {
@@ -158,7 +246,7 @@ router.get("/join", async (req, res, next) => {
   }
 }); // 회원가입 라우터
 
-router.get("/joinSocial", async (req, res, next) => {
+router.get("/joinSocialNaver", async (req, res, next) => {
   try {
     // 이용약관
     const params = {
@@ -180,7 +268,7 @@ router.get("/joinSocial", async (req, res, next) => {
       privatePolicy = responseData2.result;
     }
 
-    res.render("joinSocial", {
+    res.render("joinSocialNaver", {
       title: "매직넘버:소셜회원가입",
       host: host,
       user: "",
@@ -188,6 +276,81 @@ router.get("/joinSocial", async (req, res, next) => {
       termsOfUse: termsOfUse,
       privatePolicy: privatePolicy,
       nick_name: req.query.nickname,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 소셜회원가입 라우터
+
+router.get("/joinSocialGoogle", async (req, res, next) => {
+  try {
+    // 이용약관
+    const params = {
+      agreement_type: 1,
+    };
+    const responseData = await etc.getAgreement(params, "");
+    let termsOfUse = "";
+    if (responseData.code === 200 && responseData.status === "success") {
+      termsOfUse = responseData.result;
+    }
+
+    // 개인정보처리방침
+    const params2 = {
+      agreement_type: 3,
+    };
+    const responseData2 = await etc.getAgreement(params2, "");
+    let privatePolicy = "";
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      privatePolicy = responseData2.result;
+    }
+
+    res.render("joinSocialGoogle", {
+      title: "매직넘버:소셜회원가입",
+      host: host,
+      user: "",
+      msg: req.query.msg,
+      termsOfUse: termsOfUse,
+      privatePolicy: privatePolicy,
+      name: req.query.name,
+      email: req.query.email,
+    });
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 소셜회원가입 라우터
+
+router.get("/joinSocialKakao", async (req, res, next) => {
+  try {
+    // 이용약관
+    const params = {
+      agreement_type: 1,
+    };
+    const responseData = await etc.getAgreement(params, "");
+    let termsOfUse = "";
+    if (responseData.code === 200 && responseData.status === "success") {
+      termsOfUse = responseData.result;
+    }
+
+    // 개인정보처리방침
+    const params2 = {
+      agreement_type: 3,
+    };
+    const responseData2 = await etc.getAgreement(params2, "");
+    let privatePolicy = "";
+    if (responseData2.code === 200 && responseData2.status === "success") {
+      privatePolicy = responseData2.result;
+    }
+
+    res.render("joinSocialKakao", {
+      title: "매직넘버:소셜회원가입",
+      host: host,
+      user: "",
+      msg: req.query.msg,
+      termsOfUse: termsOfUse,
+      privatePolicy: privatePolicy,
+      email: req.query.email,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -647,6 +810,7 @@ router.get("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
       user: req.user,
       msg: req.query.msg,
       userInfo: userInfo,
+      mypageInfo: mypageInfo,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -825,21 +989,21 @@ router.get("/mypage-review1", auth.isAuthenticated, async (req, res, next) => {
       if (userData.code === 200 && userData.status === "success") {
         userInfo = userData.result;
       }
-  
+
       const params = {
         type: 1, // 1:작성가능, 2:작성완료(수정)
         page: 1,
       };
-  
+
       const responseData = await counselor.getMyReview(params, accessToken);
       console.log("responseData: ", responseData)
-  
+
       // 내 리뷰내역
       let myReviewList = {};
       if (responseData.code === 200 && responseData.status === "success") {
         myReviewList = responseData.result;
       }
-  
+
       res.render("mypage-review1", {
         title: "매직넘버:마이페이지",
         host: host,
@@ -862,21 +1026,21 @@ router.get("/mypage-review2", auth.isAuthenticated, async (req, res, next) => {
       if (userData.code === 200 && userData.status === "success") {
         userInfo = userData.result;
       }
-  
+
       const params = {
         type: 2, // 1:작성가능, 2:작성완료(수정)
         page: 1,
       };
-  
+
       const responseData = await counselor.getMyReview(params, accessToken);
       console.log("responseData: ", responseData)
-  
+
       // 내 리뷰내역
       let myReviewList = {};
       if (responseData.code === 200 && responseData.status === "success") {
         myReviewList = responseData.result;
       }
-  
+
       res.render("mypage-review2", {
         title: "매직넘버:마이페이지",
         host: host,
