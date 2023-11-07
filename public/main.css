@@ -1,6 +1,9 @@
 h1 img {
   height: 40px;
 }
+/* index.html */
+.swiper-pagination .swiper-pagination-bullet{width: 40px; border-radius: 50px;}
+.swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active{background-color: #6900FF;}
 
 /* 마이페이지 - 로컬 네비게이션 */
 .mypage-lnb{width: 100%; overflow: scroll visible;}

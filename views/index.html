@@ -8,12 +8,41 @@
         {% endfor %}
     </div> -->
     <div class="container">
-        <a href="#">
-            <img src="images/mainBanner.jpg" alt="" />
-        </a>
+        <div class="swiper mainVisual">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="/join">
+                        <img class="pc d-none d-md-block" src="images/bn-1.jpg" alt="" />
+                        <img class="m d-block d-md-none" src="images/bn-1-sm.jpg" alt="" />
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/join">
+                        <img class="pc d-none d-md-block" src="images/bn-2.jpg" alt="" />
+                        <img class="m d-block d-md-none" src="images/bn-2-sm.jpg" alt="" />
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#cnslLnb">
+                        <img class="pc d-none d-md-block" src="images/bn-3.jpg" alt="" />
+                        <img class="m d-block d-md-none" src="images/bn-3-sm.jpg" alt="" />
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-pagination">
+            </div>
+        </div>
+        <script>
+            const mainBn = new Swiper(".mainVisual", {
+                loop: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                },
+            });
+        </script>
     </div>
 </div>
-<div class="lnb bg-white">
+<div class="lnb bg-white" id="cnslLnb">
     <div class="container">
         <div class="row">
             <div class="col col-6 text-center py-2"><a href="/" class="h-100 w-100 d-block text-darkGray {% if state != 'IDLE' %} active {% endif %}" data-index="0">전체보기</a></div>
