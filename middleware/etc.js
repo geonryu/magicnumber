@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-// 5. 구매
+// 6. 기타
 const etc = {
-  // 3.1 [GET] 배너 목록 호출
+  // 6.1 [GET] 배너 목록 호출
   async getBanner(params, accessToken) {
     console.log("getBanner(params, accessToken)", params, accessToken);
 
@@ -36,7 +36,7 @@ const etc = {
     }
   },
 
-  // 3.2 [POST] 약관 목록 호출
+  // 6.2 [POST] 약관 목록 호출
   async getAgreement(params, accessToken) {
     console.log("getAgreement(params, accessToken)", params, accessToken);
 
@@ -53,12 +53,8 @@ const etc = {
         }, // 헤더 설정
       });
 
-      console.log("params", params);
-
       // GET 요청 보내기
       const response = await axiosInstance.get(apiUrl, {params: params});
-
-      console.log("response", response.result);
 
       const responseStatus = response.status;
       const responseStatusText = response.statusText;
