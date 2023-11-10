@@ -4,6 +4,7 @@ const counselor = require("../middleware/counselor.js");
 const etc = require("../middleware/etc.js");
 const mypage = require("../middleware/mypage.js");
 const payment = require("../middleware/payment.js");
+const sns = require("../middleware/sns.js");
 const user = require("../middleware/user.js");
 const passport = require("passport");
 
@@ -108,8 +109,33 @@ router.get("/auth/naver/callback", passport.authenticate("naver", {
       id: '고유아이디'
       */
 
-      const nickname = req.user._json.nickname;
-      res.redirect(`/joinSocialNaver?nickname=${nickname}`)
+      if(req.user.accessToken){
+        res.redirect("/");
+      }else{
+        const sns_type = 4; // 1:로컬, 2:구글, 3:카카오, 4:네이버
+        const sns_uid = req.user.id;
+        const params = {
+          sns_uid: sns_uid,
+        }
+        const responseData = await sns.loginNaver(params, "");
+        console.log("/auth/naver/callback - responseData", responseData);
+
+        if (responseData.code === 200 && responseData.status === "success") {
+
+          // 회원 정보가 없을 경우
+          if(responseData.result.code == 404) {
+            const name = req.user._json.name ? req.user._json.name : "";
+            const birth = req.user._json.birthday ? req.user._json.birthday : "";
+            const gender = req.user._json.gender ? req.user._json.gender : "";
+            const phone_num = req.user._json.phone_num ? req.user._json.phone_num : "";
+            const email = req.user._json.email ? req.user._json.email : "";
+            const nick_name = req.user._json.nickname ? req.user._json.nickname : "";
+            res.redirect(`/joinSocial?sns_type=${sns_type}&sns_uid=${sns_uid}&name=${name}&birth=${birth}&gender=${gender}&phone_num=${phone_num}&email=${email}&nick_name=${nick_name}`);
+          }else{
+            res.redirect("/auth/naver");
+          }
+        }
+      }
     } catch (error) {
       console.error("외부 API와의 통신 중 에러 발생:", error);
       res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
@@ -143,9 +169,33 @@ router.get("/auth/google/callback", passport.authenticate("google", {
       locale: 'ko'
       */
 
-      const name = req.user._json.name;
-      const email = req.user._json.email;
-      res.redirect(`/joinSocialGoogle?name=${name}&email=${email}`)
+      if(req.user.accessToken){
+        res.redirect("/");
+      }else{
+        const sns_type = 2; // 1:로컬, 2:구글, 3:카카오, 4:네이버
+        const sns_uid = req.user.id;
+        const params = {
+          sns_uid: sns_uid,
+        }
+        const responseData = await sns.loginGoogle(params, "");
+        console.log("/auth/google/callback - responseData", responseData);
+
+        if (responseData.code === 200 && responseData.status === "success") {
+
+          // 회원 정보가 없을 경우
+          if(responseData.result.code == 404) {
+            const name = req.user._json.name ? req.user._json.name : "";
+            const birth = req.user._json.birth ? req.user._json.birth : "";
+            const gender = req.user._json.gender ? req.user._json.gender : "";
+            const phone_num = req.user._json.phone_num ? req.user._json.phone_num : "";
+            const email = req.user._json.email ? req.user._json.email : "";
+            const nick_name = req.user._json.nickname ? req.user._json.nickname : "";
+            res.redirect(`/joinSocial?sns_type=${sns_type}&sns_uid=${sns_uid}&name=${name}&birth=${birth}&gender=${gender}&phone_num=${phone_num}&email=${email}&nick_name=${nick_name}`);
+          }else{
+            res.redirect("/auth/google");
+          }
+        }
+      }
     } catch (error) {
       console.error("외부 API와의 통신 중 에러 발생:", error);
       res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
@@ -182,8 +232,33 @@ router.get("/auth/kakao/callback", passport.authenticate("kakao", {
       }
       */
 
-      const email = req.user._json.kakao_account.email;
-      res.redirect(`/joinSocialKakao?email=${email}`)
+      if(req.user.accessToken){
+        res.redirect("/");
+      }else{
+        const sns_type = 3; // 1:로컬, 2:구글, 3:카카오, 4:네이버
+        const sns_uid = req.user.id;
+        const params = {
+          sns_uid: sns_uid,
+        }
+        const responseData = await sns.loginKakao(params, "");
+        console.log("/auth/kakao/callback - responseData", responseData);
+
+        if (responseData.code === 200 && responseData.status === "success") {
+
+          // 회원 정보가 없을 경우
+          if(responseData.result.code == 404) {
+            const name = req.user._json.name ? req.user._json.name : "";
+            const birth = req.user._json.birth ? req.user._json.birth : "";
+            const gender = req.user._json.gender ? req.user._json.gender : "";
+            const phone_num = req.user._json.phone_num ? req.user._json.phone_num : "";
+            const email = req.user._json.kakao_account.email ? req.user._json.kakao_account.email : "";
+            const nick_name = req.user._json.nickname ? req.user._json.nickname : "";
+            res.redirect(`/joinSocial?sns_type=${sns_type}&sns_uid=${sns_uid}&name=${name}&birth=${birth}&gender=${gender}&phone_num=${phone_num}&email=${email}&nick_name=${nick_name}`);
+          }else{
+            res.redirect("/auth/kakao");
+          }
+        }
+      }
     } catch (error) {
       console.error("외부 API와의 통신 중 에러 발생:", error);
       res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
@@ -246,111 +321,21 @@ router.get("/join", async (req, res, next) => {
   }
 }); // 회원가입 라우터
 
-router.get("/joinSocialNaver", async (req, res, next) => {
+router.get("/joinSocial", async (req, res, next) => {
   try {
-    // 이용약관
-    const params = {
-      agreement_type: 1,
-    };
-    const responseData = await etc.getAgreement(params, "");
-    let termsOfUse = "";
-    if (responseData.code === 200 && responseData.status === "success") {
-      termsOfUse = responseData.result;
-    }
-
-    // 개인정보처리방침
-    const params2 = {
-      agreement_type: 3,
-    };
-    const responseData2 = await etc.getAgreement(params2, "");
-    let privatePolicy = "";
-    if (responseData2.code === 200 && responseData2.status === "success") {
-      privatePolicy = responseData2.result;
-    }
-
-    res.render("joinSocialNaver", {
+    res.render("joinSocial", {
       title: "매직넘버:소셜회원가입",
       host: host,
       user: "",
       msg: req.query.msg,
-      termsOfUse: termsOfUse,
-      privatePolicy: privatePolicy,
-      nick_name: req.query.nickname,
-    });
-  } catch (error) {
-    console.error("외부 API와의 통신 중 에러 발생:", error);
-    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
-  }
-}); // 소셜회원가입 라우터
-
-router.get("/joinSocialGoogle", async (req, res, next) => {
-  try {
-    // 이용약관
-    const params = {
-      agreement_type: 1,
-    };
-    const responseData = await etc.getAgreement(params, "");
-    let termsOfUse = "";
-    if (responseData.code === 200 && responseData.status === "success") {
-      termsOfUse = responseData.result;
-    }
-
-    // 개인정보처리방침
-    const params2 = {
-      agreement_type: 3,
-    };
-    const responseData2 = await etc.getAgreement(params2, "");
-    let privatePolicy = "";
-    if (responseData2.code === 200 && responseData2.status === "success") {
-      privatePolicy = responseData2.result;
-    }
-
-    res.render("joinSocialGoogle", {
-      title: "매직넘버:소셜회원가입",
-      host: host,
-      user: "",
-      msg: req.query.msg,
-      termsOfUse: termsOfUse,
-      privatePolicy: privatePolicy,
+      sns_type: req.query.sns_type,
+      sns_uid: req.query.sns_uid,
       name: req.query.name,
+      birth: req.query.birth,
+      gender: req.query.gender,
+      phone_num: req.query.phone_num,
       email: req.query.email,
-    });
-  } catch (error) {
-    console.error("외부 API와의 통신 중 에러 발생:", error);
-    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
-  }
-}); // 소셜회원가입 라우터
-
-router.get("/joinSocialKakao", async (req, res, next) => {
-  try {
-    // 이용약관
-    const params = {
-      agreement_type: 1,
-    };
-    const responseData = await etc.getAgreement(params, "");
-    let termsOfUse = "";
-    if (responseData.code === 200 && responseData.status === "success") {
-      termsOfUse = responseData.result;
-    }
-
-    // 개인정보처리방침
-    const params2 = {
-      agreement_type: 3,
-    };
-    const responseData2 = await etc.getAgreement(params2, "");
-    let privatePolicy = "";
-    if (responseData2.code === 200 && responseData2.status === "success") {
-      privatePolicy = responseData2.result;
-    }
-
-    res.render("joinSocialKakao", {
-      title: "매직넘버:소셜회원가입",
-      host: host,
-      user: "",
-      msg: req.query.msg,
-      termsOfUse: termsOfUse,
-      privatePolicy: privatePolicy,
-      email: req.query.email,
+      nick_name: req.query.nick_name,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -377,7 +362,6 @@ router.post("/join", async (req, res, next) => {
     };
 
     const responseData = await user.signUp(params, "");
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       res.redirect("/");
@@ -396,6 +380,54 @@ router.post("/join", async (req, res, next) => {
   }
 }); // 회원가입 처리
 
+router.post("/joinSocial", async (req, res, next) => {
+  try {
+    const params = {
+      sns_uid: req.body.sns_uid,
+      name: req.body.name,
+      birth: req.body.birth,
+      gender: req.body.gender,
+      email: req.body.email,
+      phone_num: req.body.phone_num,
+      nick_name: req.body.nick_name,
+    };
+
+    const sns_type = req.body.sns_type;
+
+    let responseData = {};
+
+    // 1:로컬, 2:구글, 3:카카오, 4:네이버
+    if(sns_type == 2) {
+      responseData = await sns.loginGoogle(params, "");
+    }else if(sns_type == 3) {
+      responseData = await sns.loginKakao(params, "");
+    }else if(sns_type == 4) {
+      responseData = await sns.loginNaver(params, "");
+    }
+
+    if (responseData.code === 200 && responseData.status === "success") {
+      res.redirect("/");
+    } else {
+      res.render("joinSocial", {
+        title: "매직넘버:소셜회원가입",
+        host: host,
+        user: "",
+        msg: req.query.msg,
+        sns_uid: req.query.sns_uid,
+        name: req.query.name,
+        birth: req.query.birth,
+        gender: req.query.gender,
+        phone_num: req.query.phone_num,
+        email: req.query.email,
+        nick_name: req.query.nick_name,
+      });
+    }
+  } catch (error) {
+    console.error("외부 API와의 통신 중 에러 발생:", error);
+    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
+  }
+}); // 네이버 회원가입 처리
+
 router.post("/reqAuthEmail", async (req, res, next) => {
   try {
     const params = {
@@ -403,7 +435,6 @@ router.post("/reqAuthEmail", async (req, res, next) => {
     };
 
     const responseData = await user.reqAuthEmail(params, "");
-    console.log("responseData: ", responseData);
 
     res.status(200).json(responseData);
   } catch (error) {
@@ -421,7 +452,6 @@ router.post("/certAuthEmail", async (req, res, next) => {
     };
 
     const responseData = await user.certAuthEmail(params, "");
-    console.log("responseData: ", responseData);
 
     res.status(200).json(responseData);
   } catch (error) {
@@ -437,7 +467,6 @@ router.post("/checkNickname", async (req, res, next) => {
     };
 
     const responseData = await user.checkNickname(params, "");
-    console.log("responseData: ", responseData);
 
     res.status(200).json(responseData);
   } catch (error) {
@@ -476,7 +505,6 @@ router.post("/forgotId", async (req, res, next) => {
     };
 
     const responseData = await user.findId(params, "");
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result.email) {
       res.redirect(`/forgotIdResult?email=${responseData.result.email}`);
@@ -543,7 +571,6 @@ router.post("/forgotPw", async (req, res, next) => {
     };
 
     const responseData = await user.findPw(params, "");
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
       res.redirect(`/forgotPwResult?temp_token=${responseData.result}`);
@@ -588,7 +615,6 @@ router.post("/forgotPwResult", async (req, res, next) => {
     };
 
     const responseData = await user.changeFindPw(params, "");
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
       res.redirect(`/login?msg=${responseData.result.msg}`);
@@ -720,7 +746,6 @@ router.post("/mypage-user-auth", auth.isAuthenticated, async (req, res, next) =>
     };
 
     const responseData = await mypage.confirmPassword(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       res.redirect("/mypage");
@@ -758,8 +783,9 @@ router.get("/mypage", auth.isAuthenticated, async (req, res, next) => {
     if (responseData2.code === 200 && responseData2.status === "success") {
       mypoint = responseData2.result;
     }
+
     // 지역화된 숫자 서식 처리 - 3자리마다 콤마(,)
-    mypoint = new Intl.NumberFormat().format(mypoint);
+    mypoint = (typeof mypoint != "object") ? new Intl.NumberFormat().format(mypoint) : 0;
 
     // 내 상담내역
     const params3 = {
@@ -828,7 +854,6 @@ router.post("/mypage-info", auth.isAuthenticated, async (req, res, next) => {
     };
 
     const responseData = await mypage.changeUserInfo(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       const msg = responseData.message;
@@ -876,7 +901,6 @@ router.post("/pwChange", auth.isAuthenticated, async (req, res, next) => {
     };
 
     const responseData = await mypage.changePassword(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       const msg = "비밀번호 변경이 완료되었습니다.";
@@ -916,14 +940,14 @@ router.get("/mypage-coin", auth.isAuthenticated, async (req, res, next) => {
       mypoint = responseData2.result;
     }
     // 지역화된 숫자 서식 처리 - 3자리마다 콤마(,)
-    mypoint = new Intl.NumberFormat().format(mypoint);
+    mypoint = (typeof mypoint != "object") ? new Intl.NumberFormat().format(mypoint) : 0;
 
     // 충전내역
     const params3 = {
       page: 1,
     };
     const responseData3 = await payment.getPaymentHistory(params3, accessToken);
-    console.log("responseData3: ", responseData3);
+
     let paymentHistory = {};
     if (responseData3.code === 200 && responseData3.status === "success") {
       paymentHistory = responseData3.result;
@@ -959,7 +983,6 @@ router.get("/mypage-history", auth.isAuthenticated, async (req, res, next) => {
     };
 
     const responseData3 = await counselor.getMyCounselingHistory(params3, accessToken);
-    console.log("responseData3: ", responseData3)
 
     // 내 상담내역
     let myCounselingHistory = {};
@@ -996,7 +1019,6 @@ router.get("/mypage-review1", auth.isAuthenticated, async (req, res, next) => {
       };
 
       const responseData = await counselor.getMyReview(params, accessToken);
-      console.log("responseData: ", responseData)
 
       // 내 리뷰내역
       let myReviewList = {};
@@ -1033,7 +1055,6 @@ router.get("/mypage-review2", auth.isAuthenticated, async (req, res, next) => {
       };
 
       const responseData = await counselor.getMyReview(params, accessToken);
-      console.log("responseData: ", responseData)
 
       // 내 리뷰내역
       let myReviewList = {};
@@ -1069,10 +1090,8 @@ router.post("/addReview", auth.isAuthenticated, async (req, res, next) => {
       contents: req.body.contents,
       score: req.body.score,
     };
-    console.log("params: ", params, accessToken);
 
     const responseData = await counselor.createReview(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       res.redirect(`/mypage-review2?msg=${responseData.message}`);
@@ -1099,10 +1118,8 @@ router.post("/editReview", auth.isAuthenticated, async (req, res, next) => {
       contents: req.body.contents,
       score: req.body.score,
     };
-    console.log("params: ", params, accessToken);
 
     const responseData = await counselor.updateReview(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       res.redirect(`/mypage-review2?msg=${responseData.message}`);
@@ -1129,13 +1146,11 @@ router.get("/charge", auth.isAuthenticated, async (req, res, next) => {
     };
 
     const responseData = await payment.getProduct(params, accessToken);
-    console.log("responseData: ", responseData);
 
     let productList = [];
     if (responseData.code === 200 && responseData.status === "success") {
       productList = responseData.result;
     }
-    console.log("productList: ", productList);
 
     res.render("charge", {
       title: "매직넘버:코인충전",
@@ -1165,10 +1180,8 @@ router.post("/charge", auth.isAuthenticated, async (req, res, next) => {
       product_num: req.body.product_num,
       view_type: req.body.view_type,
     };
-    console.log("params: ", params, accessToken);
 
     const responseData = await payment.preprocessPayment(params, accessToken);
-    console.log("responseData: ", responseData);
 
     // 060 충전처리 API
     const url = responseData.result.url; // https://passcall.co.kr:28737/CPTL/Pay2/Card/pay.jsp
@@ -1296,7 +1309,6 @@ router.get("/sendCall", auth.isAuthenticated, async (req, res, next) => {
       csrid: csrid,
     }
     const responseData = await counselor.sendCallWithoutComment(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
       res.redirect(`/counselorInfoProfile?csrid=${csrid}&msg=${responseData.message}`);
@@ -1341,7 +1353,6 @@ router.post("/userWithdrawal", async (req, res, next) => {
     };
 
     const responseData = await mypage.withDraw(params, accessToken);
-    console.log("responseData: ", responseData);
 
     if (responseData.code === 200 && responseData.status === "success") {
       res.redirect("/userWithdrawal?withdraw=true");

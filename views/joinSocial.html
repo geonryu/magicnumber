@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="join py-5">
+    <div class="container">
+        <div class="wrapper col-12 col-lg-6 mx-lg-auto">
+            <h2 class="border-bottom text-center pb-3 mb-3 fw-bold">추가 기입사항</h2>
+            <div class="text text-center pb-3 mb-3">하나의 계정으로<br />브라우저와 앱에서 손쉽게 매직넘버를 만나보세요!</div>
+            <div class="emailJoin">
+                <form action="joinSocial" method="post" id="joinForm">
+                    <input type="hidden" name="sns_type" value="{{sns_type}}">
+                    <input type="hidden" name="sns_uid" value="{{sns_uid}}">
+                    <div class="join-user-info px-2 py-4 bg-white rounded mb-3">
+                        <h3 class="fs-5 mb-3">개인정보*</h3>
+                        <div class="join-name mb-3">
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="name" id="joinName" placeholder="이름" value="{{name}}" required />
+                        </div>
+                        <div class="join-so-num mb-3">
+                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="birth" id="joinBirth" placeholder="생년월일(YYYYMMDD)" value="{{birth}}" required />
+                        </div>
+                        <div class="join-gender mb-3">
+                            <select name="gender" id="joinGender" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" required>
+                                <option value="default" selected>성별</option>
+                                <option value="1">남자</option>
+                                <option value="2">여자</option>
+                            </select>
+                        </div>
+                        <div class="join-id mb-3">
+                            <div class="d-flex mb-3">
+                                <div class="w-100 d-flex border border-primary rounded p-2">
+                                    <input class="px-3 py-2 me-1 bg-white d-block rounded w-100 d-block" type="text" name="email" id="joinId" placeholder="아이디(이메일)" value="{{email}}" required />
+                                </div>
+                            </div>
+                            <div id="emailWarn" class="message-warn fs-6 text-point mb-3">정확한 이메일을 입력해주세요.</div>
+                        </div>
+                        <div class="join-phone mb-3">
+                            <div class="d-flex mb-3">
+                                <div class="w-100 border border-primary d-flex rounded p-2">
+                                    <input class="px-3 py-2 me-1 bg-white d-block rounded w-100 d-block" name="phone_num" id="joinTel" type="text" value="{{phone_num}}" maxlength="13" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="join-nick-name mb-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="joinNickName" placeholder="닉네임" value="{{nick_name}}" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-join">
+                        <button type="submit" id="joinSubmit" class="px-4 py-3 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">회원가입</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

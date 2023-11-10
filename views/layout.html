@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" href="#" type="image/x-icon">
+    <title>매직넘버</title>
+    <link rel="icon" href="./images/a.svg" type="image/x-icon">
     <link rel="stylesheet" href="/default.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/main.css">
@@ -28,12 +28,17 @@
                         </a>
                     </div>
                     <div class="user-menu pc-only d-none d-md-flex ms-md-auto">
-                        {% if user === undefined %}
+                        {% if user == undefined %}
                             <div class="login"><a href="/login">로그인</a></div>
                             <div class="join"><a href="/join">회원가입</a></div>
                         {% endif %}
                         {% if user %}
+                            {% if userInfo.sns_type == 1 %}
                             <div class="mypage"><a href="/mypage-user-auth">{{userInfo.nick_name}}</a></div>
+                            {% endif %}
+                            {% if userInfo.sns_type != 1 %}
+                            <div class="mypage"><a href="/mypage">{{userInfo.nick_name}}</a></div>
+                            {% endif %}
                             <div class="coin"><a href="/charge">코인충전</a></div>
                             <div class="logout"><a href="/logout">로그아웃</a></div>
                         {% endif %}
@@ -168,7 +173,7 @@
                             <span class="tit text-default">대표자</span> 최영낭, 문정환 |
                             <span class="tit text-default">사업자등록번호</span> 406-16-73191 |
                             <span class="tit text-default">주소</span> 부산광역시 해운대구 해운대로81번길24, 3층 3B-51호 |
-                            <span class="tit text-default">고객센터</span> 010 9323 0582(임시) |
+                            <span class="tit text-default">고객센터</span> 070 4235 1008 |
                             <span class="tit text-default">운영시간</span> 24시간 |
                             <span class="tit text-default">통신판매업</span> 2023-부산 사하-0749
                         </address>
