@@ -66,37 +66,63 @@
     <div class="container py-4">
         <div class="row">
             {% for item in counselorList %}
-            <div class="profile col col-12 col-sm-6 col-md-4 mb-3 mb-sm-4">
-                <div class="inner bg-white rounded h-100">
+            <div class="profile col col-12 col-md-6 col-lg-4 mb-3 mb-sm-4">
+                <div class="inner bg-white rounded h-100 shadow-sm">
                     <a href="/counselorInfoProfile?csrid={{item.csrid}}" class="d-block h-100">
-                        <div class="intro row p-2">
-                            <div class="pic col col-5">
-                                <div class="profile-img" >
-                                    <img src="{{host}}{{item.profile_path}}" alt="" />
+                        <div class="intro row p-2 p-md-3">
+                            <div class="pic col col-5 col-md-12 col-lg-12">
+                                <div class="profile-img rounded" style="background-image: url({{host}}{{item.profile_path}})">
+                                    <!-- <img class="rounded" src="{{host}}{{item.profile_path}}" alt="" /> -->
                                 </div>
                             </div>
-                            <div class="txt col col-7">
-                                {% if item.state == 'IDLE' %}
-                                <div id="cnsStatus" class="status badge idle mb-1">상담가능</div>
-                                {% elif item.state == 'ABSE' %}
-                                <div id="cnsStatus" class="status badge abse mb-1">부재중</div>
-                                {% elif item.state == 'CONN' %}
-                                <div id="cnsStatus" class="status badge conn mb-1">상담중</div>
-                                {% endif %}
-                                <div class="name fw-bold">{{item.nicknm}} | <span class="cns-num text-secondary">{{item.csrid}}</span></div>
-                                <div class="msg fs-6 w-100">{{item.profile_title}}</div>
-                                <script>console.log(item.profile_title)</script>
-                            </div>
-                        </div>
-                        <div class="info p-2">
-                            <div class="border-top d-flex">
-                                <div class="review d-flex align-items-center">
-                                    <div class="ico"><img src="images/review.png" alt="" /></div>
-                                    <div class="ms-1">후기<span class="review-count text-point">{{item.review_count}}</span></div>
+                            <div class="txt col col-7 col-md-12 col-lg-12 d-flex flex-wrap pt-2 align-items-center">
+                                <div class="name fw-bold fs-4">
+                                    {{item.nicknm}} |
+                                    <span class="cns-num text-secondary">
+                                        {% if item.sortno < 10 %}
+                                        00{{item.sortno}}
+                                        {% elif item.sortno < 100 %}
+                                        0{{item.sortno}}
+                                        {% endif %}
+                                    </span>
                                 </div>
-                                <div class="coin d-flex align-items-center ms-auto">
-                                    <div class="ico me-1"><img src="images/coin.png" alt="" /></div>
-                                    <div class="price">{{item.decamt}}</div>
+                                <div class="cnsl-status ms-auto">
+                                    {% if item.state == 'IDLE' %}
+                                    <div id="cnsStatus" class="status d-inline-block px-3 py-1 rounded idle fw-bold">
+                                        상담가능
+                                    </div>
+                                    {% elif item.state == 'ABSE' %}
+                                    <div id="cnsStatus" class="status d-inline-block px-3 py-1 rounded abse fw-bold">
+                                        부재중
+                                    </div>
+                                    {% elif item.state == 'CONN' %}
+                                    <div id="cnsStatus" class="status d-inline-block px-3 py-1 rounded conn fw-bold">상담중</div>
+                                    {% endif %}
+                                </div>
+                                <!-- <div class="msg fs-6 w-100">{{item.profile_title}}</div> -->
+                                <div class="msg w-100">
+                                    <div class="line-message">안녕하세요. {{item.nicknm}}입니다.</div>
+                                    <div class="hashtags py-2">
+                                        {% for tag in item.tb_api_counselor_hash_tags %}
+                                            <div class="badge fw-bold bg-bgPoint text-primary">#{{tag.tag}}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="border-top d-sm-flex align-items-start mt-auto pt-2 pt-md-2 w-100">
+                                    <div class="review d-flex align-items-center">
+                                        <div class="ico"><img src="images/review.png" alt="" /></div>
+                                        <div class="ms-1">후기<span class="review-count text-point ms-1 fw-bold">{{item.review_count}}</span></div>
+                                    </div>
+                                    <div class="coin ms-auto">
+                                        <div class="price1 d-flex align-items-center">
+                                            <div class="price-ico me-1 d-flex align-items-center"><img class="me-1" src="images/coin.svg" alt="" /><span class="txtDisabled">선불 30초당</span></div>
+                                            <div class="price fw-bold">{{item.decamt}}</div>
+                                        </div>
+                                        <div class="price2 d-flex align-items-center">
+                                            <div class="price-ico me-1 d-flex align-items-center"><img class="me-1" src="images/won.svg" alt="" /><span class="txtDisabled">선불 30초당</span></div>
+                                            <div class="price fw-bold">1300</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -4,15 +4,36 @@
 <div class="counselor">
     <div class="container py-5">
         <div class="profile row py-3 bg-white">
-            <div class="profile-info col-12 col-md-6">
-                <div class="profile-img">
-                    <img src="{{host}}{{counselorInfo.profile_path}}" alt="" style="height: 270px">
+            <div class="profile-info col-12 col-md-6 py-2 mb-4 mb-md-0">
+                <div class="profile-img" style="background-image: url({{host}}{{counselorInfo.profile_path}});">
+                    <!-- <img src="{{host}}{{counselorInfo.profile_path}}" alt="" style="height: 270px;"> -->
+                    <div class="cnsl-status">
+                        {% if counselorInfo.state == 'IDLE' %}
+                        <div id="cnsStatus" class="status d-inline-block px-3 py-1 rounded idle fw-bold">
+                            상담가능
+                        </div>
+                        {% elif counselorInfo.state == 'ABSE' %}
+                        <div id="cnsStatus" class="status d-inline-block px-3 py-1 rounded abse fw-bold">
+                            부재중
+                        </div>
+                        {% elif counselorInfo.state == 'CONN' %}
+                        <div id="cnsStatus" class="status d-inline-block px-3 py-1 rounded conn fw-bold">상담중</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="profile-util col-12 col-md-6 d-flex flex-column">
-                <div class="txt py-3">
-                    <div class="name fw-bold fs-4">{{counselorInfo.nicknm}} | <span class="cns-num text-secondary">{{counselorInfo.csrid}}</span></div>
-                    <!--ARS 연결시 필요한 접속 번호-->
+                <div class="txt pt-3">
+                    <div class="name fw-bold fs-2">
+                        {{counselorInfo.nicknm}} | 
+                        <span class="cns-num text-secondary">
+                            {% if counselorInfo.sortno < 10 %}
+                            00{{counselorInfo.sortno}}
+                            {% elif counselorInfo.sortno < 100 %}
+                            0{{counselorInfo.sortno}}
+                            {% endif %}
+                        </span>
+                    </div>
                     <div class="msg">{{counselorInfo.profile_title}}</div>
                 </div>
                 <!-- <div class="tag mb-3">
@@ -20,17 +41,47 @@
                     <div class="badge bg-primary">#<span class="keyword">심리상담</span></div>
                     <div class="badge bg-primary">#<span class="keyword">빠른상담</span></div>
                 </div> -->
-                <div class="count mb-3">
-                    <div class="review d-flex align-items-center mb-1">
-                        <div class="ico"><img src="images/review.png" alt=""></div>
-                        <div class="ms-1">후기<span class="review-count text-point ms-1">{{counselorInfo.review_count}}</span></div>
+                <div class="reviews mb-3 d-flex flex-wrap align-items-center border-bottom pb-3 pb-md-2 mb-4" id="reviewPreview">
+                    <div class="score score-{{counselorInfo.score}} d-flex justify-content-start align-items-center py-2">
+                        <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="1"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                        <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="2"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                        <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="3"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                        <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="4"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
+                        <div class="score-star"><button class="star-btn d-flex align-items-center" data-score="5"><span class="material-symbols-rounded star-disabled">star</span><span class="material-symbols-rounded star-active">star</span></button></div>
                     </div>
-                    <div class="coin d-flex align-items-center ms-auto">
-                        <div class="ico me-1"><img src="images/coin.png" alt=""></div>
-                        <div class="price">{{counselorInfo.decamt}}</div>
+                    <div class="review d-flex align-items-center ms-1 me-1 ms-sm-2 me-0 ms-md-2 ms-lg-3">
+                        <div class="ico"><img src="images/review.png" alt=""></div>
+                        <div class="ms-1 fw-bold">후기<span class="review-count text-point ms-1">{{counselorInfo.review_count}}</span></div>
+                    </div>
+                    <div class="how-to-use ms-auto">
+                        <a href="/howToUse" class="d-flex align-items-center">
+                            <span class=" text-darkGray">이용방법 안내</span>
+                            <span class="material-symbols-outlined text-point">help</span>                             
+                        </a>
                     </div>
                 </div>
-                <div class="control d-flex align-items-center mt-auto">
+                <div class="prices container mb-lg-3">
+                    <div class="row">
+                        <div class="price1 flex-wrap col-6">
+                            <div class="border rounded p-2 p-sm-3 px-md-2 px-lg-3 d-flex flex-wrap align-items-center w-100">
+                                <div class="fw-bold w-100">선불전화</div>
+                                <div class="price-type badge border text-primary border-primary me-1">30분</div>
+                                <div class="price fs-4">{{counselorInfo.decamt}}</div>
+                                <div class="ico fs-6 mt-1">P</div>
+                            </div>
+                        </div>
+                        <!-- <span class="or fs-6 mx-3 text-darkGray">/</span> -->
+                        <div class="price2 flex-wrap col-6">
+                            <div class="border rounded p-2 p-sm-3 px-md-2 px-lg-3 d-flex flex-wrap align-items-center w-100">
+                                <div class="fw-bold w-100">후불전화</div>
+                                <div class="price-type badge border text-primary border-primary me-1">30분</div>
+                                <div class="price fs-4">1300</div>
+                                <div class="ico fs-6 mt-1">원</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control container d-flex align-items-center mt-auto pt-2 pb-5 p-md-0 bg-white">
                     <!-- <div class="bookmark me-2">
                         <button class="rounded border border-point text-point">
                             <span class="material-symbols-outlined d-block">favorite</span>
@@ -41,36 +92,84 @@
                             찜
                         </button> 찜 활성화
                     </div> -->
-                    <div class="call w-100">
-                        <!-- <a href="tel:000-000-0000" class="d-block h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-3 fs-4 fw-bold">
-                            <span class="material-symbols-outlined">call</span>
-                            <span class="counselor-status ms-1">상담가능</span>
-                        </a> 상담가능 -->
-                        {% if user === undefined %}
-                        <a href="javascript:alert('로그인후 상담 가능합니다.')" class="d-block col-lg-12 mt-auto h-100 rounded bg-secondary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                    <div class="call-before w-50 p-y">
+                        {% if user === undefined%}
+                            <a href="javascript:alert('로그인후 상담 가능합니다.')" class="col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex flex-column align-items-center justify-content-center py-2 fw-bold opacity-25">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    선불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">{{counselorInfo.decamt}}<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></span>
+                                </div>
+                            </a>
+                        {% elif user and counselorInfo.state === 'ABSE'%}
+                            <a href="javascript:alert('현재는 상담시간이 종료되었습니다. 잠시후 다시 시도해주세요.')" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold opacity-25">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    선불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">{{counselorInfo.decamt}}<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></span>
+                                </div>
+                            </a>
+                        {% elif user and counselorInfo.state === 'CONN'%}
+                            <a href="javascript:alert('상담사가 이미 상담중에 있습니다. 잠시후 다시 시도해주세요.')" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold opacity-25">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    선불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">{{counselorInfo.decamt}}<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></span>
+                                </div>
+                            </a>
+                        {% elif user and counselorInfo.state === 'IDLE' %}
+                            <a href="/sendCall?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    선불상담&nbsp;
+                                    <div class="d-md-none">{{counselorInfo.decamt}}<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></div>
+                                </div>
+                            </a>
                         {% endif %}
-                        {% if user %}
-                        <a href="/sendCall?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                    </div>
+                    <div class="call-after w-50 p-1">
+                        {% if user === undefined%}
+                            <a href="javascript:alert('로그인후 상담 가능합니다.')" class="col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex flex-column align-items-center justify-content-center py-2 fw-bold opacity-25">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    후불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">1300<img style="width: 16px;" class="me-1" src="images/won.svg" alt="" /></span>
+                                </div>
+                            </a>
+                        {% elif user and counselorInfo.state === 'ABSE'%}
+                            <a href="javascript:alert('현재는 상담시간이 종료되었습니다. 잠시후 다시 시도해주세요.')" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold opacity-25">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    후불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">1300<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></span>
+                                </div>
+                            </a>
+                        {% elif user and counselorInfo.state === 'CONN'%}
+                            <a href="javascript:alert('상담사가 이미 상담중에 있습니다. 잠시후 다시 시도해주세요.')" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold opacity-25">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    후불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">1300<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></span>
+                                </div>
+                            </a>
+                        {% elif user and counselorInfo.state === 'IDLE' %}
+                            <a href="/sendCall?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                                <div class="call-type d-flex align-items-center">
+                                    <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
+                                    후불상담&nbsp;
+                                    <span class="d-md-none d-flex align-items-center">1300<img style="width: 16px;" class="me-1" src="images/coin.svg" alt="" /></span>
+                                </div>
+                            </a>
                         {% endif %}
-                            <span class="counselor-status ms-1">
-                                {% if counselorInfo.state == 'IDLE' %}
-                                    상담가능
-                                {% elif counselorInfo.state == 'ABSE' %}
-                                    부재중
-                                {% elif counselorInfo.state == 'CONN' %}
-                                    상담중
-                                {% endif %}
-                            </span>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="content">
             <div class="local-nav row bg-white">
-                <div class="col col-6 active"><a href="/counselorInfoProfile?csrid={{counselorInfo.csrid}}" class="d-flex align-items-center justify-content-center py-2">프로필</a></div>
+                <div class="col col-6 active"><a href="/counselorInfoProfile?csrid={{counselorInfo.csrid}}" class="d-flex align-items-center justify-content-center py-3">프로필</a></div>
                 <div class="col col-6">
-                    <a href="counselorInfoReview?csrid={{counselorInfo.csrid}}" class="d-flex align-items-center justify-content-center py-2">
+                    <a href="counselorInfoReview?csrid={{counselorInfo.csrid}}" class="d-flex align-items-center justify-content-center py-3">
                         후기
                         <div class="ms-1 badge bg-point text-white"><span class="review-count">{{counselorInfo.review_count}}</span></div>
                     </a>

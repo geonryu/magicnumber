@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="info">
+<div class="how-to-use">
     <div class="container py-5">
         <div class="tit">
             <h3 class="text-center mb-5 text-dark fw-bold">매직넘버 이용방법 안내</h3>
@@ -9,22 +9,33 @@
         <div class="content">
             <div class="service-1 pb-4 border-bottom">
                 <h4 class="text-center mb-3">후불상담 이용방법 안내</h4>
-                <div class="process row align-items-stretch">
-                    <div class="col col-12 col-md-4 text-center mb-3 mb-sm-3 mb-md-0 h-100">
-                        <div class="inner p-3 rounded bg-white">
-                            <div class="ico mb-2"><span class="text-primary fs-4 material-symbols-outlined">ring_volume</span></div>
-                            <div class="txt"><b><a href="tel:060-000-0000" class="text-decoration-underline text-point">060-000-0000</a></b>로 전화 연결합니다.</div>
+                <div class="process d-flex flex-column flex-md-row justify-content-between bg-white rounded">
+                    <div class="w-100 text-center h-100">
+                        <div class="inner p-3 h-100">
+                            <div class="ico mb-2 mx-auto d-flex align-items-center justify-content-center"><span class="text-white fs-4 material-symbols-outlined">support_agent</span></div>
+                            <div class="txt"><b><a href="/join" class="text-decoration-underline text-point">상담사목록</a></b>에서 원하시는 상담사를 선택해주세요.</div>
                         </div>
                     </div>
-                    <div class="col col-12 col-md-4 text-center mb-3 mb-sm-3 mb-md-0 h-100">
-                        <div class="inner p-3 rounded bg-white">
-                            <div class="ico mb-2"><span class="text-primary fs-4 material-symbols-outlined">dialpad</span></div>
-                            <div class="txt">전화 연결 후 희망하는 상담사의 <b>고유번호 3자리</b>를 입력하세요.</div>
+                    <div class="arr mx-auto text-txtDisabled d-flex align-items-center">
+                        <span class="material-symbols-outlined d-none d-md-block">arrow_forward_ios</span>
+                        <span class="material-symbols-outlined d-block d-md-none">keyboard_arrow_down</span>
+                    </div>
+                    <div class="w-100 text-center mb-3 mb-sm-3 mb-md-0 h-100">
+                        <div class="inner p-3 h-100">
+                            <div class="ico mb-2 mx-auto d-flex align-items-center justify-content-center"><span class="text-white fs-4 material-symbols-outlined">ring_volume</span></div>
+                            <!-- <div class="txt"><b><a href="tel:060-000-0000" class="text-decoration-underline text-point">070-8017-5431</a></b>로 전화 연결합니다.</div> -->
+                            <div class="txt">
+                                원하는 상담사를 선택하고 후불상담 전화 버튼을 터치(클릭)합니다.
+                            </div>
                         </div>
                     </div>
-                    <div class="col col-12 col-md-4 text-center h-100">
-                        <div class="inner p-3 rounded bg-white">
-                            <div class="ico mb-2"><span class="text-primary fs-4 material-symbols-outlined">forum</span></div>
+                    <div class="arr mx-auto text-txtDisabled d-flex align-items-center">
+                        <span class="material-symbols-outlined d-none d-md-block">arrow_forward_ios</span>
+                        <span class="material-symbols-outlined d-block d-md-none">keyboard_arrow_down</span>
+                    </div>
+                    <div class="w-100 text-center h-100">
+                        <div class="inner p-3 h-100">
+                            <div class="ico mb-2 mx-auto d-flex align-items-center justify-content-center"><span class="text-white fs-4 material-symbols-outlined">forum</span></div>
                             <div class="txt">상담사와 연결 후 상담을 나누세요.</div>
                         </div>
                     </div>
@@ -32,23 +43,34 @@
             </div>
             <div class="service-2 pt-4">
                 <h4 class="text-center mb-3">선불상담 이용방법 안내 </h4>
-                <div class="process row align-items-stretch">
-                    <div class="col col-12 col-md-4 text-center mb-3 mb-sm-3 mb-md-0 h-100">
-                        <div class="inner p-3 rounded bg-white">
-                            <div class="ico mb-2"><span class="text-primary fs-4 material-symbols-outlined">person_add</span></div>
+                <div class="process d-flex flex-column flex-md-row justify-content-between bg-white rounded">
+                    <div class="w-100 text-center mb-3 mb-sm-3 mb-md-0 h-100">
+                        <div class="inner p-3 h-100">
+                            <div class="ico mb-2 mx-auto d-flex align-items-center justify-content-center"><span class="text-white fs-4 material-symbols-outlined">person_add</span></div>
                             <div class="txt">매직넘버 계정이 없으시면 <b><a href="/join" class="text-decoration-underline text-point">회원가입</a></b>을 진행해 주세요.</div>
                         </div>
                     </div>
-                    <div class="col col-12 col-md-4 text-center mb-3 mb-sm-3 mb-md-0 h-100">
-                        <div class="inner p-3 rounded bg-white">
-                            <div class="ico mb-2"><span class="text-primary fs-4 material-symbols-outlined">login</span></div>
+                    <div class="arr mx-auto text-txtDisabled d-flex align-items-center">
+                        <span class="material-symbols-outlined d-none d-md-block">arrow_forward_ios</span>
+                        <span class="material-symbols-outlined d-block d-md-none">keyboard_arrow_down</span>
+                    </div>
+                    <div class="w-100 text-center mb-3 mb-sm-3 mb-md-0 h-100">
+                        <div class="inner p-3 h-100">
+                            <div class="ico mb-2 mx-auto d-flex align-items-center justify-content-center"><span class="text-white fs-4 material-symbols-outlined">login</span></div>
                             <div class="txt">계정에 로그인하여 <b><a href="/charge" class="text-decoration-underline text-point">코인을 충전</a></b>하세요.</div>
                         </div>
                     </div>
-                    <div class="col col-12 col-md-4 text-center h-100">
-                        <div class="inner p-3 rounded bg-white">
-                            <div class="ico mb-2"><span class="text-primary fs-4 material-symbols-outlined">credit_card</span></div>
-                            <div class="txt"><b><a href="tel:000-000-0000" class="text-decoration-underline text-point">000-000-0000</a></b>에 전화 연결하여 원하는 상담사의<br><b>고유번호 3자리를 입력</b>한 후 상담을 나누세요.</div>
+                    <div class="arr mx-auto text-txtDisabled d-flex align-items-center">
+                        <span class="material-symbols-outlined d-none d-md-block">arrow_forward_ios</span>
+                        <span class="material-symbols-outlined d-block d-md-none">keyboard_arrow_down</span>
+                    </div>
+                    <div class="w-100 text-center mb-3 mb-sm-3 mb-md-0 h-100">
+                        <div class="inner p-3 h-100">
+                            <div class="ico mb-2 mx-auto d-flex align-items-center justify-content-center"><span class="text-white fs-4 material-symbols-outlined">ring_volume</span></div>
+                            <!-- <div class="txt"><b><a href="tel:060-000-0000" class="text-decoration-underline text-point">070-8017-5431</a></b>로 전화 연결합니다.</div> -->
+                            <div class="txt">
+                                원하는 상담사를 선택하고 선불상담 전화 버튼을 터치(클릭)합니다.
+                            </div>
                         </div>
                     </div>
                 </div>
