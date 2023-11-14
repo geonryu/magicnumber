@@ -653,7 +653,6 @@ router.get("/counselorInfoProfile", async (req, res, next) => {
       msg: req.query.msg,
       userInfo: userInfo,
       counselorInfo: counselorInfo,
-      sendCall: req.query.sendCall,
     });
   } catch (error) {
     console.error("외부 API와의 통신 중 에러 발생:", error);
@@ -1295,35 +1294,7 @@ router.get("/recruit", async (req, res, next) => {
   }
 }); // 상담사 모집 라우터
 
-router.get("/sendCallPrepaid", auth.isAuthenticated, async (req, res, next) => {
-  try {
-    const accessToken = (req.user) ? req.user.accessToken : "";
-    let userInfo = [];
-    const userData = await auth.getUserInfo("", accessToken);
-    if (userData.code === 200 && userData.status === "success") {
-      userInfo = userData.result;
-    }
-
-    const csrid = req.query.csrid;
-    const params = {
-      telno: userInfo.telno,
-      csrid: csrid,
-    }
-    const responseData = await counselor.sendCallWithoutComment(params, accessToken);
-    console.log("responseData", responseData);
-
-    if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
-      res.redirect(`/counselorInfoProfile?csrid=${csrid}&sendCall=prepaid`);
-    }else{
-      res.redirect(`/counselorInfoProfile?csrid=${csrid}`);
-    }
-  } catch (error) {
-    console.error("외부 API와의 통신 중 에러 발생:", error);
-    res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
-  }
-}); // 선불상담 버튼 처리
-
-router.get("/sendCallDeferred", auth.isAuthenticated, async (req, res, next) => {
+router.get("/sendCall", auth.isAuthenticated, async (req, res, next) => {
   try {
     const accessToken = (req.user) ? req.user.accessToken : "";
     let userInfo = [];
@@ -1340,7 +1311,7 @@ router.get("/sendCallDeferred", auth.isAuthenticated, async (req, res, next) => 
     const responseData = await counselor.sendCallWithoutComment(params, accessToken);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
-      res.redirect(`/counselorInfoProfile?csrid=${csrid}&sendCall=deferred`);
+      res.redirect(`/counselorInfoProfile?csrid=${csrid}&msg=${responseData.message}`);
     }else{
       res.redirect(`/counselorInfoProfile?csrid=${csrid}`);
     }
@@ -1348,7 +1319,7 @@ router.get("/sendCallDeferred", auth.isAuthenticated, async (req, res, next) => 
     console.error("외부 API와의 통신 중 에러 발생:", error);
     res.status(500).json({ error: "외부 API와의 통신 중 에러 발생" });
   }
-}); // 후불상담 버튼 처리
+}); // 상담하기 버튼 처리
 
 router.get("/userWithdrawal", auth.isAuthenticated, async (req, res, next) => {
   try {
