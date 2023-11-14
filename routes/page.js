@@ -1340,7 +1340,7 @@ router.get("/sendCallDeferred", auth.isAuthenticated, async (req, res, next) => 
     const responseData = await counselor.sendCallWithoutComment(params, accessToken);
 
     if (responseData.code === 200 && responseData.status === "success" && responseData.result) {
-      res.redirect(`/counselorInfoProfile?csrid=${csrid}&sendCall=deferred`);
+      res.redirect(`/counselorInfoProfile?csrid=${csrid}&sendCall=deffered`);
     }else{
       res.redirect(`/counselorInfoProfile?csrid=${csrid}`);
     }
