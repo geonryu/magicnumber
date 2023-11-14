@@ -25,7 +25,7 @@
             <div class="profile-util col-12 col-md-6 d-flex flex-column">
                 <div class="txt pt-3">
                     <div class="name fw-bold fs-2">
-                        {{counselorInfo.nicknm}} | 
+                        {{counselorInfo.nicknm}} |
                         <span class="cns-num text-secondary">
                             {% if counselorInfo.sortno < 10 %}
                             00{{counselorInfo.sortno}}
@@ -56,7 +56,7 @@
                     <div class="how-to-use ms-auto">
                         <a href="/howToUse" class="d-flex align-items-center">
                             <span class=" text-darkGray">이용방법 안내</span>
-                            <span class="material-symbols-outlined text-point">help</span>                             
+                            <span class="material-symbols-outlined text-point">help</span>
                         </a>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                                 </div>
                             </a>
                         {% elif user and counselorInfo.state === 'IDLE' %}
-                            <a href="/sendCall?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                            <a href="/sendCallPrepaid?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
                                 <div class="call-type d-flex align-items-center">
                                     <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
                                     선불상담&nbsp;
@@ -153,7 +153,7 @@
                                 </div>
                             </a>
                         {% elif user and counselorInfo.state === 'IDLE' %}
-                            <a href="/sendCall?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
+                            <a href="/sendCallDeferred?csrid={{counselorInfo.csrid}}" class="d-block col-lg-12 mt-auto h-100 rounded bg-primary text-white fw-bold d-flex align-items-center justify-content-center py-2 fw-bold">
                                 <div class="call-type d-flex align-items-center">
                                     <span class="material-symbols-outlined text-white d-none d-md-block">call</span>
                                     후불상담&nbsp;
@@ -193,6 +193,18 @@
 <script>
   alert("{{msg}}");
   location.href = location.pathname + "?csrid={{counselorInfo.csrid}}";
+</script>
+{% endif %}
+{% if sendCall == 'prepaid' %}
+<script>
+    console.log("선불상담. 070-8017-5431");
+    location.href = 'tel:070-8017-5431';
+</script>
+{% endif %}
+{% if sendCall == 'deferred' %}
+<script>
+    console.log("후불상담. 060-501-7171");
+    location.href = 'tel:060-501-7171';
 </script>
 {% endif %}
 {% endblock %}
