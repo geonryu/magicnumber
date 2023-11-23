@@ -9,11 +9,13 @@
             <a href="/charge" class="btn btn-md bg-primary text-white w-100 fw-bold">이전으로</a>
         </div>
     </div>
+    <iframe id="chargeFrame" width="0" height="0" frameborder="0"></iframe>
 {% if url %}
 <script>
     let url = "{{url}}?{{body}}";
     url = url.replaceAll('&amp;', '&');
-    window.open(url);
+    const iframe = document.getElementById("chargeFrame");
+    iframe.setAttribute("src", url);
 </script>
 {% endif %}
 {% endblock %}
