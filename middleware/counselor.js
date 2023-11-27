@@ -12,7 +12,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
@@ -46,7 +46,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
@@ -79,7 +79,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
@@ -113,7 +113,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
@@ -146,7 +146,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
@@ -179,7 +179,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
@@ -212,7 +212,7 @@ const counselor = {
 
       // Axios 인스턴스 생성
       const axiosInstance = axios.create({
-        baseURL: "http://api.magicnumber.co.kr", // API 기본 호스트 URL
+        baseURL: "https://api.magicnumber.co.kr", // API 기본 호스트 URL
         headers: {
           "content-Type": "application/json",
           authorization: accessToken,
