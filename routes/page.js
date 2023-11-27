@@ -11,7 +11,7 @@ const passport = require("passport");
 const router = express.Router();
 
 // API 호스트 경로
-const host = "http://api.magicnumber.co.kr";
+const host = "https://api.magicnumber.co.kr";
 
 router.get("/", async (req, res, next) => {
   try {
