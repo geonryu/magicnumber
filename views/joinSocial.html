@@ -12,13 +12,13 @@
                     <div class="join-user-info px-2 py-4 bg-white rounded mb-3">
                         <h3 class="fs-5 mb-3">개인정보*</h3>
                         <div class="join-name mb-3">
-                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="name" id="joinName" placeholder="이름" value="{{name}}" required />
+                            <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="name" id="joinName" placeholder="이름" value="{{name}}" required />
                         </div>
                         <div class="join-so-num mb-3">
-                            <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="birth" id="joinBirth" placeholder="생년월일(YYYYMMDD)" value="{{birth}}" required />
+                            <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="birth" id="joinBirth" placeholder="생년월일(YYYYMMDD)" value="{{birth}}" required />
                         </div>
                         <div class="join-gender mb-3">
-                            <select name="gender" id="joinGender" class="px-4 py-3 bg-white border border-primary d-block rounded w-100" required>
+                            <select name="gender" id="joinGender" class="px-3 py-2 bg-white border border-primary d-block rounded w-100" required>
                                 <option value="default" selected>성별</option>
                                 <option value="1">남자</option>
                                 <option value="2">여자</option>
@@ -26,29 +26,47 @@
                         </div>
                         <div class="join-id mb-3">
                             <div class="d-flex mb-3">
-                                <div class="w-100 d-flex border border-primary rounded p-2">
+                                <div class="w-100 d-flex border border-primary rounded">
                                     <input class="px-3 py-2 me-1 bg-white d-block rounded w-100 d-block" type="text" name="email" id="joinId" placeholder="아이디(이메일)" value="{{email}}" required />
                                 </div>
                             </div>
                             <div id="emailWarn" class="message-warn fs-6 text-point mb-3">정확한 이메일을 입력해주세요.</div>
                         </div>
                         <div class="join-phone mb-3">
-                            <div class="d-flex mb-3">
+                            <!-- <div class="d-flex mb-3">
                                 <div class="w-100 border border-primary d-flex rounded p-2">
                                     <input class="px-3 py-2 me-1 bg-white d-block rounded w-100 d-block" name="phone_num" id="joinTel" type="text" value="{{phone_num}}" maxlength="13" required />
                                 </div>
+                            </div> -->
+                            <div class="d-flex mb-3">
+                                <div class="me-1 w-25">
+                                    <select name="" id="joinCarrier" class="bg-white border border-primary d-block rounded w-100 h-100 border d-block text-center">
+                                        <option value="default" selected>통신사</option>
+                                        <option value="skt">SKT</option>
+                                        <option value="lg">LG</option>
+                                        <option value="kt">KT</option>
+                                    </select>
+                                </div>
+                                <div class="w-75 border border-primary d-flex rounded">
+                                    <input class="px-3 py-2 me-1 bg-white d-block rounded w-75 d-block" name="phone_num" id="joinTel" type="text" value="010-" maxlength="13" required />
+                                    <button type="button" id="reqAuthPhone" class="d-block px-1 py-1 d-block w-25 bg-primary rounded text-white fw-bold bg-bgDisabled text-center">인증요청</button>
+                                </div>
+                            </div>
+                            <div class="w-100 d-flex border border-primary rounded">
+                                <input id="certCodePhone" class="px-3 py-2 rounded bg-white d-block w-75 me-1 d-block" type="text" placeholder="휴대폰 인증번호(6자리)">
+                                <button type="button" id="certAuthPhone" class="d-block px-1 py-1 d-block w-25 bg-primary rounded text-white fw-bold bg-bgDisabled text-center">확인</button>
                             </div>
                         </div>
                         <div class="join-nick-name mb-3">
                             <div class="row">
                                 <div class="col-12">
-                                    <input class="px-4 py-3 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="joinNickName" placeholder="닉네임" value="{{nick_name}}" required />
+                                    <input class="px-3 py-2 bg-white border border-primary d-block rounded w-100" type="text" name="nick_name" id="joinNickName" placeholder="닉네임" value="{{nick_name}}" required />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="btn-join">
-                        <button type="submit" id="joinSubmit" class="px-4 py-3 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">회원가입</button>
+                        <button type="submit" id="joinSubmit" class="px-3 py-2 mt-3 d-block w-100 bg-primary rounded text-white fw-bold">회원가입</button>
                     </div>
                 </form>
             </div>
